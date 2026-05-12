@@ -27,7 +27,13 @@ model = timm.create_model(
 )
 
 # โหลดโมเดล
-model.load_state_dict(torch.load("model.pth", map_location=device))
+model.load_state_dict(
+    torch.load(
+        "model.pth",
+        map_location=device
+    )
+)
+
 model.to(device)
 model.eval()
 
@@ -37,29 +43,37 @@ print("Model loaded successfully!")
 # Image Transform
 # -------------------------------
 transform = transforms.Compose([
+
     transforms.Resize((380, 380)),
+
     transforms.CenterCrop(380),
+
     transforms.ToTensor(),
+
     transforms.Normalize(
         [0.485, 0.456, 0.406],
         [0.229, 0.224, 0.225]
     )
+
 ])
 
 # -------------------------------
 # Prediction Function
 # -------------------------------
 def predict_image(image_path):
+
     image = Image.open(image_path).convert("RGB")
+
     image = transform(image).unsqueeze(0).to(device)
 
     with torch.no_grad():
+
         output = model(image)
 
-        # แปลง logits -> probability
+        # logits -> probability
         probs = torch.softmax(output, dim=1)
 
-        # class index 1 = Melanoma
+        # melanoma probability
         risk_prob = probs[0][1].item()
 
     return risk_prob
@@ -70,8 +84,16 @@ def predict_image(image_path):
 
 @app.route("/")
 def landing():
-    return render_template("landing.html")
 
+    disclaimer = """
+    This system is intended to support early screening
+    and encourage users to seek medical advice from specialists.
+    """
+
+    return render_template(
+        "landing.html",
+        disclaimer=disclaimer
+    )
 
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
@@ -81,13 +103,18 @@ def questionnaire():
     # Threshold สำหรับคัดกรอง
     threshold = 0.225
 
+    disclaimer = """
+    This system is intended to support early screening
+    and encourage users to seek medical advice from specialists.
+    """
+
     if request.method == "POST":
 
         file = request.files.get("image")
 
         if file and file.filename != "":
 
-            # Save file
+            # Save File
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"],
                 file.filename
@@ -101,16 +128,19 @@ def questionnaire():
             # Convert to percent
             percent = risk_prob * 100
 
-            # ระดับความเสี่ยง
+            # Risk Level
             if percent >= 50:
+
                 level = "เสี่ยงปานกลาง - เสี่ยงสูง"
                 color = "red"
 
             elif risk_prob >= threshold:
+
                 level = "เสี่ยงต่ำ - เสี่ยงปานกลาง"
                 color = "orange"
 
             else:
+
                 level = "เสี่ยงต่ำ"
                 color = "green"
 
@@ -142,17 +172,41 @@ def questionnaire():
                 {level}
             </b>
 
+            <br><br>
+
+            <div style='
+                margin-top:15px;
+                padding:12px;
+                border-radius:10px;
+                background:#f4f8ff;
+                border-left:5px solid #0a66c2;
+                font-size:14px;
+                color:#333;
+            '>
+
+            <b>Disclaimer:</b><br>
+
+            This system is intended to support early screening
+            and encourage users to seek medical advice from specialists.
+
+            </div>
+
             </div>
             """
 
     return render_template(
         "questionnaire.html",
-        result=result
+        result=result,
+        disclaimer=disclaimer
     )
-
 
 @app.route("/hospital")
 def hospital():
+
+    disclaimer = """
+    This system is intended to support early screening
+    and encourage users to seek medical advice from specialists.
+    """
 
     with open(
         "hospitals.json",
@@ -164,17 +218,30 @@ def hospital():
 
     return render_template(
         "hospital.html",
-        hospitals=hospitals
+        hospitals=hospitals,
+        disclaimer=disclaimer
     )
-
 
 @app.route("/info")
 def info():
-    return render_template("info.html")
 
+    disclaimer = """
+    This system is intended to support early screening
+    and encourage users to seek medical advice from specialists.
+    """
+
+    return render_template(
+        "info.html",
+        disclaimer=disclaimer
+    )
 
 # -------------------------------
 # Run App
 # -------------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
