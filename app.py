@@ -6,19 +6,31 @@ import torch
 import torchvision.transforms as transforms
 import timm
 
+# =========================================
+# Flask App
+# =========================================
+
 app = Flask(__name__)
 
-# -------------------------------
+# =========================================
 # Upload Folder
-# -------------------------------
+# =========================================
+
 UPLOAD_FOLDER = "uploads"
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# -------------------------------
-# AI Model Setup
-# -------------------------------
+# =========================================
+# Device
+# =========================================
+
 device = torch.device("cpu")
+
+# =========================================
+# Load AI Model
+# =========================================
 
 model = timm.create_model(
     "efficientnet_b4",
@@ -26,7 +38,6 @@ model = timm.create_model(
     num_classes=2
 )
 
-# โหลดโมเดล
 model.load_state_dict(
     torch.load(
         "model.pth",
@@ -37,16 +48,17 @@ model.load_state_dict(
 model.to(device)
 model.eval()
 
-print("Model loaded successfully!")
+print("✅ Model loaded successfully!")
 
-# -------------------------------
-# Image Transform
-# -------------------------------
+# =========================================
+# Transform
+# IMPORTANT:
+# ให้เหมือน Google Colab เป๊ะ
+# =========================================
+
 transform = transforms.Compose([
 
     transforms.Resize((380, 380)),
-
-    transforms.CenterCrop(380),
 
     transforms.ToTensor(),
 
@@ -57,30 +69,60 @@ transform = transforms.Compose([
 
 ])
 
-# -------------------------------
+# =========================================
+# Threshold
+# =========================================
+
+THRESHOLD = 0.225
+
+# =========================================
 # Prediction Function
-# -------------------------------
+# =========================================
+
 def predict_image(image_path):
 
+    # เปิดภาพแบบ RGB
     image = Image.open(image_path).convert("RGB")
 
-    image = transform(image).unsqueeze(0).to(device)
+    # Transform
+    image_tensor = transform(image).unsqueeze(0).to(device)
 
     with torch.no_grad():
 
-        output = model(image)
+        # Predict
+        output = model(image_tensor)
 
-        # logits -> probability
+        # Softmax
         probs = torch.softmax(output, dim=1)
 
-        # melanoma probability
-        risk_prob = probs[0][1].item()
+        # =========================================
+        # IMPORTANT
+        # class 0 = melanoma
+        # class 1 = non_melanoma
+        # =========================================
 
-    return risk_prob
+        melanoma_prob = probs[0][0].item()
+        non_melanoma_prob = probs[0][1].item()
 
-# -------------------------------
-# Routes
-# -------------------------------
+        pred_class = torch.argmax(probs, dim=1).item()
+
+        confidence = probs[0][pred_class].item()
+
+    # Debug
+    print("\n=================================")
+    print("RAW OUTPUT:", output)
+    print("PROBS:", probs)
+    print("Melanoma:", melanoma_prob)
+    print("Non-Melanoma:", non_melanoma_prob)
+    print("Predicted Class:", pred_class)
+    print("Confidence:", confidence)
+    print("=================================\n")
+
+    return melanoma_prob, non_melanoma_prob, confidence
+
+# =========================================
+# Landing Page
+# =========================================
 
 @app.route("/")
 def landing():
@@ -95,13 +137,14 @@ def landing():
         disclaimer=disclaimer
     )
 
+# =========================================
+# Questionnaire
+# =========================================
+
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
 
     result = None
-
-    # Threshold สำหรับคัดกรอง
-    threshold = 0.225
 
     disclaimer = """
     This system is intended to support early screening
@@ -114,7 +157,10 @@ def questionnaire():
 
         if file and file.filename != "":
 
-            # Save File
+            # =========================================
+            # Save Image
+            # =========================================
+
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"],
                 file.filename
@@ -122,76 +168,110 @@ def questionnaire():
 
             file.save(filepath)
 
+            # =========================================
             # Predict
-            risk_prob = predict_image(filepath)
+            # =========================================
 
-            # Convert to percent
-            percent = risk_prob * 100
+            melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
 
+            percent = melanoma_prob * 100
+
+            # =========================================
             # Risk Level
-            if percent >= 50:
+            # =========================================
 
-                level = "เสี่ยงปานกลาง - เสี่ยงสูง"
-                color = "red"
+            if melanoma_prob > THRESHOLD:
 
-            elif risk_prob >= threshold:
+                label = "Melanoma (Risk)"
 
-                level = "เสี่ยงต่ำ - เสี่ยงปานกลาง"
-                color = "orange"
+                if percent >= 50:
+
+                    level = "เสี่ยงปานกลาง - เสี่ยงสูง"
+                    color = "red"
+
+                else:
+
+                    level = "เสี่ยงต่ำ - เสี่ยงปานกลาง"
+                    color = "orange"
 
             else:
 
+                label = "Non-Melanoma"
                 level = "เสี่ยงต่ำ"
                 color = "green"
 
+            # =========================================
             # Result HTML
+            # =========================================
+
             result = f"""
+
             <div style='line-height:1.8;'>
 
-            <h3 style='color:#0a66c2;'>
-            ผลการวิเคราะห์จาก AI
-            </h3>
+                <h3 style='color:#0a66c2;'>
+                    ผลการวิเคราะห์จาก AI
+                </h3>
 
-            มีความเสี่ยงเป็น
-            <b>Melanoma</b>
+                ผลการประเมิน:
+                <b>{label}</b>
 
-            <br>
+                <br><br>
 
-            <span style='
-                font-size:32px;
-                font-weight:bold;
-                color:{color};
-            '>
-                {percent:.2f}%
-            </span>
+                ความเสี่ยง Melanoma:
 
-            <br><br>
+                <br>
 
-            ระดับการประเมิน:
-            <b style='color:{color};'>
-                {level}
-            </b>
+                <span style='
+                    font-size:36px;
+                    font-weight:bold;
+                    color:{color};
+                '>
+                    {percent:.2f}%
+                </span>
 
-            <br><br>
+                <br><br>
 
-            <div style='
-                margin-top:15px;
-                padding:12px;
-                border-radius:10px;
-                background:#f4f8ff;
-                border-left:5px solid #0a66c2;
-                font-size:14px;
-                color:#333;
-            '>
+                ระดับการประเมิน:
+                <b style='color:{color};'>
+                    {level}
+                </b>
 
-            <b>Disclaimer:</b><br>
+                <br><br>
 
-            This system is intended to support early screening
-            and encourage users to seek medical advice from specialists.
+                AI Confidence:
+                <b>
+                    {confidence * 100:.2f}%
+                </b>
+
+                <br><br>
+
+                Threshold:
+                <b>
+                    {THRESHOLD}
+                </b>
+
+                <br><br>
+
+                <div style='
+                    margin-top:15px;
+                    padding:12px;
+                    border-radius:10px;
+                    background:#f4f8ff;
+                    border-left:5px solid #0a66c2;
+                    font-size:14px;
+                    color:#333;
+                '>
+
+                    <b>Disclaimer:</b><br>
+
+                    This system is intended to support early screening
+                    and encourage users to seek medical advice
+                    from medical specialists.
+
+                </div>
 
             </div>
 
-            </div>
             """
 
     return render_template(
@@ -199,6 +279,10 @@ def questionnaire():
         result=result,
         disclaimer=disclaimer
     )
+
+# =========================================
+# Hospital Page
+# =========================================
 
 @app.route("/hospital")
 def hospital():
@@ -222,6 +306,10 @@ def hospital():
         disclaimer=disclaimer
     )
 
+# =========================================
+# Info Page
+# =========================================
+
 @app.route("/info")
 def info():
 
@@ -235,9 +323,10 @@ def info():
         disclaimer=disclaimer
     )
 
-# -------------------------------
-# Run App
-# -------------------------------
+# =========================================
+# Run Flask
+# =========================================
+
 if __name__ == "__main__":
 
     app.run(
