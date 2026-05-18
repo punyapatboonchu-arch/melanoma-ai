@@ -29,7 +29,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 device = torch.device("cpu")
 
 # =========================================
-# Load AI Model
+# Load Model
 # =========================================
 
 model = timm.create_model(
@@ -53,12 +53,14 @@ print("✅ Model loaded successfully!")
 # =========================================
 # Transform
 # IMPORTANT:
-# ให้เหมือน Google Colab เป๊ะ
+# ให้เหมือนตอน validation/test
 # =========================================
 
 transform = transforms.Compose([
 
-    transforms.Resize((380, 380)),
+    transforms.Resize((400, 400)),
+
+    transforms.CenterCrop(380),
 
     transforms.ToTensor(),
 
@@ -70,10 +72,13 @@ transform = transforms.Compose([
 ])
 
 # =========================================
-# Threshold
+# Settings
 # =========================================
 
 THRESHOLD = 0.225
+
+# 🔥 ลดความมั่นใจเกินจริง
+TEMPERATURE = 3.0
 
 # =========================================
 # Prediction Function
@@ -81,19 +86,25 @@ THRESHOLD = 0.225
 
 def predict_image(image_path):
 
-    # เปิดภาพแบบ RGB
+    # โหลดภาพ
     image = Image.open(image_path).convert("RGB")
 
-    # Transform
+    # transform
     image_tensor = transform(image).unsqueeze(0).to(device)
 
     with torch.no_grad():
 
-        # Predict
+        # predict
         output = model(image_tensor)
 
-        # Softmax
-        probs = torch.softmax(output, dim=1)
+        # =========================================
+        # Temperature Scaling
+        # =========================================
+
+        probs = torch.softmax(
+            output / TEMPERATURE,
+            dim=1
+        )
 
         # =========================================
         # IMPORTANT
@@ -108,15 +119,18 @@ def predict_image(image_path):
 
         confidence = probs[0][pred_class].item()
 
+    # =========================================
     # Debug
-    print("\n=================================")
+    # =========================================
+
+    print("\n===================================")
     print("RAW OUTPUT:", output)
     print("PROBS:", probs)
-    print("Melanoma:", melanoma_prob)
-    print("Non-Melanoma:", non_melanoma_prob)
+    print("Melanoma Probability:", melanoma_prob)
+    print("Non-Melanoma Probability:", non_melanoma_prob)
     print("Predicted Class:", pred_class)
     print("Confidence:", confidence)
-    print("=================================\n")
+    print("===================================\n")
 
     return melanoma_prob, non_melanoma_prob, confidence
 
@@ -158,7 +172,7 @@ def questionnaire():
         if file and file.filename != "":
 
             # =========================================
-            # Save Image
+            # Save File
             # =========================================
 
             filepath = os.path.join(
@@ -212,17 +226,19 @@ def questionnaire():
                     ผลการวิเคราะห์จาก AI
                 </h3>
 
+                <br>
+
                 ผลการประเมิน:
                 <b>{label}</b>
 
                 <br><br>
 
-                ความเสี่ยง Melanoma:
+                ความเสี่ยง Melanoma
 
                 <br>
 
                 <span style='
-                    font-size:36px;
+                    font-size:40px;
                     font-weight:bold;
                     color:{color};
                 '>
@@ -231,7 +247,7 @@ def questionnaire():
 
                 <br><br>
 
-                ระดับการประเมิน:
+                ระดับความเสี่ยง:
                 <b style='color:{color};'>
                     {level}
                 </b>
@@ -241,6 +257,13 @@ def questionnaire():
                 AI Confidence:
                 <b>
                     {confidence * 100:.2f}%
+                </b>
+
+                <br><br>
+
+                Temperature Scaling:
+                <b>
+                    {TEMPERATURE}
                 </b>
 
                 <br><br>
