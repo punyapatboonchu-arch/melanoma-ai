@@ -52,8 +52,6 @@ print("✅ Model loaded successfully!")
 
 # =========================================
 # Transform
-# IMPORTANT:
-# ให้เหมือนตอน validation/test
 # =========================================
 
 transform = transforms.Compose([
@@ -72,12 +70,9 @@ transform = transforms.Compose([
 ])
 
 # =========================================
-# Settings
+# Temperature Scaling
 # =========================================
 
-THRESHOLD = 0.5
-
-# 🔥 ลดความมั่นใจเกินจริง
 TEMPERATURE = 3.0
 
 # =========================================
@@ -94,7 +89,7 @@ def predict_image(image_path):
 
     with torch.no_grad():
 
-        # predict
+        # Predict
         output = model(image_tensor)
 
         # =========================================
@@ -106,11 +101,9 @@ def predict_image(image_path):
             dim=1
         )
 
-        # =========================================
         # IMPORTANT
         # class 0 = melanoma
         # class 1 = non_melanoma
-        # =========================================
 
         melanoma_prob = probs[0][0].item()
         non_melanoma_prob = probs[0][1].item()
@@ -143,7 +136,8 @@ def landing():
 
     disclaimer = """
     This system is intended to support early screening
-    and encourage users to seek medical advice from specialists.
+    and encourage users to seek medical advice
+    from specialists.
     """
 
     return render_template(
@@ -162,7 +156,8 @@ def questionnaire():
 
     disclaimer = """
     This system is intended to support early screening
-    and encourage users to seek medical advice from specialists.
+    and encourage users to seek medical advice
+    from specialists.
     """
 
     if request.method == "POST":
@@ -172,7 +167,7 @@ def questionnaire():
         if file and file.filename != "":
 
             # =========================================
-            # Save File
+            # Save Image
             # =========================================
 
             filepath = os.path.join(
@@ -191,28 +186,26 @@ def questionnaire():
             percent = melanoma_prob * 100
 
             # =========================================
-            # Risk Level
+            # Risk Category
             # =========================================
 
-            if melanoma_prob > THRESHOLD:
+            if melanoma_prob < 0.30:
 
-                label = "Melanoma (Risk)"
+                risk_level = "Low Risk"
+                recommendation = "ลักษณะความเสี่ยงต่ำ"
+                color = "green"
 
-                if percent >= 50:
+            elif melanoma_prob < 0.60:
 
-                    level = "เสี่ยงปานกลาง - เสี่ยงสูง"
-                    color = "red"
-
-                else:
-
-                    level = "เสี่ยงต่ำ - เสี่ยงปานกลาง"
-                    color = "orange"
+                risk_level = "Moderate Risk"
+                recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
+                color = "orange"
 
             else:
 
-                label = "Non-Melanoma"
-                level = "เสี่ยงต่ำ"
-                color = "green"
+                risk_level = "High Risk"
+                recommendation = "ควรพบแพทย์ผู้เชี่ยวชาญ"
+                color = "red"
 
             # =========================================
             # Result HTML
@@ -222,23 +215,32 @@ def questionnaire():
 
             <div style='line-height:1.8;'>
 
-                <h3 style='color:#0a66c2;'>
-                    ผลการวิเคราะห์จาก AI
-                </h3>
+                <h2 style='color:#0a66c2;'>
+                    AI Skin Cancer Assessment
+                </h2>
 
                 <br>
 
-                ผลการประเมิน:
-                <b>{label}</b>
+                ระดับความเสี่ยงจาก AI:
 
                 <br><br>
 
-                ความเสี่ยง Melanoma
+                <span style='
+                    font-size:42px;
+                    font-weight:bold;
+                    color:{color};
+                '>
+                    {risk_level}
+                </span>
+
+                <br><br>
+
+                คะแนนความเสี่ยง:
 
                 <br>
 
                 <span style='
-                    font-size:40px;
+                    font-size:34px;
                     font-weight:bold;
                     color:{color};
                 '>
@@ -247,9 +249,12 @@ def questionnaire():
 
                 <br><br>
 
-                ระดับความเสี่ยง:
+                คำแนะนำ:
+
+                <br>
+
                 <b style='color:{color};'>
-                    {level}
+                    {recommendation}
                 </b>
 
                 <br><br>
@@ -268,17 +273,10 @@ def questionnaire():
 
                 <br><br>
 
-                Threshold:
-                <b>
-                    {THRESHOLD}
-                </b>
-
-                <br><br>
-
                 <div style='
-                    margin-top:15px;
-                    padding:12px;
-                    border-radius:10px;
+                    margin-top:20px;
+                    padding:14px;
+                    border-radius:12px;
                     background:#f4f8ff;
                     border-left:5px solid #0a66c2;
                     font-size:14px;
@@ -287,9 +285,14 @@ def questionnaire():
 
                     <b>Disclaimer:</b><br>
 
-                    This system is intended to support early screening
-                    and encourage users to seek medical advice
-                    from medical specialists.
+                    This AI system is intended to support
+                    preliminary screening only and should
+                    not be used as a final medical diagnosis.
+
+                    <br><br>
+
+                    Users are encouraged to consult
+                    medical professionals for further evaluation.
 
                 </div>
 
@@ -312,7 +315,8 @@ def hospital():
 
     disclaimer = """
     This system is intended to support early screening
-    and encourage users to seek medical advice from specialists.
+    and encourage users to seek medical advice
+    from specialists.
     """
 
     with open(
@@ -338,7 +342,8 @@ def info():
 
     disclaimer = """
     This system is intended to support early screening
-    and encourage users to seek medical advice from specialists.
+    and encourage users to seek medical advice
+    from specialists.
     """
 
     return render_template(
