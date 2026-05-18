@@ -75,7 +75,7 @@ transform = transforms.Compose([
 # Settings
 # =========================================
 
-THRESHOLD = 0.225
+THRESHOLD = 0.5
 
 # 🔥 ลดความมั่นใจเกินจริง
 TEMPERATURE = 3.0
