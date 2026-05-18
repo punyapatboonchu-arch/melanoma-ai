@@ -52,6 +52,8 @@ print("✅ Model loaded successfully!")
 
 # =========================================
 # Transform
+# IMPORTANT:
+# ต้องเหมือน validation/test ตอน train
 # =========================================
 
 transform = transforms.Compose([
@@ -70,10 +72,10 @@ transform = transforms.Compose([
 ])
 
 # =========================================
-# Temperature Scaling
+# Settings
 # =========================================
 
-TEMPERATURE = 3.0
+TEMPERATURE = 8.0
 
 # =========================================
 # Prediction Function
@@ -81,21 +83,15 @@ TEMPERATURE = 3.0
 
 def predict_image(image_path):
 
-    # โหลดภาพ
     image = Image.open(image_path).convert("RGB")
 
-    # transform
     image_tensor = transform(image).unsqueeze(0).to(device)
 
     with torch.no_grad():
 
-        # Predict
         output = model(image_tensor)
 
-        # =========================================
         # Temperature Scaling
-        # =========================================
-
         probs = torch.softmax(
             output / TEMPERATURE,
             dim=1
@@ -167,7 +163,7 @@ def questionnaire():
         if file and file.filename != "":
 
             # =========================================
-            # Save Image
+            # Save File
             # =========================================
 
             filepath = os.path.join(
@@ -183,19 +179,20 @@ def questionnaire():
 
             melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
 
-            percent = melanoma_prob * 100
+            # Compress Score
+            percent = (melanoma_prob ** 2) * 100
 
             # =========================================
-            # Risk Category
+            # Risk Assessment
             # =========================================
 
-            if melanoma_prob < 0.30:
+            if melanoma_prob >= 0.70:
 
-                risk_level = "Low Risk"
-                recommendation = "ลักษณะความเสี่ยงต่ำ"
-                color = "green"
+                risk_level = "High Risk"
+                recommendation = "ควรพบแพทย์ผู้เชี่ยวชาญ"
+                color = "red"
 
-            elif melanoma_prob < 0.60:
+            elif melanoma_prob >= 0.40:
 
                 risk_level = "Moderate Risk"
                 recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
@@ -203,9 +200,19 @@ def questionnaire():
 
             else:
 
-                risk_level = "High Risk"
-                recommendation = "ควรพบแพทย์ผู้เชี่ยวชาญ"
-                color = "red"
+                risk_level = "Low Risk"
+                recommendation = "ลักษณะความเสี่ยงต่ำ"
+                color = "green"
+
+            # =========================================
+            # Invalid Image Detection
+            # =========================================
+
+            if confidence < 0.60:
+
+                risk_level = "Unable to Analyze"
+                recommendation = "กรุณาอัปโหลดภาพรอยโรคผิวหนังให้ชัดเจน"
+                color = "gray"
 
             # =========================================
             # Result HTML
@@ -221,7 +228,7 @@ def questionnaire():
 
                 <br>
 
-                ระดับความเสี่ยงจาก AI:
+                ระดับความเสี่ยงจาก AI
 
                 <br><br>
 
@@ -235,7 +242,7 @@ def questionnaire():
 
                 <br><br>
 
-                คะแนนความเสี่ยง:
+                คะแนนความเสี่ยง Melanoma
 
                 <br>
 
@@ -249,7 +256,7 @@ def questionnaire():
 
                 <br><br>
 
-                คำแนะนำ:
+                คำแนะนำ
 
                 <br>
 
@@ -262,6 +269,20 @@ def questionnaire():
                 AI Confidence:
                 <b>
                     {confidence * 100:.2f}%
+                </b>
+
+                <br><br>
+
+                Melanoma Probability:
+                <b>
+                    {melanoma_prob:.4f}
+                </b>
+
+                <br><br>
+
+                Non-Melanoma Probability:
+                <b>
+                    {non_melanoma_prob:.4f}
                 </b>
 
                 <br><br>
@@ -285,14 +306,16 @@ def questionnaire():
 
                     <b>Disclaimer:</b><br>
 
-                    This AI system is intended to support
-                    preliminary screening only and should
-                    not be used as a final medical diagnosis.
+                    This AI system is intended
+                    for preliminary screening only
+                    and should not be used as
+                    a final medical diagnosis.
 
                     <br><br>
 
                     Users are encouraged to consult
-                    medical professionals for further evaluation.
+                    medical professionals for
+                    further evaluation.
 
                 </div>
 
