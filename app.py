@@ -52,8 +52,6 @@ print("✅ Model loaded successfully!")
 
 # =========================================
 # Transform
-# IMPORTANT:
-# ต้องเหมือน validation/test ตอน train
 # =========================================
 
 transform = transforms.Compose([
@@ -91,13 +89,11 @@ def predict_image(image_path):
 
         output = model(image_tensor)
 
-        # Temperature Scaling
         probs = torch.softmax(
             output / TEMPERATURE,
             dim=1
         )
 
-        # IMPORTANT
         # class 0 = melanoma
         # class 1 = non_melanoma
 
@@ -107,19 +103,6 @@ def predict_image(image_path):
         pred_class = torch.argmax(probs, dim=1).item()
 
         confidence = probs[0][pred_class].item()
-
-    # =========================================
-    # Debug
-    # =========================================
-
-    print("\n===================================")
-    print("RAW OUTPUT:", output)
-    print("PROBS:", probs)
-    print("Melanoma Probability:", melanoma_prob)
-    print("Non-Melanoma Probability:", non_melanoma_prob)
-    print("Predicted Class:", pred_class)
-    print("Confidence:", confidence)
-    print("===================================\n")
 
     return melanoma_prob, non_melanoma_prob, confidence
 
@@ -210,8 +193,8 @@ def questionnaire():
 
             if confidence < 0.60:
 
-                risk_level = "Unable to Analyze"
-                recommendation = "กรุณาอัปโหลดภาพรอยโรคผิวหนังให้ชัดเจน"
+                risk_level = "กรุณาอัปโหลดภาพให้ชัดเจน"
+                recommendation = "โปรดลองถ่ายภาพใหม่ในแสงที่เพียงพอ"
                 color = "gray"
 
             # =========================================
@@ -262,34 +245,6 @@ def questionnaire():
 
                 <b style='color:{color};'>
                     {recommendation}
-                </b>
-
-                <br><br>
-
-                AI Confidence:
-                <b>
-                    {confidence * 100:.2f}%
-                </b>
-
-                <br><br>
-
-                Melanoma Probability:
-                <b>
-                    {melanoma_prob:.4f}
-                </b>
-
-                <br><br>
-
-                Non-Melanoma Probability:
-                <b>
-                    {non_melanoma_prob:.4f}
-                </b>
-
-                <br><br>
-
-                Temperature Scaling:
-                <b>
-                    {TEMPERATURE}
                 </b>
 
                 <br><br>
