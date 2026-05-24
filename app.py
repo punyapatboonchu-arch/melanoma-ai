@@ -94,9 +94,17 @@ def predict_image(image_path):
             dim=1
         )
 
-        melanoma_prob = probs[0][0].item()
+        # class 0 = melanoma
+        # class 1 = non_melanoma
 
-    return melanoma_prob
+        melanoma_prob = probs[0][0].item()
+        non_melanoma_prob = probs[0][1].item()
+
+        pred_class = torch.argmax(probs, dim=1).item()
+
+        confidence = probs[0][pred_class].item()
+
+    return melanoma_prob, non_melanoma_prob, confidence
 
 # =========================================
 # Landing Page
@@ -152,13 +160,10 @@ def questionnaire():
             # Predict
             # =========================================
 
-            melanoma_prob = predict_image(filepath)
+            melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
 
-            # =========================================
-            # Risk Score
-            # =========================================
-
-            percent = melanoma_prob * 100
+            # Compress Score
+            percent = (melanoma_prob ** 2) * 100
 
             # =========================================
             # Risk Assessment
@@ -167,17 +172,30 @@ def questionnaire():
             if melanoma_prob >= 0.70:
 
                 risk_level = "High Risk"
+                recommendation = "ควรพบแพทย์ผู้เชี่ยวชาญ"
                 color = "red"
 
             elif melanoma_prob >= 0.40:
 
                 risk_level = "Moderate Risk"
+                recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
                 color = "orange"
 
             else:
 
                 risk_level = "Low Risk"
+                recommendation = "ลักษณะความเสี่ยงต่ำ"
                 color = "green"
+
+            # =========================================
+            # Invalid Image Detection
+            # =========================================
+
+            if confidence < 0.60:
+
+                risk_level = "Moderate Risk"
+                recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
+                color = "orange"
 
             # =========================================
             # Result HTML
@@ -185,24 +203,75 @@ def questionnaire():
 
             result = f"""
 
-            <div style='line-height:1.8; text-align:center;'>
+            <div style='line-height:1.8;'>
 
-                <div style='
-                    font-size:52px;
-                    font-weight:bold;
-                    color:{color};
-                '>
-                    {percent:.2f}%
-                </div>
+                <h2 style='color:#0a66c2;'>
+                    AI Skin Cancer Assessment
+                </h2>
 
                 <br>
 
-                <div style='
-                    font-size:32px;
+                ระดับความเสี่ยงจาก AI
+
+                <br><br>
+
+                <span style='
+                    font-size:42px;
                     font-weight:bold;
                     color:{color};
                 '>
                     {risk_level}
+                </span>
+
+                <br><br>
+
+                คะแนนความเสี่ยง Melanoma
+
+                <br>
+
+                <span style='
+                    font-size:34px;
+                    font-weight:bold;
+                    color:{color};
+                '>
+                    {percent:.2f}%
+                </span>
+
+                <br><br>
+
+                คำแนะนำ
+
+                <br>
+
+                <b style='color:{color};'>
+                    {recommendation}
+                </b>
+
+                <br><br>
+
+                <div style='
+                    margin-top:20px;
+                    padding:14px;
+                    border-radius:12px;
+                    background:#f4f8ff;
+                    border-left:5px solid #0a66c2;
+                    font-size:14px;
+                    color:#333;
+                '>
+
+                    <b>Disclaimer:</b><br>
+
+                    This AI system is intended
+                    for preliminary screening only
+                    and should not be used as
+                    a final medical diagnosis.
+
+                    <br><br>
+
+                    Users are encouraged to consult
+                    medical professionals for
+                    further evaluation.
+
                 </div>
 
             </div>
