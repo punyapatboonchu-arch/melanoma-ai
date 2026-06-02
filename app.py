@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
+from werkzeug.utils import secure_filename
 import os
 import json
 from PIL import Image
@@ -119,12 +120,25 @@ def landing():
     from specialists.
     """
 
-    return render_template(
-        "landing.html",
-        disclaimer=disclaimer
+    response = make_response(
+        render_template(
+            "landing.html",
+            disclaimer=disclaimer
+        )
     )
 
-# =========================================
+    if not request.cookies.get("cookie_consent"):
+
+        response.set_cookie(
+            "cookie_consent",
+            "accepted",
+            max_age=60 * 60 * 24 * 365,
+            httponly=True,
+            samesite="Lax"
+        )
+
+    return response
+    # =========================================
 # Questionnaire
 # =========================================
 
@@ -149,9 +163,11 @@ def questionnaire():
             # Save File
             # =========================================
 
+            filename = secure_filename(file.filename)
+
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"],
-                file.filename
+                filename
             )
 
             file.save(filepath)
@@ -161,6 +177,12 @@ def questionnaire():
             # =========================================
 
             melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
+
+            # ลบไฟล์หลังวิเคราะห์เสร็จ
+            try:
+                os.remove(filepath)
+            except:
+                pass
 
             # Compress Score
             percent = (melanoma_prob ** 2) * 100
