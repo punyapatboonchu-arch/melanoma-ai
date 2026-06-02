@@ -114,6 +114,8 @@ def predict_image(image_path):
 @app.route("/")
 def landing():
 
+    print("Cookie เดิม:", request.cookies.get("cookie_consent"))
+
     disclaimer = """
     This system is intended to support early screening
     and encourage users to seek medical advice
@@ -129,6 +131,8 @@ def landing():
 
     if not request.cookies.get("cookie_consent"):
 
+        print("กำลังสร้าง Cookie")
+
         response.set_cookie(
             "cookie_consent",
             "accepted",
@@ -138,7 +142,7 @@ def landing():
         )
 
     return response
-    # =========================================
+# =========================================
 # Questionnaire
 # =========================================
 
