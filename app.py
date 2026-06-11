@@ -69,42 +69,15 @@ def predict_image(image_path):
     return melanoma_prob, non_melanoma_prob, confidence
 
 
-@app.route("/")
-def landing():
-
-    disclaimer = '''
-    This system is intended to support early screening
-    and encourage users to seek medical advice from specialists.
-    '''
-
-    response = make_response(
-        render_template(
-            "landing.html",
-            disclaimer=disclaimer
-        )
-    )
-
-    if not request.cookies.get("cookie_consent"):
-        response.set_cookie(
-            "cookie_consent",
-            "accepted",
-            max_age=60 * 60 * 24 * 365,
-            httponly=True,
-            samesite="Lax"
-        )
-
-    return response
-
-
 @app.route("/questionnaire", methods=["GET", "POST"])
 def questionnaire():
 
     result = None
 
-    disclaimer = '''
+    disclaimer = """
     ระบบนี้ใช้สำหรับการคัดกรองเบื้องต้นเท่านั้น
     This system is intended for preliminary screening only.
-    '''
+    """
 
     if request.method == "POST":
 
@@ -128,43 +101,67 @@ def questionnaire():
             except:
                 pass
 
-            if melanoma_prob >= 0.50:
+            # =========================================
+            # Risk Assessment
+            # =========================================
 
-                risk_level = '''
-                พบความเสี่ยงมะเร็งผิวหนังเมลาโนมา
+            if melanoma_prob >= 0.70:
+
+                risk_level = """
+                ความเสี่ยงสูง
                 <br>
-                (Melanoma Detected)
-                '''
+                (High Risk)
+                """
 
-                recommendation = '''
-• ควรเข้าพบแพทย์ผิวหนังหรือผู้เชี่ยวชาญเพื่อรับการประเมินเพิ่มเติม
+                recommendation = """
+• ควรเข้าพบแพทย์ผิวหนังหรือผู้เชี่ยวชาญโดยเร็ว
 
-• ผลลัพธ์นี้เป็นเพียงการคัดกรองเบื้องต้นจาก AI
+• ควรได้รับการตรวจเพิ่มเติมโดยแพทย์
 
-• Consult a dermatologist for further evaluation.
+• Consult a dermatologist as soon as possible.
 
-• This result is intended for screening purposes only.
-'''
+• Further medical evaluation is strongly recommended.
+"""
 
                 color = "#d32f2f"
 
+            elif melanoma_prob >= 0.40:
+
+                risk_level = """
+                ความเสี่ยงปานกลาง
+                <br>
+                (Moderate Risk)
+                """
+
+                recommendation = """
+• ควรเฝ้าสังเกตการเปลี่ยนแปลงของรอยโรค
+
+• หากมีการเปลี่ยนแปลงควรปรึกษาแพทย์
+
+• Monitor the lesion regularly.
+
+• Seek medical advice if changes occur.
+"""
+
+                color = "#f57c00"
+
             else:
 
-                risk_level = '''
-                ไม่พบความเสี่ยงมะเร็งผิวหนังเมลาโนมา
+                risk_level = """
+                ความเสี่ยงต่ำ
                 <br>
-                (Melanoma Not Detected)
-                '''
+                (Low Risk)
+                """
 
-                recommendation = '''
+                recommendation = """
 • ยังไม่พบความเสี่ยงเด่นชัดจากการประเมินของ AI
 
-• ควรตรวจผิวหนังด้วยตนเองอย่างสม่ำเสมอ
+• ควรตรวจผิวหนังด้วยตนเองเป็นประจำ
 
-• No significant melanoma risk was identified by the AI assessment.
+• No significant risk was identified by the AI assessment.
 
 • Continue regular skin self-examinations.
-'''
+"""
 
                 color = "#2e7d32"
 
@@ -172,14 +169,14 @@ def questionnaire():
             <div style="line-height:1.8;">
 
                 <h2 style="color:#0a66c2;">
-                    การประเมินมะเร็งผิวหนังด้วย AI
+                    การประเมินความเสี่ยงมะเร็งผิวหนังด้วย AI
                     <br>
-                    (AI Skin Cancer Assessment)
+                    (AI Skin Cancer Risk Assessment)
                 </h2>
 
                 <br>
 
-                ผลการประเมิน (Assessment Result)
+                ระดับความเสี่ยง (Risk Level)
 
                 <br><br>
 
@@ -227,6 +224,11 @@ def questionnaire():
                     ไม่สามารถใช้แทนการวินิจฉัยทางการแพทย์
                     หรือการตรวจโดยแพทย์ผู้เชี่ยวชาญได้
 
+                    <br><br>
+
+                    ผู้ใช้งานควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์
+                    เพื่อรับการประเมินและวินิจฉัยที่ถูกต้อง
+
                     <hr>
 
                     This AI system is intended for preliminary screening only
@@ -234,8 +236,13 @@ def questionnaire():
 
                     <br><br>
 
-                    Please consult qualified healthcare professionals
-                    for proper diagnosis and treatment.
+                    The assessment result does not replace professional
+                    medical examination, diagnosis, or treatment.
+
+                    <br><br>
+
+                    Users are strongly encouraged to consult qualified
+                    healthcare professionals for further evaluation.
 
                 </div>
 
