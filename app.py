@@ -18,9 +18,7 @@ app = Flask(__name__)
 # =========================================
 
 UPLOAD_FOLDER = "uploads"
-
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # =========================================
@@ -56,18 +54,13 @@ print("✅ Model loaded successfully!")
 # =========================================
 
 transform = transforms.Compose([
-
     transforms.Resize((400, 400)),
-
     transforms.CenterCrop(380),
-
     transforms.ToTensor(),
-
     transforms.Normalize(
         [0.485, 0.456, 0.406],
         [0.229, 0.224, 0.225]
     )
-
 ])
 
 # =========================================
@@ -95,14 +88,10 @@ def predict_image(image_path):
             dim=1
         )
 
-        # class 0 = melanoma
-        # class 1 = non_melanoma
-
         melanoma_prob = probs[0][0].item()
         non_melanoma_prob = probs[0][1].item()
 
         pred_class = torch.argmax(probs, dim=1).item()
-
         confidence = probs[0][pred_class].item()
 
     return melanoma_prob, non_melanoma_prob, confidence
@@ -114,12 +103,9 @@ def predict_image(image_path):
 @app.route("/")
 def landing():
 
-    print("Cookie เดิม:", request.cookies.get("cookie_consent"))
-
     disclaimer = """
     This system is intended to support early screening
-    and encourage users to seek medical advice
-    from specialists.
+    and encourage users to seek medical advice from specialists.
     """
 
     response = make_response(
@@ -130,9 +116,6 @@ def landing():
     )
 
     if not request.cookies.get("cookie_consent"):
-
-        print("กำลังสร้าง Cookie")
-
         response.set_cookie(
             "cookie_consent",
             "accepted",
@@ -142,6 +125,7 @@ def landing():
         )
 
     return response
+
 # =========================================
 # Questionnaire
 # =========================================
@@ -152,9 +136,8 @@ def questionnaire():
     result = None
 
     disclaimer = """
-    This system is intended to support early screening
-    and encourage users to seek medical advice
-    from specialists.
+    ระบบนี้ใช้สำหรับการคัดกรองเบื้องต้นเท่านั้น
+    This system is intended for preliminary screening only.
     """
 
     if request.method == "POST":
@@ -162,10 +145,6 @@ def questionnaire():
         file = request.files.get("image")
 
         if file and file.filename != "":
-
-            # =========================================
-            # Save File
-            # =========================================
 
             filename = secure_filename(file.filename)
 
@@ -176,20 +155,12 @@ def questionnaire():
 
             file.save(filepath)
 
-            # =========================================
-            # Predict
-            # =========================================
-
             melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
 
-            # ลบไฟล์หลังวิเคราะห์เสร็จ
             try:
                 os.remove(filepath)
             except:
                 pass
-
-            # Compress Score
-            percent = (melanoma_prob ** 2) * 100
 
             # =========================================
             # Risk Assessment
@@ -197,21 +168,55 @@ def questionnaire():
 
             if melanoma_prob >= 0.70:
 
-                risk_level = "High Risk"
-                recommendation = "ควรพบแพทย์ผู้เชี่ยวชาญ"
-                color = "red"
+                risk_level = "ความเสี่ยงสูง (High Risk)"
+
+                recommendation = """
+• ควรเข้าพบแพทย์ผิวหนังหรือผู้เชี่ยวชาญโดยเร็ว
+
+• หากรอยโรคมีการเปลี่ยนแปลงอย่างรวดเร็ว ควรเข้ารับการตรวจเพิ่มเติม
+
+• Consult a dermatologist or medical specialist promptly.
+
+• Seek medical evaluation if the lesion changes rapidly.
+"""
+
+                color = "#d32f2f"
 
             elif melanoma_prob >= 0.40:
 
-                risk_level = "Moderate Risk"
-                recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
-                color = "orange"
+                risk_level = "ความเสี่ยงปานกลาง (Moderate Risk)"
+
+                recommendation = """
+• ควรเฝ้าสังเกตการเปลี่ยนแปลงของรอยโรค
+
+• ถ่ายภาพเก็บไว้เพื่อติดตามอาการ
+
+• หากมีอาการผิดปกติควรปรึกษาแพทย์
+
+• Monitor the lesion regularly.
+
+• Consult a healthcare professional if abnormalities occur.
+"""
+
+                color = "#f57c00"
 
             else:
 
-                risk_level = "Low Risk"
-                recommendation = "ลักษณะความเสี่ยงต่ำ"
-                color = "green"
+                risk_level = "ความเสี่ยงต่ำ (Low Risk)"
+
+                recommendation = """
+• ยังไม่พบความเสี่ยงเด่นชัดจากการประเมินของ AI
+
+• ควรตรวจผิวหนังด้วยตนเองเป็นประจำ
+
+• ใช้ครีมกันแดดและหลีกเลี่ยงแสงแดดจัด
+
+• No significant risk was identified by the AI assessment.
+
+• Continue regular skin self-examinations.
+"""
+
+                color = "#2e7d32"
 
             # =========================================
             # Invalid Image Detection
@@ -219,25 +224,34 @@ def questionnaire():
 
             if confidence < 0.60:
 
-                risk_level = "Moderate Risk"
-                recommendation = "ควรติดตามอาการหรือปรึกษาแพทย์"
-                color = "orange"
+                risk_level = "ไม่สามารถประเมินได้ (Unable to Assess)"
 
-            # =========================================
-            # Result HTML
-            # =========================================
+                recommendation = """
+• ภาพอาจไม่ชัดเจนเพียงพอสำหรับการวิเคราะห์
+
+• กรุณาถ่ายภาพใหม่ในที่มีแสงสว่างเพียงพอ
+
+• ให้รอยโรคอยู่กึ่งกลางภาพ
+
+• The image quality may be insufficient for analysis.
+
+• Please retake the image under adequate lighting conditions.
+"""
+
+                color = "#616161"
 
             result = f"""
-
             <div style='line-height:1.8;'>
 
                 <h2 style='color:#0a66c2;'>
-                    AI Skin Cancer Assessment
+                    การประเมินความเสี่ยงมะเร็งผิวหนังด้วย AI
+                    <br>
+                    (AI Skin Cancer Risk Assessment)
                 </h2>
 
                 <br>
 
-                ระดับความเสี่ยงจาก AI
+                ระดับความเสี่ยง (Risk Level)
 
                 <br><br>
 
@@ -251,27 +265,19 @@ def questionnaire():
 
                 <br><br>
 
-                คะแนนความเสี่ยง Melanoma
-
-                <br>
-
-                <span style='
-                    font-size:34px;
-                    font-weight:bold;
-                    color:{color};
-                '>
-                    {percent:.2f}%
-                </span>
+                คำแนะนำ (Recommendations)
 
                 <br><br>
 
-                คำแนะนำ
-
-                <br>
-
-                <b style='color:{color};'>
+                <div style='
+                    background:#fafafa;
+                    padding:15px;
+                    border-radius:12px;
+                    border-left:5px solid {color};
+                    white-space:pre-line;
+                '>
                     {recommendation}
-                </b>
+                </div>
 
                 <br><br>
 
@@ -285,23 +291,37 @@ def questionnaire():
                     color:#333;
                 '>
 
-                    <b>Disclaimer:</b><br>
-
-                    This AI system is intended
-                    for preliminary screening only
-                    and should not be used as
-                    a final medical diagnosis.
+                    <b>ข้อจำกัดการใช้งาน (Disclaimer)</b>
 
                     <br><br>
 
-                    Users are encouraged to consult
-                    medical professionals for
-                    further evaluation.
+                    ระบบ AI นี้ถูกพัฒนาขึ้นเพื่อใช้ในการคัดกรองเบื้องต้นเท่านั้น
+                    ไม่สามารถใช้แทนการวินิจฉัยทางการแพทย์
+                    หรือการตรวจโดยแพทย์ผู้เชี่ยวชาญได้
+
+                    <br><br>
+
+                    ผู้ใช้งานควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์
+                    เพื่อรับการประเมินและวินิจฉัยที่ถูกต้อง
+
+                    <hr>
+
+                    This AI system is intended for preliminary screening only
+                    and should not be used as a final medical diagnosis.
+
+                    <br><br>
+
+                    The assessment result does not replace professional
+                    medical examination, diagnosis, or treatment.
+
+                    <br><br>
+
+                    Users are strongly encouraged to consult qualified
+                    healthcare professionals for further evaluation.
 
                 </div>
 
             </div>
-
             """
 
     return render_template(
@@ -317,12 +337,6 @@ def questionnaire():
 @app.route("/hospital")
 def hospital():
 
-    disclaimer = """
-    This system is intended to support early screening
-    and encourage users to seek medical advice
-    from specialists.
-    """
-
     with open(
         "hospitals.json",
         "r",
@@ -333,8 +347,7 @@ def hospital():
 
     return render_template(
         "hospital.html",
-        hospitals=hospitals,
-        disclaimer=disclaimer
+        hospitals=hospitals
     )
 
 # =========================================
@@ -344,16 +357,7 @@ def hospital():
 @app.route("/info")
 def info():
 
-    disclaimer = """
-    This system is intended to support early screening
-    and encourage users to seek medical advice
-    from specialists.
-    """
-
-    return render_template(
-        "info.html",
-        disclaimer=disclaimer
-    )
+    return render_template("info.html")
 
 # =========================================
 # Run Flask
