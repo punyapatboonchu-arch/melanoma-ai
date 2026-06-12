@@ -67,6 +67,32 @@ def predict_image(image_path):
         confidence = probs[0][pred_class].item()
 
     return melanoma_prob, non_melanoma_prob, confidence
+    
+@app.route("/")
+def landing():
+
+    disclaimer = """
+    This system is intended to support early screening
+    and encourage users to seek medical advice from specialists.
+    """
+
+    response = make_response(
+        render_template(
+            "landing.html",
+            disclaimer=disclaimer
+        )
+    )
+
+    if not request.cookies.get("cookie_consent"):
+        response.set_cookie(
+            "cookie_consent",
+            "accepted",
+            max_age=60 * 60 * 24 * 365,
+            httponly=True,
+            samesite="Lax"
+        )
+
+    return response
 
 
 @app.route("/questionnaire", methods=["GET", "POST"])
