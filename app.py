@@ -66,7 +66,15 @@ def predict_image(image_path):
         pred_class = torch.argmax(probs, dim=1).item()
         confidence = probs[0][pred_class].item()
 
-    return melanoma_prob, non_melanoma_prob, confidence
+        melanoma_percent = melanoma_prob * 100
+        non_melanoma_percent = non_melanoma_prob * 100
+
+        return (
+        melanoma_prob,
+        non_melanoma_prob,
+        melanoma_percent,
+        non_melanoma_percent
+        )
     
 @app.route("/")
 def landing():
