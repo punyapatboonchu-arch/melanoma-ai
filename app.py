@@ -94,7 +94,7 @@ def questionnaire():
 
             file.save(filepath)
 
-            melanoma_prob, non_melanoma_prob, confidence = predict_image(filepath)
+            ( melanoma_prob,non_melanoma_prob,melanoma_percent,non_melanoma_percent ) = predict_image(filepath)
 
             try:
                 os.remove(filepath)
@@ -166,88 +166,147 @@ def questionnaire():
                 color = "#2e7d32"
 
             result = f'''
-            <div style="line-height:1.8;">
+<div style="line-height:1.8;">
 
-                <h2 style="color:#0a66c2;">
-                    การประเมินความเสี่ยงมะเร็งผิวหนังด้วย AI
-                    <br>
-                    (AI Skin Cancer Risk Assessment)
-                </h2>
+    <h2 style="color:#0a66c2;">
+        การประเมินความเสี่ยงมะเร็งผิวหนังด้วย AI
+        <br>
+        (AI Skin Cancer Risk Assessment)
+    </h2>
 
-                <br>
+    <br>
 
-                ระดับความเสี่ยง (Risk Level)
+    ระดับความเสี่ยง (Risk Level)
 
-                <br><br>
+    <br><br>
 
-                <span style="
-                    font-size:38px;
-                    font-weight:bold;
-                    color:{color};
-                ">
-                    {risk_level}
-                </span>
+    <span style="
+        font-size:38px;
+        font-weight:bold;
+        color:{color};
+    ">
+        {risk_level}
+    </span>
 
-                <br><br>
+    <br><br>
 
-                คำแนะนำ (Recommendations)
+    <div style="
+        background:#ffffff;
+        border:2px solid #e0e0e0;
+        border-radius:12px;
+        padding:20px;
+    ">
 
-                <br><br>
+        <h3>
+            ผลการวิเคราะห์จาก AI
+            <br>
+            (AI Prediction Results)
+        </h3>
 
-                <div style="
-                    background:#fafafa;
-                    padding:15px;
-                    border-radius:12px;
-                    border-left:5px solid {color};
-                    white-space:pre-line;
-                ">
-                    {recommendation}
-                </div>
+        <p style="font-size:18px;">
+            <b>Melanoma Risk:</b>
+            {melanoma_percent:.2f}%
+        </p>
 
-                <br><br>
-
-                <div style="
-                    margin-top:20px;
-                    padding:14px;
-                    border-radius:12px;
-                    background:#f4f8ff;
-                    border-left:5px solid #0a66c2;
-                    font-size:14px;
-                    color:#333;
-                ">
-
-                    <b>ข้อจำกัดการใช้งาน (Disclaimer)</b>
-
-                    <br><br>
-
-                    ระบบ AI นี้ถูกพัฒนาขึ้นเพื่อใช้ในการคัดกรองเบื้องต้นเท่านั้น
-                    ไม่สามารถใช้แทนการวินิจฉัยทางการแพทย์
-                    หรือการตรวจโดยแพทย์ผู้เชี่ยวชาญได้
-
-                    <br><br>
-
-                    ผู้ใช้งานควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์
-                    เพื่อรับการประเมินและวินิจฉัยที่ถูกต้อง
-
-                    <hr>
-
-                    This AI system is intended for preliminary screening only
-                    and should not be used as a final medical diagnosis.
-
-                    <br><br>
-
-                    The assessment result does not replace professional
-                    medical examination, diagnosis, or treatment.
-
-                    <br><br>
-
-                    Users are strongly encouraged to consult qualified
-                    healthcare professionals for further evaluation.
-
-                </div>
-
+        <div style="
+            width:100%;
+            background:#eeeeee;
+            border-radius:10px;
+            overflow:hidden;
+            height:24px;
+        ">
+            <div style="
+                width:{melanoma_percent}%;
+                background:#d32f2f;
+                height:24px;
+            ">
             </div>
-            '''
+        </div>
+
+        <br>
+
+        <p style="font-size:18px;">
+            <b>Non-Melanoma:</b>
+            {non_melanoma_percent:.2f}%
+        </p>
+
+        <div style="
+            width:100%;
+            background:#eeeeee;
+            border-radius:10px;
+            overflow:hidden;
+            height:24px;
+        ">
+            <div style="
+                width:{non_melanoma_percent}%;
+                background:#2e7d32;
+                height:24px;
+            ">
+            </div>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    คำแนะนำ (Recommendations)
+
+    <br><br>
+
+    <div style="
+        background:#fafafa;
+        padding:15px;
+        border-radius:12px;
+        border-left:5px solid {color};
+        white-space:pre-line;
+    ">
+        {recommendation}
+    </div>
+
+    <br><br>
+
+    <div style="
+        margin-top:20px;
+        padding:14px;
+        border-radius:12px;
+        background:#f4f8ff;
+        border-left:5px solid #0a66c2;
+        font-size:14px;
+        color:#333;
+    ">
+
+        <b>ข้อจำกัดการใช้งาน (Disclaimer)</b>
+
+        <br><br>
+
+        ระบบ AI นี้ถูกพัฒนาขึ้นเพื่อใช้ในการคัดกรองเบื้องต้นเท่านั้น
+        ไม่สามารถใช้แทนการวินิจฉัยทางการแพทย์
+        หรือการตรวจโดยแพทย์ผู้เชี่ยวชาญได้
+
+        <br><br>
+
+        ผู้ใช้งานควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์
+        เพื่อรับการประเมินและวินิจฉัยที่ถูกต้อง
+
+        <hr>
+
+        This AI system is intended for preliminary screening only
+        and should not be used as a final medical diagnosis.
+
+        <br><br>
+
+        The assessment result does not replace professional
+        medical examination, diagnosis, or treatment.
+
+        <br><br>
+
+        Users are strongly encouraged to consult qualified
+        healthcare professionals for further evaluation.
+
+    </div>
+
+</div>
+'''
 
     return render_template(
         "questionnaire.html",
