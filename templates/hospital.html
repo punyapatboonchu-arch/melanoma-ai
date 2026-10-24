@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ค้นหาโรงพยาบาล</title>
+  <title>ค้นหาโรงพยาบาล | Skin Lesion Detection Platform for Melanoma</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -93,22 +93,82 @@
     text-decoration:none;
     border-radius:30px;
     }
+
+    /* Premium ice-blue visual system matching the homepage */
+    :root{--ink:#172534;--muted:#657b8c;--blue:#168cf0;--sky:#76d0f7;--line:#dcecf5;--paper:#f5fbff}
+    html{scroll-behavior:smooth;scroll-padding-top:90px}
+    body{font-family:'Prompt',sans-serif;margin:0;text-align:left;color:var(--ink);background:radial-gradient(ellipse at 8% 15%,#e0f5ff 0,transparent 30%),radial-gradient(ellipse at 95% 45%,#e8f8ff 0,transparent 28%),#f7fcff;line-height:1.7;-webkit-font-smoothing:antialiased}
+    .site-header{position:sticky;top:0;z-index:50;padding:0 22px;background:#ffffffd9;backdrop-filter:blur(20px);border-bottom:1px solid #dcecf5;box-shadow:0 8px 28px #3c8eb30c}
+    .nav-shell{width:min(1220px,100%);min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+    .brand-icon{width:43px;height:43px;border-radius:15px;display:grid;place-items:center;color:#12384e;font-size:25px;background:linear-gradient(145deg,#8ddcff,#e5f9ff);box-shadow:0 8px 22px #70c8f233}
+    .brand-copy strong{display:block;font-size:14px;line-height:1.25;font-weight:700}.brand-copy small{display:block;margin-top:4px;font:700 9px Inter,sans-serif;letter-spacing:1.1px;color:#6d8b9e}
+    .main-nav{display:flex;align-items:center;gap:26px}.main-nav a{font-size:12px;font-weight:500;color:#526c7c;text-decoration:none;transition:.2s}.main-nav a:hover{color:#168cf0}.main-nav .nav-cta{padding:11px 17px;border-radius:999px;background:linear-gradient(110deg,#80d5fa,#bdeeff);color:#15384c;box-shadow:0 8px 20px #70c8f233}.nav-cta span{margin-left:8px}
+    .page-hero{position:relative;isolation:isolate;overflow:hidden;min-height:365px;padding:55px max(5vw,calc((100% - 1180px)/2));display:flex;align-items:center;justify-content:space-between;gap:28px;background:linear-gradient(115deg,#fff 0%,#eff9ff 52%,#e2f5ff 100%);border-bottom:1px solid #e0f0f8}
+    .page-hero:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;background-image:linear-gradient(#8bcce622 1px,transparent 1px),linear-gradient(90deg,#8bcce622 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(90deg,transparent,#000)}
+    .hero-content{position:relative;z-index:2;max-width:650px}.eyebrow,.section-kicker{display:inline-flex;align-items:center;gap:9px;color:#347fa1;font:700 10px Inter,sans-serif;letter-spacing:1.6px}.eyebrow{padding:9px 13px;border:1px solid #cdebf8;border-radius:999px;background:#ffffffc9}
+    .status-dot{width:7px;height:7px;border-radius:50%;background:#4fc4a8;box-shadow:0 0 0 5px #4fc4a81c}
+    .page-hero h1{font-size:clamp(34px,4.2vw,54px);line-height:1.2;letter-spacing:-1px;margin:20px 0 13px;color:#142637;font-weight:700}.page-hero h1 em{font-style:normal;background:linear-gradient(100deg,#167bd0,#63c7f3);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .page-hero p{margin:0;color:#607789;font-size:14px;line-height:1.95}.hero-pills{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.hero-pills span{padding:7px 11px;border-radius:999px;border:1px solid #d9edf7;background:#ffffffb8;color:#4d7187;font-size:10px}
+    .hero-art{width:320px;height:270px;flex-shrink:0;position:relative;display:grid;place-items:center}.art-glow{position:absolute;width:240px;height:240px;border-radius:50%;background:#9ce4ff55;filter:blur(28px)}
+    .art-card{position:absolute;width:175px;height:205px;border:1px solid #ffffffc9;border-radius:23px;background:linear-gradient(145deg,#ffffffd9,#e7f7ffb8);box-shadow:0 25px 65px #4c9cbd24;backdrop-filter:blur(12px);padding:19px}
+    .art-card-back{transform:rotate(-11deg) translate(-38px,-3px);color:#6990a4}.art-card-back>span{font:700 9px Inter,sans-serif;letter-spacing:1.3px}.art-lines{height:7px;border-radius:9px;background:#d3eaf5;margin-top:25px;width:100%}.art-lines.short{width:65%;margin-top:12px}.art-cross{font-size:32px;color:#8ad9f7;text-align:right;margin-top:25px}
+    .art-card-front{transform:rotate(9deg) translate(37px,5px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#1d4054}.art-hospital{width:68px;height:68px;border-radius:22px;display:grid;place-items:center;font-size:36px;color:#168cf0;background:linear-gradient(145deg,#d7f4ff,#fff);box-shadow:0 9px 25px #5bb7e522;margin-bottom:14px}.art-card-front strong{font:800 13px/1.3 Inter,sans-serif;letter-spacing:1px}.art-card-front small{color:#7b98a9;font-size:9px;margin-top:5px}.art-crosshair{position:absolute;top:14px;right:20px;color:#67c7f2;font-size:20px}
+    .art-badge{position:absolute;bottom:9px;left:0;display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px solid #fff;border-radius:15px;background:#ffffffed;box-shadow:0 12px 32px #4c9cbd20}.badge-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#e5f7ff;color:#168cf0;font-size:22px}.art-badge b,.art-badge small{display:block}.art-badge b{font-size:10px}.art-badge small{font-size:9px;color:#718a9a}
+    .page-main{padding:48px 22px 72px}.section-intro{text-align:center;margin:0 auto 27px}.section-kicker{justify-content:center}.section-intro h2{font-size:clamp(23px,3vw,32px);margin:8px 0;color:#1a2b39}.section-intro p{font-size:12px;color:#708596;margin:0}
+    .form-container{width:min(780px,100%);margin:0 auto;padding:clamp(20px,4vw,38px);border-radius:28px;background:linear-gradient(145deg,#fff,#f9fdff);border:1px solid #dcecf5;box-shadow:0 22px 65px #4d9ab815;text-align:left;position:relative;overflow:hidden}
+    .form-container:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#71c9f5,#d6f5ff,#168cf0)}
+    .form-topline{display:flex;align-items:center;gap:13px;padding-bottom:23px;margin-bottom:7px;border-bottom:1px solid #e4f0f6}.form-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:#e5f7ff;color:#168cf0;font-size:27px}.form-topline h2{font-size:17px;margin:0}.form-topline p{font-size:11px;color:#7b8e9b;margin:2px 0 0}.form-step{margin-left:auto;font:700 9px Inter,sans-serif;letter-spacing:1px;color:#5f9bb8;background:#edf9ff;padding:8px 10px;border-radius:9px}
+    label{display:block;margin-top:23px;font-weight:600;font-size:13px;color:#314b5c}
+    select{appearance:none;width:100%;padding:14px 45px 14px 15px;margin-top:8px;border-radius:13px;border:1px solid #d5e8f2;background-color:#fbfeff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234f91b4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;color:#243b4b;font:400 13px 'Prompt',sans-serif;transition:.2s;outline:none}
+    select:focus{border-color:#70c8f2;box-shadow:0 0 0 4px #70c8f222}select:hover{border-color:#a6d9ef}
+    #hospitalDetails{margin-top:25px;padding:22px;background:linear-gradient(145deg,#eff9ff,#f9fdff);border:1px solid #dceef7;border-radius:19px;box-shadow:inset 0 1px #fff;line-height:1.9;font-size:13px;color:#405d70;overflow-wrap:anywhere}
+    #hospitalDetails p{margin:8px 0}#hospitalDetails a{color:#087dcc;text-decoration:none;font-weight:600}#hospitalDetails a:hover{text-decoration:underline}
+    .empty-state{text-align:center;padding:10px 5px}.empty-icon{display:grid;place-items:center;width:45px;height:45px;border-radius:15px;margin:0 auto 10px;background:#dff5ff;color:#168cf0;font-size:25px}.empty-state strong{display:block;color:#2a4a5d;font-size:13px}.empty-state p{color:#8195a3;font-size:11px;margin:3px 0 0!important}
+    .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:24px;padding:12px 21px;background:linear-gradient(110deg,#8bd9fa,#d6f4ff);color:#15384c;text-decoration:none;border:1px solid #cdebf8;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 8px 20px #70c8f222;transition:.2s}.back-btn:hover{transform:translateY(-2px);box-shadow:0 12px 25px #70c8f244}
+    .site-footer{padding:29px 22px 20px;background:linear-gradient(110deg,#f0faff,#fff);border-top:1px solid #dcecf5;color:#496576}.footer-inner{width:min(1180px,100%);margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;gap:22px}.footer-inner strong{font-size:12px;color:#203c4e}.footer-inner p{font-size:10px;color:#7a91a0;margin:4px 0 0}.footer-inner>a{white-space:nowrap;text-decoration:none;color:#167fba;font-size:11px;font-weight:700;padding:9px 13px;border:1px solid #d6edf8;border-radius:999px;background:#fff}.site-footer>small{display:block;text-align:center;font-size:9px;color:#8ba0ad}
+    @media(max-width:850px){.page-hero{padding:45px 28px;gap:8px}.hero-art{width:260px;transform:scale(.88);transform-origin:center right}.main-nav{gap:14px}.brand-copy strong{font-size:12px}}
+    @media(max-width:650px){.site-header{padding:0 15px}.nav-shell{min-height:68px}.brand-icon{width:38px;height:38px}.brand-copy strong{font-size:11px}.brand-copy small{font-size:7px;letter-spacing:.7px}.main-nav{gap:8px}.main-nav>a:not(.nav-cta){display:none}.main-nav .nav-cta{font-size:10px;padding:10px 12px}.page-hero{padding:42px 22px 20px;display:block}.page-hero h1{font-size:35px}.page-hero p{font-size:12px}.desktop-break{display:none}.hero-art{height:220px;width:100%;transform:scale(.84);transform-origin:top center;margin-top:8px}.art-badge{left:calc(50% - 135px)}.page-main{padding:38px 15px 52px}.section-intro h2{font-size:23px}.form-container{padding:22px 17px;border-radius:22px}.form-topline h2{font-size:15px}.form-step{font-size:8px;padding:7px}.footer-inner{align-items:flex-start;flex-direction:column}.site-footer>small{text-align:left;line-height:1.7}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
   </style>
 </head>
 <body>
 
-<header>
-  <h2>Skin Cancer Screening System</h2>
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="brand" href="/" aria-label="กลับหน้าหลัก">
+      <span class="brand-icon" aria-hidden="true">✳</span>
+      <span class="brand-copy"><strong>Skin Lesion Detection</strong><small>PLATFORM FOR MELANOMA</small></span>
+    </a>
+    <nav class="main-nav" aria-label="เมนูหลัก">
+      <a href="/">หน้าแรก</a>
+      <a href="/questionnaire">AI วิเคราะห์</a>
+      <a href="/info">ข้อมูล Melanoma</a>
+      <a class="nav-cta" href="/questionnaire">เริ่มประเมินด้วย AI <span>↗</span></a>
+    </nav>
+  </div>
 </header>
 
-<h1>ค้นหาโรงพยาบาลสำหรับตรวจ Melanoma</h1>
+<section class="page-hero">
+  <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
+  <div class="hero-content">
+    <span class="eyebrow"><span class="status-dot"></span> HOSPITAL DIRECTORY</span>
+    <h1>ค้นหาโรงพยาบาล<br><em>สำหรับตรวจ Melanoma</em></h1>
+    <p>ค้นหาสถานพยาบาลและข้อมูลคลินิกผิวหนังตามจังหวัด<br class="desktop-break"> เพื่อวางแผนเข้ารับคำปรึกษาจากบุคลากรทางการแพทย์</p>
+    <div class="hero-pills"><span>✦ ข้อมูลโรงพยาบาล</span><span>⌖ ค้นหาตามจังหวัด</span><span>♡ ดูแลสุขภาพผิว</span></div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="art-glow"></div><div class="art-card art-card-back"><span>DERMATOLOGY</span><div class="art-lines"></div><div class="art-lines short"></div><div class="art-cross">＋</div></div>
+    <div class="art-card art-card-front"><div class="art-crosshair">＋</div><div class="art-hospital">✚</div><strong>CARE<br>STARTS HERE</strong><small>Find trusted care</small></div>
+    <div class="art-badge"><span class="badge-icon">⌖</span><span><b>Hospital Finder</b><small>ค้นหาสถานพยาบาล</small></span></div>
+  </div>
+</section>
 
+<main class="page-main">
+<div class="section-intro"><span class="section-kicker">FIND MEDICAL CARE</span><h2>ค้นหาสถานพยาบาลที่เหมาะกับคุณ</h2><p>เลือกจังหวัดและโรงพยาบาลเพื่อดูข้อมูลการติดต่อและเวลาให้บริการ</p></div>
 <div class="form-container">
-  <label for="region">เลือกภาค:</label>
-  <select id="region">
-    <option value="">-- เลือกภาค --</option>
-  </select>
-
+  <div class="form-topline"><span class="form-icon">⌖</span><div><h2>ค้นหาโรงพยาบาล</h2><p>เลือกข้อมูลด้านล่างเพื่อเริ่มค้นหา</p></div><span class="form-step">STEP 01</span></div>
   <label for="province">เลือกจังหวัด:</label>
   <select id="province">
     <option value="">-- เลือกจังหวัด --</option>
@@ -119,7 +179,7 @@
     <option value="">-- เลือกรพ. --</option>
   </select>
 
-  <div id="hospitalDetails">กรุณาเลือกโรงพยาบาล</div>
+  <div id="hospitalDetails"><div class="empty-state"><span class="empty-icon">＋</span><strong>ข้อมูลโรงพยาบาลจะแสดงที่นี่</strong><p>กรุณาเลือกจังหวัดและโรงพยาบาลเพื่อดูรายละเอียด</p></div></div>
   <div class="container">
 
     
@@ -131,8 +191,10 @@
   </div>
 </div>
 
-<footer>
-  © 2026 Skin Cancer AI Project
+</main>
+<footer class="site-footer">
+  <div class="footer-inner"><div><strong>Skin Lesion Detection Platform for Melanoma</strong><p>แพลตฟอร์มเพื่อสนับสนุนการคัดกรองความเสี่ยงเบื้องต้นและการเข้าถึงข้อมูลสุขภาพผิว</p></div><a href="/">กลับหน้าแรก ↑</a></div>
+  <small>© 2026 Skin Cancer AI Project · ผลจาก AI ไม่ใช่การวินิจฉัยทางการแพทย์</small>
 </footer>
 
 <script>
@@ -1020,7 +1082,7 @@
   },
   {
     "ภูมิภาค": "ภาคเหนือ",
-    "จังหวัด": "อุตรดิษถ์",
+    "จังหวัด": "อุตรดิตถ์",
     "ชื่อโรงพยาบาล": "โรงพยาบาลอุตรดิษถ์",
     "ที่อยู่": "เลขที่ 38 ซอยเจษฎาบดินทร์ 1 ต.ท่าอิฐ อ.เมือง จ.อุตรดิตถ์",
     "วันและเวลาเปิด-ปิดคลินิกผิวหนัง": "เปิดให้บริการทุกวัน จันทร์ - ศุกร์ 08:30-12:00",
@@ -1054,34 +1116,20 @@
 ]
   ;
 
-  const regionSelect = document.getElementById('region');
   const provinceSelect = document.getElementById('province');
   const hospitalSelect = document.getElementById('hospital');
   const hospitalDetails = document.getElementById('hospitalDetails');
 
-  // สร้างตัวเลือกภาค
-  const regions = [...new Set(hospitals.map(h => h.ภูมิภาค))];
-  regions.forEach(r => {
+  // แสดงรายชื่อจังหวัดทั้งหมดทันที โดยไม่ต้องเลือกภาคก่อน
+  const provinces = [...new Set(hospitals.map(h => h.จังหวัด))]
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, 'th'));
+
+  provinces.forEach(p => {
     const option = document.createElement('option');
-    option.value = r;
-    option.textContent = r;
-    regionSelect.appendChild(option);
-  });
-
-  regionSelect.addEventListener('change', () => {
-    provinceSelect.innerHTML = '<option value="">-- เลือกจังหวัด --</option>';
-    hospitalSelect.innerHTML = '<option value="">-- เลือกรพ. --</option>';
-    hospitalDetails.innerHTML = 'กรุณาเลือกโรงพยาบาล';
-
-    const selectedRegion = regionSelect.value;
-    const provinces = [...new Set(hospitals.filter(h => h.ภูมิภาค === selectedRegion).map(h => h.จังหวัด))];
-
-    provinces.forEach(p => {
-      const option = document.createElement('option');
-      option.value = p;
-      option.textContent = p;
-      provinceSelect.appendChild(option);
-    });
+    option.value = p;
+    option.textContent = p;
+    provinceSelect.appendChild(option);
   });
 
   provinceSelect.addEventListener('change', () => {
