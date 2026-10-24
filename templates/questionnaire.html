@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="{{ current_language|default("th") }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,6 +69,12 @@
       box-shadow: 0 8px 22px rgba(22,143,224,.2); transition: .2s;
     }
     .nav-cta:hover { transform: translateY(-2px); }
+    .language-select {
+      border: 1px solid #d9edf7; border-radius: 999px; padding: 8px 10px;
+      color: #315a70; background: #fff; font: 600 11px 'Inter', 'Prompt', sans-serif;
+      cursor: pointer; max-width: 112px;
+    }
+    .language-select:focus { outline: 3px solid #9bdcf7; outline-offset: 2px; }
     .page { width: min(980px, calc(100% - 36px)); margin: auto; padding: 46px 0 70px; }
     .intro { text-align: center; max-width: 740px; margin: 0 auto 28px; }
     .eyebrow {
@@ -115,7 +121,8 @@
     .upload-zone strong { font-size: 15px; }
     .upload-zone .hint { margin-top: 5px; color: var(--muted); font-size: 11px; }
     .upload-zone .file-types { margin-top: 12px; padding: 4px 9px; border-radius: 8px; background: #e5f5fd; color: #4d829c; font: 600 9px 'Inter', sans-serif; }
-    #imageInput { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }\n    .upload-zone:focus-within { outline: 3px solid #9bdcf7; outline-offset: 3px; }
+    #imageInput { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .upload-zone:focus-within { outline: 3px solid #9bdcf7; outline-offset: 3px; }
     .preview { display: none; width: 100%; margin-top: 16px; padding: 12px; border: 1px solid var(--line); border-radius: 17px; background: #fff; }
     .preview.show { display: flex; align-items: center; gap: 13px; }
     .preview img { width: 68px; height: 68px; object-fit: cover; border-radius: 12px; background: #eef7fb; }
@@ -196,88 +203,187 @@
         <span class="brandmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span>
         <span class="brandname">Skin Lesion Detection Platform<small>FOR MELANOMA · AI-ASSISTED SCREENING</small></span>
       </a>
-      <nav class="navlinks" aria-label="เมนูหลัก">
-        <a href="/">หน้าแรก</a>
-        <a href="/info">ข้อมูล Melanoma</a>
-        <a href="/hospital">โรงพยาบาล</a>
-        <a class="nav-cta" href="/questionnaire">เริ่มประเมินด้วย AI&nbsp; →</a>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="/" data-i18n="nav_home">หน้าแรก</a>
+        <a href="/info" data-i18n="nav_info">ข้อมูล Melanoma</a>
+        {% if in_thailand %}
+        <a href="/hospital" data-i18n="nav_hospital">โรงพยาบาล</a>
+        {% endif %}
+        <select class="language-select" id="languageSelect" aria-label="Select language">
+          <option value="th">ไทย</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="zh">中文</option>
+          <option value="ko">한국어</option>
+        </select>
+        <a class="nav-cta" href="/questionnaire"><span data-i18n="nav_start">เริ่มประเมินด้วย AI</span>&nbsp; →</a>
       </nav>
     </div>
   </header>
 
   <main class="page">
     <section class="intro">
-      <span class="eyebrow"><span class="pulse"></span> AI-POWERED SKIN HEALTH</span>
-      <h1>วิเคราะห์ภาพผิวหนัง<br><span>ด้วยปัญญาประดิษฐ์</span></h1>
-      <p>อัปโหลดภาพรอยโรคผิวหนังเพื่อให้ระบบช่วยประเมินความเสี่ยงเบื้องต้น พร้อมอ่านผลและคำแนะนำอย่างรอบคอบ</p>
+      <span class="eyebrow"><span class="pulse"></span> <span data-i18n="eyebrow">AI-POWERED SKIN HEALTH</span></span>
+      <h1><span data-i18n="heading_top">วิเคราะห์ภาพผิวหนัง</span><br><span data-i18n="heading_bottom">ด้วยปัญญาประดิษฐ์</span></h1>
+      <p data-i18n="intro_desc">อัปโหลดภาพรอยโรคผิวหนังเพื่อให้ระบบช่วยประเมินความเสี่ยงเบื้องต้น พร้อมอ่านผลและคำแนะนำอย่างรอบคอบ</p>
     </section>
 
     <div class="layout">
       <section class="panel upload-panel">
         <div class="panel-heading">
           <div class="iconbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div>
-          <div><h2>เริ่มต้นวิเคราะห์ภาพ</h2><p>เลือกภาพรอยโรคผิวหนังจากอุปกรณ์ของคุณ</p></div>
+          <div><h2 data-i18n="upload_heading">เริ่มต้นวิเคราะห์ภาพ</h2><p data-i18n="upload_subheading">เลือกภาพรอยโรคผิวหนังจากอุปกรณ์ของคุณ</p></div>
         </div>
 
         <form method="POST" enctype="multipart/form-data" id="analysisForm">
           <label class="upload-zone" id="uploadZone" for="imageInput">
             <span class="upload-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M20 16.5v2A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-2"/></svg></span>
-            <strong>คลิกเพื่อเลือกภาพ หรือวางไฟล์ที่นี่</strong>
-            <span class="hint">เลือกภาพรอยโรคที่เห็นรายละเอียดชัดเจนและมีแสงเพียงพอ</span>
-            <span class="file-types">รองรับไฟล์ภาพ JPG · PNG · JPEG</span>
+            <strong data-i18n="upload_prompt">คลิกเพื่อเลือกภาพ หรือวางไฟล์ที่นี่</strong>
+            <span class="hint" data-i18n="upload_hint">เลือกภาพรอยโรคที่เห็นรายละเอียดชัดเจนและมีแสงเพียงพอ</span>
+            <span class="file-types" data-i18n="file_types">รองรับไฟล์ภาพ JPG · PNG · JPEG</span>
             <input type="file" name="image" id="imageInput" accept="image/*" required>
           </label>
 
           <div class="preview" id="preview">
             <img id="previewImage" alt="ตัวอย่างภาพที่เลือก">
             <div class="preview-copy"><strong id="fileName">ชื่อไฟล์</strong><span id="fileSize">พร้อมสำหรับส่งวิเคราะห์</span></div>
-            <button class="remove-file" id="removeFile" type="button">เปลี่ยนภาพ</button>
+            <button class="remove-file" id="removeFile" type="button" data-i18n="change_image">เปลี่ยนภาพ</button>
           </div>
 
           <button class="submit-btn" id="submitBtn" type="submit">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="5"/></svg>
-            วิเคราะห์ภาพด้วย AI
+            <span data-i18n="submit_btn">วิเคราะห์ภาพด้วย AI</span>
           </button>
         </form>
 
         {% if result %}
         <div class="result" aria-live="polite">
-          <div class="result-heading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>ผลการประเมินจากระบบ</div>
+          <div class="result-heading" data-i18n="result_heading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg><span data-i18n="result_heading_text">ผลการประเมินจากระบบ</span></div>
           <div class="result-content">{{ result|safe }}</div>
         </div>
         {% endif %}
 
         <p class="privacy-note">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
-          ระบบนี้มีไว้เพื่อคัดกรองความเสี่ยงเบื้องต้นเท่านั้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถใช้แทนการตรวจจากแพทย์ได้
+          <span data-i18n="privacy_note">ระบบนี้มีไว้เพื่อคัดกรองความเสี่ยงเบื้องต้นเท่านั้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถใช้แทนการตรวจจากแพทย์ได้</span>
         </p>
       </section>
 
       <aside class="side">
         <section class="panel side-card">
-          <h3 class="side-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>เตรียมภาพให้เหมาะสม</h3>
-          <p>ภาพที่ชัดเจนช่วยให้ระบบประมวลผลได้ตามที่ออกแบบไว้ ควรตรวจสอบก่อนอัปโหลด</p>
+          <h3 class="side-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><span data-i18n="tips_heading">เตรียมภาพให้เหมาะสม</span></h3>
+          <p><span data-i18n="tips_desc">ภาพที่ชัดเจนช่วยให้ระบบประมวลผลได้ตามที่ออกแบบไว้ ควรตรวจสอบก่อนอัปโหลด</span></p>
           <ul class="tips">
-            <li><span class="check">✓</span><span>ถ่ายภาพในบริเวณที่มีแสงสว่างเพียงพอ</span></li>
-            <li><span class="check">✓</span><span>ให้รอยโรคอยู่ตรงกลางภาพและไม่เบลอ</span></li>
-            <li><span class="check">✓</span><span>หลีกเลี่ยงเงา แสงสะท้อน และฟิลเตอร์</span></li>
+            <li><span class="check">✓</span><span><span data-i18n="tip1">ถ่ายภาพในบริเวณที่มีแสงสว่างเพียงพอ</span></span></li>
+            <li><span class="check">✓</span><span><span data-i18n="tip2">ให้รอยโรคอยู่ตรงกลางภาพและไม่เบลอ</span></span></li>
+            <li><span class="check">✓</span><span><span data-i18n="tip3">หลีกเลี่ยงเงา แสงสะท้อน และฟิลเตอร์</span></span></li>
           </ul>
         </section>
         <section class="panel side-card medical-note">
-          <h3 class="side-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01"/><path d="M10.3 3.9 2.5 17.4A2 2 0 0 0 4.2 20h15.6a2 2 0 0 0 1.7-2.6L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>ข้อควรทราบ</h3>
-          <p>หากรอยโรคมีการเปลี่ยนแปลง โตเร็ว เลือดออก คัน หรือมีลักษณะผิดปกติ ควรปรึกษาแพทย์ แม้ผลจากระบบจะไม่แสดงความเสี่ยงสูงก็ตาม</p>
-          <a href="/info" class="back-btn" style="margin-top:15px;padding:9px 13px;font-size:11px">เรียนรู้เกี่ยวกับ Melanoma →</a>
+          <h3 class="side-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01"/><path d="M10.3 3.9 2.5 17.4A2 2 0 0 0 4.2 20h15.6a2 2 0 0 0 1.7-2.6L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg><span data-i18n="medical_heading">ข้อควรทราบ</span></h3>
+          <p><span data-i18n="medical_desc">หากรอยโรคมีการเปลี่ยนแปลง โตเร็ว เลือดออก คัน หรือมีลักษณะผิดปกติ ควรปรึกษาแพทย์ แม้ผลจากระบบจะไม่แสดงความเสี่ยงสูงก็ตาม</span></p>
+          <a href="/info" class="back-btn" style="margin-top:15px;padding:9px 13px;font-size:11px"><span data-i18n="learn_melanoma">เรียนรู้เกี่ยวกับ Melanoma</span> →</a>
         </section>
       </aside>
     </div>
 
-    <div class="back-wrap"><a href="/" class="back-btn">← กลับหน้าแรก</a></div>
+    <div class="back-wrap"><a href="/" class="back-btn">← <span data-i18n="back_home">กลับหน้าแรก</span></a></div>
   </main>
 
-  <footer><strong>Skin Lesion Detection Platform for Melanoma</strong>AI-assisted preliminary screening · ไม่ใช่เครื่องมือวินิจฉัยทางการแพทย์</footer>
+  <footer><strong>Skin Lesion Detection Platform for Melanoma</strong><span data-i18n="footer_note">AI-assisted preliminary screening · ไม่ใช่เครื่องมือวินิจฉัยทางการแพทย์</span></footer>
+
 
   <script>
     (() => {
+      const translations = {
+        th: {
+          nav_home:"หน้าแรก", nav_info:"ข้อมูล Melanoma", nav_hospital:"โรงพยาบาล", nav_start:"เริ่มประเมินด้วย AI",
+          eyebrow:"AI-POWERED SKIN HEALTH", heading_top:"วิเคราะห์ภาพผิวหนัง", heading_bottom:"ด้วยปัญญาประดิษฐ์",
+          intro_desc:"อัปโหลดภาพรอยโรคผิวหนังเพื่อให้ระบบช่วยประเมินความเสี่ยงเบื้องต้น พร้อมอ่านผลและคำแนะนำอย่างรอบคอบ",
+          upload_heading:"เริ่มต้นวิเคราะห์ภาพ", upload_subheading:"เลือกภาพรอยโรคผิวหนังจากอุปกรณ์ของคุณ",
+          upload_prompt:"คลิกเพื่อเลือกภาพ หรือวางไฟล์ที่นี่", upload_hint:"เลือกภาพรอยโรคที่เห็นรายละเอียดชัดเจนและมีแสงเพียงพอ",
+          file_types:"รองรับไฟล์ภาพ JPG · PNG · JPEG", change_image:"เปลี่ยนภาพ", submit_btn:"วิเคราะห์ภาพด้วย AI",
+          result_heading_text:"ผลการประเมินจากระบบ", privacy_note:"ระบบนี้มีไว้เพื่อคัดกรองความเสี่ยงเบื้องต้นเท่านั้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถใช้แทนการตรวจจากแพทย์ได้",
+          tips_heading:"เตรียมภาพให้เหมาะสม", tips_desc:"ภาพที่ชัดเจนช่วยให้ระบบประมวลผลได้ตามที่ออกแบบไว้ ควรตรวจสอบก่อนอัปโหลด",
+          tip1:"ถ่ายภาพในบริเวณที่มีแสงสว่างเพียงพอ", tip2:"ให้รอยโรคอยู่ตรงกลางภาพและไม่เบลอ", tip3:"หลีกเลี่ยงเงา แสงสะท้อน และฟิลเตอร์",
+          medical_heading:"ข้อควรทราบ", medical_desc:"หากรอยโรคมีการเปลี่ยนแปลง โตเร็ว เลือดออก คัน หรือมีลักษณะผิดปกติ ควรปรึกษาแพทย์ แม้ผลจากระบบจะไม่แสดงความเสี่ยงสูงก็ตาม",
+          learn_melanoma:"เรียนรู้เกี่ยวกับ Melanoma", back_home:"กลับหน้าแรก", footer_note:"AI-assisted preliminary screening · ไม่ใช่เครื่องมือวินิจฉัยทางการแพทย์",
+          selected:"เลือกภาพเรียบร้อยแล้ว", ready:"พร้อมสำหรับวิเคราะห์", uploading:"กำลังส่งภาพเพื่อประมวลผล...", invalid:"กรุณาเลือกไฟล์รูปภาพ เช่น JPG หรือ PNG"
+        },
+        en: {
+          nav_home:"Home", nav_info:"Melanoma Information", nav_hospital:"Hospitals", nav_start:"Start AI Screening",
+          eyebrow:"AI-POWERED SKIN HEALTH", heading_top:"Skin Image Analysis", heading_bottom:"Powered by AI",
+          intro_desc:"Upload an image of a skin lesion for a preliminary risk assessment, then review the result and guidance carefully.",
+          upload_heading:"Start Image Analysis", upload_subheading:"Choose a skin-lesion image from your device",
+          upload_prompt:"Click to choose an image or drop a file here", upload_hint:"Choose a clear, well-lit image with visible details",
+          file_types:"Supported: JPG · PNG · JPEG", change_image:"Change image", submit_btn:"Analyze Image with AI",
+          result_heading_text:"System Assessment Result", privacy_note:"This tool is for preliminary risk screening only. AI results are not a diagnosis and cannot replace an examination by a medical professional.",
+          tips_heading:"Prepare a Suitable Image", tips_desc:"A clear image helps the system process it as intended. Please check the image before uploading.",
+          tip1:"Take the photo in a well-lit area", tip2:"Keep the lesion centered and in focus", tip3:"Avoid shadows, glare, and filters",
+          medical_heading:"Important Information", medical_desc:"If a lesion changes, grows quickly, bleeds, itches, or looks unusual, consult a healthcare professional even if the system does not indicate high risk.",
+          learn_melanoma:"Learn About Melanoma", back_home:"Back to Home", footer_note:"AI-assisted preliminary screening · Not a medical diagnostic tool",
+          selected:"Image selected", ready:"Ready for analysis", uploading:"Uploading image for analysis...", invalid:"Please choose an image file, such as JPG or PNG."
+        },
+        ja: {
+          nav_home:"ホーム", nav_info:"メラノーマ情報", nav_hospital:"病院", nav_start:"AI評価を開始",
+          eyebrow:"AIによる皮膚の健康サポート", heading_top:"皮膚画像の分析", heading_bottom:"人工知能を活用",
+          intro_desc:"皮膚病変の画像をアップロードして、初期リスク評価と結果・注意事項を確認してください。",
+          upload_heading:"画像分析を開始", upload_subheading:"端末から皮膚病変の画像を選択してください",
+          upload_prompt:"クリックして画像を選択、またはここにドロップ", upload_hint:"詳細がはっきり見える、明るく鮮明な画像を選んでください",
+          file_types:"対応形式：JPG · PNG · JPEG", change_image:"画像を変更", submit_btn:"AIで画像を分析",
+          result_heading_text:"システム評価結果", privacy_note:"このツールは初期リスク評価を目的としています。AIの結果は診断ではなく、医療専門家による診察の代わりにはなりません。",
+          tips_heading:"適切な画像を準備", tips_desc:"鮮明な画像は、想定どおりの処理に役立ちます。アップロード前に確認してください。",
+          tip1:"十分に明るい場所で撮影する", tip2:"病変を中央に置き、ピントを合わせる", tip3:"影、反射、フィルターを避ける",
+          medical_heading:"重要なお知らせ", medical_desc:"病変が変化する、急速に大きくなる、出血する、かゆみがある、または異常に見える場合は、システムが高リスクと表示しなくても医療機関に相談してください。",
+          learn_melanoma:"メラノーマについて学ぶ", back_home:"ホームに戻る", footer_note:"AIによる初期スクリーニング · 医療診断ツールではありません",
+          selected:"画像を選択しました", ready:"分析の準備完了", uploading:"画像を送信して分析しています...", invalid:"JPGやPNGなどの画像ファイルを選択してください。"
+        },
+        zh: {
+          nav_home:"首页", nav_info:"黑色素瘤知识", nav_hospital:"医院", nav_start:"开始 AI 筛查",
+          eyebrow:"AI 皮肤健康平台", heading_top:"皮肤图像分析", heading_bottom:"由人工智能支持",
+          intro_desc:"上传皮肤病变图像以进行初步风险评估，并仔细查看结果和建议。",
+          upload_heading:"开始图像分析", upload_subheading:"从您的设备选择皮肤病变图像",
+          upload_prompt:"点击选择图像，或将文件拖放到此处", upload_hint:"请选择清晰、光线充足且细节可见的图像",
+          file_types:"支持格式：JPG · PNG · JPEG", change_image:"更换图像", submit_btn:"使用 AI 分析图像",
+          result_heading_text:"系统评估结果", privacy_note:"本工具仅用于初步风险筛查。AI 结果不是医学诊断，不能替代医疗专业人员的检查。",
+          tips_heading:"准备合适的图像", tips_desc:"清晰的图像有助于系统按设计进行处理。上传前请先检查图像。",
+          tip1:"在光线充足的地方拍摄", tip2:"将病变置于图像中央并保持清晰", tip3:"避免阴影、反光和滤镜",
+          medical_heading:"重要提示", medical_desc:"如果病变发生变化、快速增大、出血、发痒或外观异常，即使系统未显示高风险，也应咨询医疗专业人员。",
+          learn_melanoma:"了解黑色素瘤", back_home:"返回首页", footer_note:"AI 辅助初步筛查 · 非医疗诊断工具",
+          selected:"已选择图像", ready:"可进行分析", uploading:"正在上传图像并进行分析...", invalid:"请选择 JPG 或 PNG 等图像文件。"
+        },
+        ko: {
+          nav_home:"홈", nav_info:"흑색종 정보", nav_hospital:"병원", nav_start:"AI 검사 시작",
+          eyebrow:"AI 피부 건강 플랫폼", heading_top:"피부 이미지 분석", heading_bottom:"인공지능 기반",
+          intro_desc:"피부 병변 이미지를 업로드해 초기 위험 평가를 받고 결과와 안내를 신중하게 확인하세요.",
+          upload_heading:"이미지 분석 시작", upload_subheading:"기기에서 피부 병변 이미지를 선택하세요",
+          upload_prompt:"클릭하여 이미지를 선택하거나 파일을 여기에 놓으세요", upload_hint:"세부 사항이 잘 보이는 밝고 선명한 이미지를 선택하세요",
+          file_types:"지원 형식: JPG · PNG · JPEG", change_image:"이미지 변경", submit_btn:"AI로 이미지 분석",
+          result_heading_text:"시스템 평가 결과", privacy_note:"이 도구는 초기 위험 선별용입니다. AI 결과는 진단이 아니며 의료 전문가의 진료를 대체할 수 없습니다.",
+          tips_heading:"적절한 이미지 준비", tips_desc:"선명한 이미지는 시스템이 의도한 대로 처리하는 데 도움이 됩니다. 업로드 전에 확인하세요.",
+          tip1:"밝은 장소에서 촬영하세요", tip2:"병변을 중앙에 두고 초점을 맞추세요", tip3:"그림자, 반사광, 필터를 피하세요",
+          medical_heading:"중요 안내", medical_desc:"병변이 변하거나 빠르게 커지거나 출혈, 가려움 또는 비정상적인 모습이 있으면 시스템에서 고위험으로 표시되지 않아도 의료 전문가와 상담하세요.",
+          learn_melanoma:"흑색종 알아보기", back_home:"홈으로 돌아가기", footer_note:"AI 기반 초기 선별 · 의료 진단 도구가 아닙니다",
+          selected:"이미지를 선택했습니다", ready:"분석 준비 완료", uploading:"분석을 위해 이미지를 전송 중...", invalid:"JPG 또는 PNG와 같은 이미지 파일을 선택하세요."
+        }
+      };
+
+      const lang = {{ current_language|default('th')|tojson }};
+      const dict = translations[lang] || translations.th;
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (dict[key] !== undefined) el.textContent = dict[key];
+      });
+
+      const langSelect = document.getElementById("languageSelect");
+      if (langSelect) {
+        langSelect.value = lang;
+        langSelect.addEventListener("change", () => {
+          window.location.href = "/set-language/" + encodeURIComponent(langSelect.value);
+        });
+      }
+
       const input = document.getElementById('imageInput');
       const zone = document.getElementById('uploadZone');
       const preview = document.getElementById('preview');
@@ -292,7 +398,7 @@
       function showFile(file) {
         if (!file) return;
         if (!file.type.startsWith('image/')) {
-          alert('กรุณาเลือกไฟล์รูปภาพ เช่น JPG หรือ PNG');
+          alert(dict.invalid || translations.th.invalid);
           input.value = '';
           return;
         }
@@ -300,11 +406,13 @@
         objectUrl = URL.createObjectURL(file);
         previewImage.src = objectUrl;
         fileName.textContent = file.name;
-        fileSize.textContent = file.size < 1024 * 1024
-          ? `${(file.size / 1024).toFixed(1)} KB · พร้อมสำหรับวิเคราะห์`
-          : `${(file.size / (1024 * 1024)).toFixed(2)} MB · พร้อมสำหรับวิเคราะห์`;
+        const sizeText = file.size < 1024 * 1024
+          ? `${(file.size / 1024).toFixed(1)} KB`
+          : `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+        fileSize.textContent = `${sizeText} · ${dict.ready}`;
         preview.classList.add('show');
-        zone.querySelector('strong').textContent = 'เลือกภาพเรียบร้อยแล้ว';
+        const prompt = document.querySelector('[data-i18n="upload_prompt"]');
+        if (prompt) prompt.textContent = dict.selected;
       }
 
       input.addEventListener('change', () => showFile(input.files[0]));
@@ -331,14 +439,15 @@
       removeFile.addEventListener('click', () => {
         input.value = '';
         preview.classList.remove('show');
-        zone.querySelector('strong').textContent = 'คลิกเพื่อเลือกภาพ หรือวางไฟล์ที่นี่';
+        const prompt = document.querySelector('[data-i18n="upload_prompt"]');
+        if (prompt) prompt.textContent = dict.upload_prompt;
         if (objectUrl) URL.revokeObjectURL(objectUrl);
         objectUrl = null;
       });
       form.addEventListener('submit', () => {
         if (!input.files.length) return;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>กำลังส่งภาพเพื่อประมวลผล...</span>';
+        submitBtn.innerHTML = '<span>' + dict.uploading + '</span>';
       });
     })();
   </script>

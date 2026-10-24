@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="{{ current_language|default('th') }}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
     <meta name="description"
           content="แพลตฟอร์ม AI เพื่อช่วยประเมินความเสี่ยงเบื้องต้นของมะเร็งผิวหนังชนิด Melanoma พร้อมข้อมูลความรู้และการค้นหาโรงพยาบาล">
 
-    <title>Skin Cancer AI | Melanoma Screening</title>
+    <title>Skin Lesion Detection Platform for Melanoma</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1549,7 +1549,7 @@
     <header class="navbar">
         <div class="page-container nav-inner">
 
-            <a href="/" class="brand" aria-label="Skin Cancer AI Home">
+            <a href="/" class="brand" aria-label="Skin Lesion Detection Platform for Melanoma Home">
 
                 <div class="brand-icon">
                     <svg viewBox="0 0 24 24"
@@ -1572,7 +1572,7 @@
 
                 <div>
                     <span class="brand-title">
-                        Skin Cancer AI
+                        Skin Lesion Detection Platform for Melanoma
                     </span>
 
                     <span class="brand-subtitle">
@@ -1597,9 +1597,17 @@
                 </a>
 
                 <a href="/questionnaire" class="nav-cta">
-                    เริ่มประเมิน
+                    <span data-i18n="nav_start">เริ่มประเมิน</span>
                     <span aria-hidden="true">→</span>
                 </a>
+                <select class="language-select" aria-label="Select language"
+                        onchange="if(this.value) window.location.href='/set-language/'+this.value;">
+                    <option value="th" {% if current_language == 'th' %}selected{% endif %}>🇹🇭 ไทย</option>
+                    <option value="en" {% if current_language == 'en' %}selected{% endif %}>🇬🇧 English</option>
+                    <option value="ja" {% if current_language == 'ja' %}selected{% endif %}>🇯🇵 日本語</option>
+                    <option value="zh" {% if current_language == 'zh' %}selected{% endif %}>🇨🇳 中文</option>
+                    <option value="ko" {% if current_language == 'ko' %}selected{% endif %}>🇰🇷 한국어</option>
+                </select>
 
             </nav>
 
@@ -2300,7 +2308,7 @@
 
             <div class="footer-brand">
 
-                Skin Cancer AI
+                Skin Lesion Detection Platform for Melanoma
 
                 <span>
                     AI-Assisted Melanoma Risk Screening Project
@@ -2309,7 +2317,7 @@
             </div>
 
             <div class="footer-copy">
-                © 2026 Skin Cancer AI Project
+                © 2026 Skin Lesion Detection Platform for Melanoma Project
             </div>
 
         </div>
@@ -2355,6 +2363,203 @@
 
     </aside>
 
+
+
+    <script>
+    (function () {
+      const lang = {{ current_language|default('th')|tojson }};
+      const translations = {
+        en: {
+          '.nav-links a[href="#features"]':'Services',
+          '.nav-links a[href="/info"]':'Knowledge',
+          '.nav-links a[href="/hospital"]':'Find a hospital',
+          '[data-i18n="nav_start"]':'Start screening',
+          '.eyebrow':'AI-POWERED SKIN HEALTH PLATFORM',
+          '.hero h1':'AI technology<br>for preliminary<br><span class="highlight">skin cancer</span><br>Melanoma screening',
+          '.hero-description':'Explore skin lesion risk with <strong>artificial intelligence (AI)</strong>, access educational information, and find hospitals for professional advice.',
+          '.hero-actions .button-primary':'Start AI screening',
+          '.hero-actions .button-secondary':'Learn about Melanoma <span aria-hidden="true">↗</span>',
+          '.hero-note span':'This platform is for preliminary risk screening only. It cannot replace a diagnosis by a qualified medical professional.',
+          '.visual-label':'AI Screening Technology',
+          '.visual-tag':'AI PLATFORM',
+          '.visual-bottom strong':'Technology for Skin Health',
+          '.visual-bottom p':'AI-assisted preliminary screening',
+          '.badge-top strong':'AI Image Analysis',
+          '.badge-top span':'AI-powered image analysis',
+          '.badge-bottom strong':'Hospital Finder',
+          '.badge-bottom span':'Find hospitals near you',
+          '.trust-strip .trust-item:nth-child(1) strong':'Easy access to information',
+          '.trust-strip .trust-item:nth-child(1) span':'Available through a website',
+          '.trust-strip .trust-item:nth-child(2) strong':'Supports early detection',
+          '.trust-strip .trust-item:nth-child(2) span':'Encourages skin health awareness',
+          '.trust-strip .trust-item:nth-child(3) strong':'Find healthcare facilities',
+          '.trust-strip .trust-item:nth-child(3) span':'Access hospital information',
+          '.features .section-heading h2':'Everything you need<br>for skin health',
+          '.features .section-heading p':'AI technology, health information, and hospital search in one platform.',
+          '.feature-card:nth-child(1) p':'Upload a skin lesion image for preliminary risk assessment by the AI model.',
+          '.feature-card:nth-child(1) .feature-link':'Start screening',
+          '.feature-card:nth-child(2) p':'Find hospitals and healthcare facilities to help plan a medical consultation.',
+          '.feature-card:nth-child(2) .feature-link':'Find a hospital',
+          '.feature-card:nth-child(3) p':'Learn about melanoma, warning signs, risk factors, and skin health.',
+          '.feature-card:nth-child(3) .feature-link':'Read information',
+          '.how-section .section-heading h2':'Getting started is easy',
+          '.how-section .section-heading p':'How to use the preliminary risk screening system',
+          '.step:nth-child(1) h3':'Upload an image',
+          '.step:nth-child(1) p':'Choose a skin lesion image for the system to analyze.',
+          '.step:nth-child(2) h3':'AI analyzes the image',
+          '.step:nth-child(2) p':'The AI model evaluates image patterns based on its training.',
+          '.step:nth-child(3) h3':'Review results and guidance',
+          '.step:nth-child(3) p':'Review the preliminary result and consider consulting a doctor if concerned.',
+          '.feedback-intro h2':'Help us improve the website',
+          '.feedback-intro p':'Your feedback helps improve the user experience and information provided.',
+          '.disclaimer h3':'Medical limitations and disclaimer',
+          '.disclaimer div p':'This website supports preliminary risk screening only. AI results are not a diagnosis and cannot confirm or rule out melanoma. Consult a qualified healthcare professional for appropriate evaluation.',
+          '.cookie-notice h3':'Cookie notice',
+          '.cookie-notice p':'This website may use essential cookies to support its functionality and provide a consistent experience. Please review the project privacy policy before use.',
+          '#acceptCookies':'Got it',
+          '#dismissCookies':'Dismiss'
+        },
+        ja: {
+          '.nav-links a[href="#features"]':'サービス',
+          '.nav-links a[href="/info"]':'知識',
+          '.nav-links a[href="/hospital"]':'病院を探す',
+          '[data-i18n="nav_start"]':'スクリーニング開始',
+          '.hero h1':'AI技術で<br>皮膚がんの<br><span class="highlight">初期スクリーニング</span><br>Melanoma',
+          '.hero-description':'人工知能（AI）で皮膚病変のリスクを確認し、病気に関する情報を学び、医療相談のための病院を探せます。',
+          '.hero-actions .button-primary':'AIスクリーニングを開始',
+          '.hero-actions .button-secondary':'メラノーマについて学ぶ <span aria-hidden="true">↗</span>',
+          '.hero-note span':'このシステムは初期スクリーニングの補助を目的としています。医療専門家による診断の代わりにはなりません。',
+          '.visual-label':'AIスクリーニング技術',
+          '.visual-tag':'AIプラットフォーム',
+          '.visual-bottom strong':'皮膚の健康を支える技術',
+          '.visual-bottom p':'AIによる初期スクリーニング補助',
+          '.badge-top strong':'AI画像解析',
+          '.badge-top span':'AIによる画像解析',
+          '.badge-bottom strong':'病院検索',
+          '.badge-bottom span':'近くの病院を探す',
+          '.features .section-heading h2':'皮膚の健康に必要な<br>機能をひとつに',
+          '.features .section-heading p':'AI技術、健康情報、病院検索をひとつのプラットフォームに。',
+          '.feature-card:nth-child(1) p':'皮膚病変の画像をアップロードし、AIによる初期リスク評価を行います。',
+          '.feature-card:nth-child(1) .feature-link':'評価を開始',
+          '.feature-card:nth-child(2) p':'医療相談の計画に役立つ病院や医療施設を検索できます。',
+          '.feature-card:nth-child(2) .feature-link':'病院を探す',
+          '.feature-card:nth-child(3) p':'メラノーマ、警告サイン、リスク要因、皮膚の健康について学べます。',
+          '.feature-card:nth-child(3) .feature-link':'情報を読む',
+          '.how-section .section-heading h2':'簡単な3ステップ',
+          '.how-section .section-heading p':'初期リスク評価システムの使い方',
+          '.step:nth-child(1) h3':'画像をアップロード',
+          '.step:nth-child(1) p':'解析したい皮膚病変の画像を選択します。',
+          '.step:nth-child(2) h3':'AIが画像を解析',
+          '.step:nth-child(2) p':'AIモデルが学習した画像パターンに基づいて評価します。',
+          '.step:nth-child(3) h3':'結果と案内を確認',
+          '.step:nth-child(3) p':'初期評価を確認し、心配な場合は医師への相談を検討してください。',
+          '.feedback-intro h2':'ウェブサイトの改善にご協力ください',
+          '.feedback-intro p':'ご意見は使いやすさと情報の改善に役立ちます。',
+          '.disclaimer h3':'医療上の制限と免責事項',
+          '.cookie-notice h3':'Cookieについて',
+          '#acceptCookies':'確認しました',
+          '#dismissCookies':'閉じる'
+        },
+        zh: {
+          '.nav-links a[href="#features"]':'服务',
+          '.nav-links a[href="/info"]':'知识',
+          '.nav-links a[href="/hospital"]':'查找医院',
+          '[data-i18n="nav_start"]':'开始筛查',
+          '.hero h1':'人工智能技术<br>用于皮肤癌<br><span class="highlight">初步筛查</span><br>Melanoma',
+          '.hero-description':'利用<strong>人工智能（AI）</strong>辅助评估皮肤病变风险，了解相关健康知识，并查找医院以寻求专业建议。',
+          '.hero-actions .button-primary':'开始 AI 筛查',
+          '.hero-actions .button-secondary':'了解黑色素瘤 <span aria-hidden="true">↗</span>',
+          '.hero-note span':'本平台仅用于初步风险筛查，不能替代专业医务人员的诊断。',
+          '.visual-label':'AI 筛查技术',
+          '.visual-tag':'AI 平台',
+          '.visual-bottom strong':'皮肤健康技术',
+          '.visual-bottom p':'AI 辅助初步筛查',
+          '.badge-top strong':'AI 图像分析',
+          '.badge-top span':'使用 AI 分析图像',
+          '.badge-bottom strong':'医院查找',
+          '.badge-bottom span':'查找附近医院',
+          '.features .section-heading h2':'皮肤健康所需功能<br>一站式提供',
+          '.features .section-heading p':'在同一平台整合 AI 技术、健康知识和医院查询。',
+          '.feature-card:nth-child(1) p':'上传皮肤病变图像，由 AI 模型进行初步风险评估。',
+          '.feature-card:nth-child(1) .feature-link':'开始筛查',
+          '.feature-card:nth-child(2) p':'查找医院和医疗机构，以便安排医疗咨询。',
+          '.feature-card:nth-child(2) .feature-link':'查找医院',
+          '.feature-card:nth-child(3) p':'了解黑色素瘤、警示信号、风险因素和皮肤健康。',
+          '.feature-card:nth-child(3) .feature-link':'阅读知识',
+          '.how-section .section-heading h2':'轻松开始使用',
+          '.how-section .section-heading p':'初步风险筛查系统的使用步骤',
+          '.step:nth-child(1) h3':'上传图像',
+          '.step:nth-child(1) p':'选择需要系统分析的皮肤病变图像。',
+          '.step:nth-child(2) h3':'AI 分析图像',
+          '.step:nth-child(2) p':'AI 模型根据训练过的图像模式进行评估。',
+          '.step:nth-child(3) h3':'查看结果和建议',
+          '.step:nth-child(3) p':'查看初步评估结果，如有疑虑请考虑咨询医生。',
+          '.feedback-intro h2':'帮助我们改进网站',
+          '.feedback-intro p':'您的反馈有助于改善使用体验和信息呈现。',
+          '.disclaimer h3':'医疗限制与免责声明',
+          '.cookie-notice h3':'Cookie 提示',
+          '#acceptCookies':'知道了',
+          '#dismissCookies':'关闭'
+        },
+        ko: {
+          '.nav-links a[href="#features"]':'서비스',
+          '.nav-links a[href="/info"]':'건강 정보',
+          '.nav-links a[href="/hospital"]':'병원 찾기',
+          '[data-i18n="nav_start"]':'검사 시작',
+          '.hero h1':'AI 기술로<br>피부암 위험을<br><span class="highlight">초기 선별</span><br>Melanoma',
+          '.hero-description':'<strong>인공지능(AI)</strong>으로 피부 병변 위험을 예비 평가하고, 관련 건강 정보를 확인하며, 전문 상담을 위한 병원을 찾을 수 있습니다.',
+          '.hero-actions .button-primary':'AI 선별 시작',
+          '.hero-actions .button-secondary':'흑색종 알아보기 <span aria-hidden="true">↗</span>',
+          '.hero-note span':'이 플랫폼은 초기 위험 선별을 위한 보조 도구입니다. 의료 전문가의 진단을 대체할 수 없습니다.',
+          '.visual-label':'AI 선별 기술',
+          '.visual-tag':'AI 플랫폼',
+          '.visual-bottom strong':'피부 건강 기술',
+          '.visual-bottom p':'AI 기반 초기 선별 보조',
+          '.badge-top strong':'AI 이미지 분석',
+          '.badge-top span':'AI 이미지 분석 기능',
+          '.badge-bottom strong':'병원 찾기',
+          '.badge-bottom span':'가까운 병원 찾기',
+          '.features .section-heading h2':'피부 건강에 필요한<br>기능을 한곳에서',
+          '.features .section-heading p':'AI 기술, 건강 정보, 병원 검색을 하나의 플랫폼에 제공합니다.',
+          '.feature-card:nth-child(1) p':'피부 병변 이미지를 업로드하여 AI 모델로 초기 위험 평가를 받아보세요.',
+          '.feature-card:nth-child(1) .feature-link':'선별 시작',
+          '.feature-card:nth-child(2) p':'의료 상담 계획에 도움이 되는 병원과 의료기관을 검색하세요.',
+          '.feature-card:nth-child(2) .feature-link':'병원 찾기',
+          '.feature-card:nth-child(3) p':'흑색종, 경고 신호, 위험 요인 및 피부 건강에 대해 알아보세요.',
+          '.feature-card:nth-child(3) .feature-link':'정보 읽기',
+          '.how-section .section-heading h2':'간단하게 시작하기',
+          '.how-section .section-heading p':'초기 위험 선별 시스템 사용 방법',
+          '.step:nth-child(1) h3':'이미지 업로드',
+          '.step:nth-child(1) p':'분석할 피부 병변 이미지를 선택하세요.',
+          '.step:nth-child(2) h3':'AI 이미지 분석',
+          '.step:nth-child(2) p':'AI 모델이 학습한 이미지 패턴을 바탕으로 평가합니다.',
+          '.step:nth-child(3) h3':'결과 및 안내 확인',
+          '.step:nth-child(3) p':'초기 평가를 확인하고 우려가 있으면 의사와 상담하세요.',
+          '.feedback-intro h2':'웹사이트 개선에 참여해 주세요',
+          '.feedback-intro p':'의견은 사용 경험과 정보 제공을 개선하는 데 도움이 됩니다.',
+          '.disclaimer h3':'의료상 제한 및 면책 안내',
+          '.cookie-notice h3':'쿠키 안내',
+          '#acceptCookies':'확인',
+          '#dismissCookies':'닫기'
+        }
+      };
+      if (lang !== 'th' && translations[lang]) {
+        Object.entries(translations[lang]).forEach(([selector, value]) => {
+          document.querySelectorAll(selector).forEach(el => {
+            if (selector.includes('.nav-links a[') || selector === '#acceptCookies' || selector === '#dismissCookies' ||
+                selector.includes('.feature-link')) {
+              const icon = el.querySelector('svg');
+              if (icon) { el.textContent = value; el.appendChild(icon); }
+              else el.innerHTML = value;
+            } else {
+              el.innerHTML = value;
+            }
+          });
+        });
+        document.documentElement.lang = lang;
+      }
+    })();
+    </script>
 
     <script>
         /*
