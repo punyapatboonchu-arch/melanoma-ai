@@ -10,6 +10,8 @@ import timm
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-change-this-secret-key")
+# Keep preferences only for the current browser session (not a persistent cookie).
+app.config["SESSION_PERMANENT"] = False
 app.config["UPLOAD_FOLDER"] = "uploads"
 app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
@@ -136,7 +138,7 @@ def language():
         country = request.form.get("in_thailand", "yes")
         session["language"] = lang if lang in SUPPORTED_LANGUAGES else DEFAULT_LANGUAGE
         session["in_thailand"] = (country == "yes")
-        session.permanent = True
+        session.permanent = False
         return redirect(url_for("landing"))
     return render_template("language.html", translations=TRANSLATIONS)
 
