@@ -2367,7 +2367,7 @@
 
     <script>
     (function () {
-      const lang = {{ current_language|default('th')|tojson }};
+      const lang = document.documentElement.lang || "th";
       const translations = {
         en: {
           '.nav-links a[href="#features"]':'Services',

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="{{ current_language|default('th') }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f5fbff">
   <meta name="description" content="ข้อมูลความรู้เกี่ยวกับ Melanoma สัญญาณเตือน และหลัก ABCDE เพื่อสนับสนุนการเฝ้าระวังสุขภาพผิว">
-  <title>Melanoma Knowledge | Skin Lesion Detection Platform</title>
+  <title data-i18n="page_title">Melanoma Knowledge | Skin Lesion Detection Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -187,13 +187,14 @@
   <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
   <header class="topbar">
     <div class="wrap nav">
-      <a class="brand" href="/" aria-label="กลับหน้าแรก">
+      <a class="brand" href="/" aria-label="Home">
         <span class="brandmark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="m12 12 7-7m-4 0h4v4"/></svg></span>
         <span class="brandname">Skin Lesion Detection Platform<small>FOR MELANOMA</small></span>
       </a>
       <nav class="navlinks" aria-label="เมนูหลัก">
-        <a href="/">หน้าแรก</a><a href="/questionnaire">AI วิเคราะห์</a><a href="/info" aria-current="page">ความรู้ Melanoma</a><a href="/hospital">โรงพยาบาล</a>
-        <a class="nav-cta" href="/questionnaire">เริ่มประเมินด้วย AI <span>→</span></a>
+        <a href="/" data-i18n="nav_home">หน้าแรก</a><a href="/questionnaire" data-i18n="nav_ai">AI วิเคราะห์</a><a href="/info" aria-current="page" data-i18n="nav_info">ความรู้ Melanoma</a>
+        {% if in_thailand %}<a href="/hospital" data-i18n="nav_hospital">โรงพยาบาล</a>{% endif %}
+        <a class="nav-cta" href="/questionnaire"><span data-i18n="nav_start">เริ่มประเมินด้วย AI</span> <span>→</span></a>
       </nav>
     </div>
   </header>
@@ -202,37 +203,37 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow"><span class="eyebrow-dot"></span> MELANOMA AWARENESS & SKIN HEALTH</span>
-          <h1>เข้าใจ Melanoma<br>เพื่อดูแลสุขภาพผิว<br><span class="gradient-text">อย่างรู้เท่าทัน</span></h1>
-          <p>เรียนรู้เกี่ยวกับมะเร็งผิวหนังชนิดเมลาโนมา สัญญาณเตือนที่ควรสังเกต และหลัก ABCDE ที่ช่วยให้คุณสังเกตความเปลี่ยนแปลงของไฝหรือรอยโรคบนผิวหนังได้อย่างมีข้อมูล</p>
+          <span class="eyebrow"><span class="eyebrow-dot"></span> <span data-i18n="hero_eyebrow">MELANOMA AWARENESS & SKIN HEALTH</span></span>
+          <h1><span data-i18n="hero_title">เข้าใจ Melanoma<br>เพื่อดูแลสุขภาพผิว<br><span class="gradient-text">อย่างรู้เท่าทัน</span></span></h1>
+          <p><span data-i18n="hero_desc">เรียนรู้เกี่ยวกับมะเร็งผิวหนังชนิดเมลาโนมา สัญญาณเตือนที่ควรสังเกต และหลัก ABCDE ที่ช่วยให้คุณสังเกตความเปลี่ยนแปลงของไฝหรือรอยโรคบนผิวหนังได้อย่างมีข้อมูล</span></p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#about">เรียนรู้เกี่ยวกับ Melanoma <span>↓</span></a>
-            <a class="btn btn-secondary" href="/questionnaire">ไปยัง AI วิเคราะห์ <span>→</span></a>
+            <a class="btn btn-primary" href="#about"><span data-i18n="learn_btn">เรียนรู้เกี่ยวกับ Melanoma</span> <span>↓</span></a>
+            <a class="btn btn-secondary" href="/questionnaire"><span data-i18n="ai_btn">ไปยัง AI วิเคราะห์</span> <span>→</span></a>
           </div>
-          <div class="hero-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><span>ข้อมูลนี้ใช้เพื่อการให้ความรู้และสนับสนุนการสังเกตเบื้องต้น ไม่ใช่เครื่องมือวินิจฉัยโรค</span></div>
+          <div class="hero-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><span><span data-i18n="hero_note">ข้อมูลนี้ใช้เพื่อการให้ความรู้และสนับสนุนการสังเกตเบื้องต้น ไม่ใช่เครื่องมือวินิจฉัยโรค</span></span></div>
         </div>
         <div class="hero-visual" aria-label="ภาพประกอบเชิงแนวคิดสำหรับการให้ความรู้เรื่องรอยโรคผิวหนัง">
           <div class="visual-glow"></div>
           <div class="knowledge-card">
-            <div class="card-label"><strong>SKIN HEALTH KNOWLEDGE</strong><span class="pill">ABCDE GUIDE</span></div>
+            <div class="card-label"><strong data-i18n="card_label">SKIN HEALTH KNOWLEDGE</strong><span class="pill" data-i18n="abcde_guide">ABCDE GUIDE</span></div>
             <div class="skin-art"><div class="lesion-art"></div><div class="scan-frame"></div></div>
             <div class="visual-caption">
               <div class="caption-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-              <div><strong>สังเกตความเปลี่ยนแปลงของผิว</strong><span>Learn the signs. Seek medical advice when concerned.</span></div>
+              <div><strong data-i18n="visual_caption">สังเกตความเปลี่ยนแปลงของผิว</strong><span data-i18n="visual_subcaption">Learn the signs. Seek medical advice when concerned.</span></div>
             </div>
           </div>
-          <div class="floating-note"><b>ABCDE METHOD</b><span>แนวทางสังเกตสัญญาณเตือน</span></div>
+          <div class="floating-note"><b>ABCDE METHOD</b><span data-i18n="floating_note">แนวทางสังเกตสัญญาณเตือน</span></div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="wrap">
-        <div class="section-head"><span class="overline">KNOW THE SIGNS</span><h2>สิ่งสำคัญที่ควรรู้เกี่ยวกับ Melanoma</h2><p>ทำความเข้าใจลักษณะทั่วไป สัญญาณเตือน และแนวทางสังเกตผิวหนัง</p></div>
+        <div class="section-head"><span class="overline">KNOW THE SIGNS</span><h2 data-i18n="section_title">สิ่งสำคัญที่ควรรู้เกี่ยวกับ Melanoma</h2><p data-i18n="section_desc">ทำความเข้าใจลักษณะทั่วไป สัญญาณเตือน และแนวทางสังเกตผิวหนัง</p></div>
         <div class="info-grid">
-          <article class="info-card"><div class="info-icon">✳</div><h3>รู้จักโรค</h3><p>Melanoma เป็นมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสี เรียกว่า melanocytes และอาจมีความรุนแรงหากไม่ได้รับการประเมินและรักษาอย่างเหมาะสม</p></article>
-          <article class="info-card"><div class="info-icon">⌕</div><h3>สังเกตการเปลี่ยนแปลง</h3><p>ควรสังเกตไฝหรือรอยโรคที่เปลี่ยนขนาด รูปร่าง สี หรือมีอาการใหม่ โดยเฉพาะเมื่อแตกต่างจากไฝอื่นบนร่างกาย</p></article>
-          <article class="info-card"><div class="info-icon">＋</div><h3>ขอคำแนะนำจากผู้เชี่ยวชาญ</h3><p>หากพบรอยโรคที่น่าสงสัยหรือเปลี่ยนแปลงต่อเนื่อง ควรปรึกษาแพทย์ ไม่ควรพึ่งผลประเมินจากภาพหรือ AI เพียงอย่างเดียว</p></article>
+          <article class="info-card"><div class="info-icon">✳</div><h3 data-i18n="card1_title">รู้จักโรค</h3><p data-i18n="card1_desc">Melanoma เป็นมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสี เรียกว่า melanocytes และอาจมีความรุนแรงหากไม่ได้รับการประเมินและรักษาอย่างเหมาะสม</p></article>
+          <article class="info-card"><div class="info-icon">⌕</div><h3 data-i18n="card2_title">สังเกตการเปลี่ยนแปลง</h3><p data-i18n="card2_desc">ควรสังเกตไฝหรือรอยโรคที่เปลี่ยนขนาด รูปร่าง สี หรือมีอาการใหม่ โดยเฉพาะเมื่อแตกต่างจากไฝอื่นบนร่างกาย</p></article>
+          <article class="info-card"><div class="info-icon">＋</div><h3 data-i18n="card3_title">ขอคำแนะนำจากผู้เชี่ยวชาญ</h3><p data-i18n="card3_desc">หากพบรอยโรคที่น่าสงสัยหรือเปลี่ยนแปลงต่อเนื่อง ควรปรึกษาแพทย์ ไม่ควรพึ่งผลประเมินจากภาพหรือ AI เพียงอย่างเดียว</p></article>
         </div>
       </div>
     </section>
@@ -240,39 +241,39 @@
     <section class="content-section" id="about">
       <div class="wrap">
         <article class="content-card reveal">
-          <h2>Melanoma คืออะไร?</h2>
-          <p>Melanoma คือมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสีของผิวหนัง ซึ่งเรียกว่า <strong>melanocytes</strong></p>
-          <p>โรคนี้สามารถลุกลามไปยังอวัยวะอื่นได้ หากไม่ได้รับการวินิจฉัยและรักษาอย่างเหมาะสมตั้งแต่ระยะต้น Melanoma อาจเริ่มต้นจากไฝเดิมหรือปรากฏเป็นรอยโรคใหม่บนผิวหนัง</p>
-          <p>ลักษณะของไฝเพียงอย่างเดียวไม่สามารถยืนยันว่าเป็นมะเร็งได้ การตรวจประเมินโดยบุคลากรทางการแพทย์มีความสำคัญเมื่อพบสิ่งผิดปกติ</p>
+          <h2 data-i18n="about_title">Melanoma คืออะไร?</h2>
+          <p data-i18n="about_p1">Melanoma คือมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสีของผิวหนัง ซึ่งเรียกว่า melanocytes</p>
+          <p data-i18n="about_p2">โรคนี้สามารถลุกลามไปยังอวัยวะอื่นได้ หากไม่ได้รับการวินิจฉัยและรักษาอย่างเหมาะสมตั้งแต่ระยะต้น Melanoma อาจเริ่มต้นจากไฝเดิมหรือปรากฏเป็นรอยโรคใหม่บนผิวหนัง</p>
+          <p data-i18n="about_p3">ลักษณะของไฝเพียงอย่างเดียวไม่สามารถยืนยันว่าเป็นมะเร็งได้ การตรวจประเมินโดยบุคลากรทางการแพทย์มีความสำคัญเมื่อพบสิ่งผิดปกติ</p>
         </article>
 
         <article class="content-card reveal">
-          <h2>อาการและสัญญาณที่ควรสังเกต</h2>
+          <h2 data-i18n="symptoms_title">อาการและสัญญาณที่ควรสังเกต</h2>
           <ul class="symptom-list">
-            <li>ไฝหรือรอยดำมีขนาดหรือความหนาเปลี่ยนไป</li>
-            <li>สีของไฝไม่สม่ำเสมอหรือมีหลายสี</li>
-            <li>ขอบไฝไม่เรียบ หยัก หรือไม่ชัดเจน</li>
-            <li>รูปร่างของรอยโรคไม่สมมาตร</li>
-            <li>มีอาการคัน เจ็บ เลือดออก หรือเป็นแผล</li>
-            <li>เกิดรอยโรคใหม่หรือแตกต่างจากไฝอื่นอย่างชัดเจน</li>
+            <li data-i18n="symptom1">ไฝหรือรอยดำมีขนาดหรือความหนาเปลี่ยนไป</li>
+            <li data-i18n="symptom2">สีของไฝไม่สม่ำเสมอหรือมีหลายสี</li>
+            <li data-i18n="symptom3">ขอบไฝไม่เรียบ หยัก หรือไม่ชัดเจน</li>
+            <li data-i18n="symptom4">รูปร่างของรอยโรคไม่สมมาตร</li>
+            <li data-i18n="symptom5">มีอาการคัน เจ็บ เลือดออก หรือเป็นแผล</li>
+            <li data-i18n="symptom6">เกิดรอยโรคใหม่หรือแตกต่างจากไฝอื่นอย่างชัดเจน</li>
           </ul>
-          <p style="margin-top:16px">สัญญาณเหล่านี้ไม่ได้หมายความว่าเป็น Melanoma เสมอไป แต่ควรได้รับการประเมินหากมีความเปลี่ยนแปลงหรือข้อกังวล</p>
+          <p style="margin-top:16px" data-i18n="symptoms_note">สัญญาณเหล่านี้ไม่ได้หมายความว่าเป็น Melanoma เสมอไป แต่ควรได้รับการประเมินหากมีความเปลี่ยนแปลงหรือข้อกังวล</p>
         </article>
 
         <article class="content-card reveal">
-          <h2>หลัก ABCDE สำหรับสังเกตไฝและรอยโรค</h2>
-          <p>ABCDE เป็นแนวทางช่วยสังเกตลักษณะที่อาจน่าสงสัย ไม่ใช่การตรวจวินิจฉัย และรอยโรคบางชนิดอาจไม่แสดงลักษณะครบทุกข้อ</p>
+          <h2 data-i18n="abcde_title">หลัก ABCDE สำหรับสังเกตไฝและรอยโรค</h2>
+          <p data-i18n="abcde_desc">ABCDE เป็นแนวทางช่วยสังเกตลักษณะที่อาจน่าสงสัย ไม่ใช่การตรวจวินิจฉัย และรอยโรคบางชนิดอาจไม่แสดงลักษณะครบทุกข้อ</p>
           <div class="abcde-grid">
-            <div class="abcde-item"><div class="letter">A</div><h3>Asymmetry<br>ความไม่สมมาตร</h3><p>รูปร่างสองด้านไม่เหมือนกันเมื่อแบ่งรอยโรคออกเป็นสองส่วน</p></div>
-            <div class="abcde-item"><div class="letter">B</div><h3>Border<br>ขอบผิดปกติ</h3><p>ขอบหยัก ไม่เรียบ หรือไม่ชัดเจน</p></div>
-            <div class="abcde-item"><div class="letter">C</div><h3>Color<br>สีไม่สม่ำเสมอ</h3><p>มีหลายสีหรือมีเฉดสีที่แตกต่างกันในรอยเดียว</p></div>
-            <div class="abcde-item"><div class="letter">D</div><h3>Diameter<br>ขนาด</h3><p>มักกล่าวถึงขนาดมากกว่า 6 มม. แต่รอยโรคที่เล็กกว่านี้ก็อาจน่าสงสัยได้</p></div>
-            <div class="abcde-item"><div class="letter">E</div><h3>Evolving<br>การเปลี่ยนแปลง</h3><p>ขนาด รูปร่าง สี หรืออาการเปลี่ยนไปตามเวลา</p></div>
+            <div class="abcde-item"><div class="letter">A</div><h3>Asymmetry<br><span data-i18n="abcde_a">ความไม่สมมาตร</span></h3><p data-i18n="abcde_a_desc">รูปร่างสองด้านไม่เหมือนกันเมื่อแบ่งรอยโรคออกเป็นสองส่วน</p></div>
+            <div class="abcde-item"><div class="letter">B</div><h3>Border<br><span data-i18n="abcde_b">ขอบผิดปกติ</span></h3><p data-i18n="abcde_b_desc">ขอบหยัก ไม่เรียบ หรือไม่ชัดเจน</p></div>
+            <div class="abcde-item"><div class="letter">C</div><h3>Color<br><span data-i18n="abcde_c">สีไม่สม่ำเสมอ</span></h3><p data-i18n="abcde_c_desc">มีหลายสีหรือมีเฉดสีที่แตกต่างกันในรอยเดียว</p></div>
+            <div class="abcde-item"><div class="letter">D</div><h3>Diameter<br><span data-i18n="abcde_d">ขนาด</span></h3><p data-i18n="abcde_d_desc">มักกล่าวถึงขนาดมากกว่า 6 มม. แต่รอยโรคที่เล็กกว่านี้ก็อาจน่าสงสัยได้</p></div>
+            <div class="abcde-item"><div class="letter">E</div><h3>Evolving<br><span data-i18n="abcde_e">การเปลี่ยนแปลง</span></h3><p data-i18n="abcde_e_desc">ขนาด รูปร่าง สี หรืออาการเปลี่ยนไปตามเวลา</p></div>
           </div>
         </article>
 
         <article class="content-card reveal">
-          <h2>แหล่งอ้างอิงเพื่อศึกษาต่อ</h2>
+          <h2 data-i18n="references_title">แหล่งอ้างอิงเพื่อศึกษาต่อ</h2>
           <ul class="references">
             <li>American Academy of Dermatology (AAD)</li>
             <li>American Cancer Society</li>
@@ -283,7 +284,7 @@
 
         <aside class="medical-note reveal">
           <div class="note-icon">i</div>
-          <div><strong>ข้อควรทราบทางการแพทย์</strong><p>เว็บไซต์นี้จัดทำขึ้นเพื่อให้ความรู้และสนับสนุนการคัดกรองความเสี่ยงเบื้องต้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถยืนยันหรือปฏิเสธการมีมะเร็งผิวหนังได้ หากพบรอยโรคที่เปลี่ยนแปลงหรือมีข้อกังวล ควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์</p></div>
+          <div><strong data-i18n="medical_title">ข้อควรทราบทางการแพทย์</strong><p data-i18n="medical_desc">เว็บไซต์นี้จัดทำขึ้นเพื่อให้ความรู้และสนับสนุนการคัดกรองความเสี่ยงเบื้องต้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถยืนยันหรือปฏิเสธการมีมะเร็งผิวหนังได้ หากพบรอยโรคที่เปลี่ยนแปลงหรือมีข้อกังวล ควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์</p></div>
         </aside>
       </div>
     </section>
@@ -292,10 +293,143 @@
   <footer>
     <div class="wrap footer-inner">
       <div class="footer-brand">Skin Lesion Detection Platform<small>FOR MELANOMA · AI-ASSISTED PRELIMINARY SCREENING</small></div>
-      <div class="copyright">© 2026 Skin Cancer AI Project</div>
+      <div class="copyright" data-i18n="copyright">© 2026 Skin Cancer AI Project</div>
     </div>
   </footer>
   <button class="backtop" id="backTop" type="button" aria-label="กลับขึ้นด้านบน">↑</button>
+
+  <script>
+    (() => {
+      const translations = {
+        th: {
+          page_title:"ความรู้ Melanoma | Skin Lesion Detection Platform",
+          nav_home:"หน้าแรก", nav_ai:"AI วิเคราะห์", nav_info:"ความรู้ Melanoma", nav_hospital:"โรงพยาบาล", nav_start:"เริ่มประเมินด้วย AI",
+          hero_eyebrow:"MELANOMA AWARENESS & SKIN HEALTH", hero_title:"เข้าใจ Melanoma<br>เพื่อดูแลสุขภาพผิว<br><span class=\"gradient-text\">อย่างรู้เท่าทัน</span>",
+          hero_desc:"เรียนรู้เกี่ยวกับมะเร็งผิวหนังชนิดเมลาโนมา สัญญาณเตือนที่ควรสังเกต และหลัก ABCDE ที่ช่วยให้คุณสังเกตความเปลี่ยนแปลงของไฝหรือรอยโรคบนผิวหนังได้อย่างมีข้อมูล",
+          learn_btn:"เรียนรู้เกี่ยวกับ Melanoma", ai_btn:"ไปยัง AI วิเคราะห์", hero_note:"ข้อมูลนี้ใช้เพื่อการให้ความรู้และสนับสนุนการสังเกตเบื้องต้น ไม่ใช่เครื่องมือวินิจฉัยโรค",
+          card_label:"SKIN HEALTH KNOWLEDGE", abcde_guide:"ABCDE GUIDE", visual_caption:"สังเกตความเปลี่ยนแปลงของผิว", visual_subcaption:"เรียนรู้สัญญาณเตือนและปรึกษาแพทย์เมื่อกังวล", floating_note:"แนวทางสังเกตสัญญาณเตือน",
+          section_title:"สิ่งสำคัญที่ควรรู้เกี่ยวกับ Melanoma", section_desc:"ทำความเข้าใจลักษณะทั่วไป สัญญาณเตือน และแนวทางสังเกตผิวหนัง",
+          card1_title:"รู้จักโรค", card1_desc:"Melanoma เป็นมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสี เรียกว่า melanocytes และอาจมีความรุนแรงหากไม่ได้รับการประเมินและรักษาอย่างเหมาะสม",
+          card2_title:"สังเกตการเปลี่ยนแปลง", card2_desc:"ควรสังเกตไฝหรือรอยโรคที่เปลี่ยนขนาด รูปร่าง สี หรือมีอาการใหม่ โดยเฉพาะเมื่อแตกต่างจากไฝอื่นบนร่างกาย",
+          card3_title:"ขอคำแนะนำจากผู้เชี่ยวชาญ", card3_desc:"หากพบรอยโรคที่น่าสงสัยหรือเปลี่ยนแปลงต่อเนื่อง ควรปรึกษาแพทย์ ไม่ควรพึ่งผลประเมินจากภาพหรือ AI เพียงอย่างเดียว",
+          about_title:"Melanoma คืออะไร?", about_p1:"Melanoma คือมะเร็งผิวหนังชนิดหนึ่งที่เกิดจากเซลล์สร้างเม็ดสีของผิวหนัง ซึ่งเรียกว่า melanocytes",
+          about_p2:"โรคนี้สามารถลุกลามไปยังอวัยวะอื่นได้ หากไม่ได้รับการวินิจฉัยและรักษาอย่างเหมาะสมตั้งแต่ระยะต้น Melanoma อาจเริ่มต้นจากไฝเดิมหรือปรากฏเป็นรอยโรคใหม่บนผิวหนัง",
+          about_p3:"ลักษณะของไฝเพียงอย่างเดียวไม่สามารถยืนยันว่าเป็นมะเร็งได้ การตรวจประเมินโดยบุคลากรทางการแพทย์มีความสำคัญเมื่อพบสิ่งผิดปกติ",
+          symptoms_title:"อาการและสัญญาณที่ควรสังเกต", symptom1:"ไฝหรือรอยดำมีขนาดหรือความหนาเปลี่ยนไป", symptom2:"สีของไฝไม่สม่ำเสมอหรือมีหลายสี", symptom3:"ขอบไฝไม่เรียบ หยัก หรือไม่ชัดเจน", symptom4:"รูปร่างของรอยโรคไม่สมมาตร", symptom5:"มีอาการคัน เจ็บ เลือดออก หรือเป็นแผล", symptom6:"เกิดรอยโรคใหม่หรือแตกต่างจากไฝอื่นอย่างชัดเจน",
+          symptoms_note:"สัญญาณเหล่านี้ไม่ได้หมายความว่าเป็น Melanoma เสมอไป แต่ควรได้รับการประเมินหากมีความเปลี่ยนแปลงหรือข้อกังวล",
+          abcde_title:"หลัก ABCDE สำหรับสังเกตไฝและรอยโรค", abcde_desc:"ABCDE เป็นแนวทางช่วยสังเกตลักษณะที่อาจน่าสงสัย ไม่ใช่การตรวจวินิจฉัย และรอยโรคบางชนิดอาจไม่แสดงลักษณะครบทุกข้อ",
+          abcde_a:"ความไม่สมมาตร", abcde_a_desc:"รูปร่างสองด้านไม่เหมือนกันเมื่อแบ่งรอยโรคออกเป็นสองส่วน", abcde_b:"ขอบผิดปกติ", abcde_b_desc:"ขอบหยัก ไม่เรียบ หรือไม่ชัดเจน",
+          abcde_c:"สีไม่สม่ำเสมอ", abcde_c_desc:"มีหลายสีหรือมีเฉดสีที่แตกต่างกันในรอยเดียว", abcde_d:"ขนาด", abcde_d_desc:"มักกล่าวถึงขนาดมากกว่า 6 มม. แต่รอยโรคที่เล็กกว่านี้ก็อาจน่าสงสัยได้",
+          abcde_e:"การเปลี่ยนแปลง", abcde_e_desc:"ขนาด รูปร่าง สี หรืออาการเปลี่ยนไปตามเวลา", references_title:"แหล่งอ้างอิงเพื่อศึกษาต่อ",
+          medical_title:"ข้อควรทราบทางการแพทย์", medical_desc:"เว็บไซต์นี้จัดทำขึ้นเพื่อให้ความรู้และสนับสนุนการคัดกรองความเสี่ยงเบื้องต้น ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถยืนยันหรือปฏิเสธการมีมะเร็งผิวหนังได้ หากพบรอยโรคที่เปลี่ยนแปลงหรือมีข้อกังวล ควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์",
+          copyright:"© 2026 Skin Cancer AI Project"
+        },
+        en: {
+          page_title:"Melanoma Knowledge | Skin Lesion Detection Platform",
+          nav_home:"Home", nav_ai:"AI Analysis", nav_info:"Melanoma Information", nav_hospital:"Hospitals", nav_start:"Start AI Screening",
+          hero_eyebrow:"MELANOMA AWARENESS & SKIN HEALTH", hero_title:"Understand Melanoma<br>and Care for Your Skin<br><span class=\"gradient-text\">with Awareness</span>",
+          hero_desc:"Learn about melanoma, warning signs to watch for, and the ABCDE guide to help you notice changes in moles or skin lesions.",
+          learn_btn:"Learn About Melanoma", ai_btn:"Go to AI Analysis", hero_note:"This information supports education and early observation. It is not a diagnostic tool.",
+          card_label:"SKIN HEALTH KNOWLEDGE", abcde_guide:"ABCDE GUIDE", visual_caption:"Notice changes in your skin", visual_subcaption:"Learn the signs and seek medical advice when concerned", floating_note:"A guide to warning signs",
+          section_title:"Key Facts About Melanoma", section_desc:"Understand common features, warning signs, and how to observe your skin.",
+          card1_title:"Know the Condition", card1_desc:"Melanoma is a type of skin cancer that develops from pigment-producing cells called melanocytes. It can be serious and needs appropriate medical assessment and treatment.",
+          card2_title:"Watch for Changes", card2_desc:"Notice moles or lesions that change in size, shape, or color, or develop new symptoms—especially if they look different from your other moles.",
+          card3_title:"Seek Professional Advice", card3_desc:"Consult a healthcare professional about suspicious or changing lesions. Do not rely on an image or AI assessment alone.",
+          about_title:"What Is Melanoma?", about_p1:"Melanoma is a type of skin cancer that develops from pigment-producing skin cells called melanocytes.",
+          about_p2:"It can spread to other organs if not appropriately diagnosed and treated. It may begin in an existing mole or appear as a new skin lesion.",
+          about_p3:"A mole's appearance alone cannot confirm cancer. Medical assessment is important when something looks unusual.",
+          symptoms_title:"Symptoms and Warning Signs", symptom1:"A mole or dark spot changes size or thickness", symptom2:"The color is uneven or includes multiple colors", symptom3:"The border is irregular, jagged, or unclear", symptom4:"The lesion has an asymmetrical shape", symptom5:"It itches, hurts, bleeds, or becomes an ulcer", symptom6:"A new lesion appears or looks clearly different from others",
+          symptoms_note:"These signs do not always mean melanoma, but changes or concerns should be assessed.",
+          abcde_title:"The ABCDE Guide for Moles and Lesions", abcde_desc:"ABCDE helps identify potentially suspicious features. It is not a diagnosis, and some lesions may not show every feature.",
+          abcde_a:"Asymmetry", abcde_a_desc:"The two halves do not match when the lesion is divided in half.", abcde_b:"Border", abcde_b_desc:"The edge is irregular, jagged, or poorly defined.",
+          abcde_c:"Color", abcde_c_desc:"Different colors or shades appear within the same lesion.", abcde_d:"Diameter", abcde_d_desc:"Often described as over 6 mm, but smaller lesions can also be concerning.",
+          abcde_e:"Evolving", abcde_e_desc:"The size, shape, color, or symptoms change over time.", references_title:"References for Further Reading",
+          medical_title:"Medical Disclaimer", medical_desc:"This website provides education and supports preliminary risk screening. AI results are not a diagnosis and cannot confirm or rule out skin cancer. Consult a healthcare professional if a lesion changes or concerns you.",
+          copyright:"© 2026 Skin Cancer AI Project"
+        },
+        ja: {
+          page_title:"メラノーマの知識 | Skin Lesion Detection Platform",
+          nav_home:"ホーム", nav_ai:"AI分析", nav_info:"メラノーマ情報", nav_hospital:"病院", nav_start:"AI評価を開始",
+          hero_eyebrow:"メラノーマの理解と皮膚の健康", hero_title:"メラノーマを理解し<br>皮膚の健康を守る<br><span class=\"gradient-text\">正しい知識を</span>",
+          hero_desc:"メラノーマ、注意すべき兆候、ほくろや皮膚病変の変化を観察するためのABCDEガイドについて学びます。",
+          learn_btn:"メラノーマについて学ぶ", ai_btn:"AI分析へ", hero_note:"この情報は知識と初期観察を支援するもので、診断ツールではありません。",
+          card_label:"皮膚の健康に関する知識", abcde_guide:"ABCDEガイド", visual_caption:"皮膚の変化に注意", visual_subcaption:"兆候を学び、心配な場合は医療機関に相談してください", floating_note:"注意すべき兆候のガイド",
+          section_title:"メラノーマについて知っておきたいこと", section_desc:"一般的な特徴、注意すべき兆候、皮膚の観察方法を理解しましょう。",
+          card1_title:"病気を知る", card1_desc:"メラノーマはメラノサイトという色素を作る細胞から発生する皮膚がんです。適切な医療評価と治療が必要です。",
+          card2_title:"変化を観察する", card2_desc:"大きさ、形、色が変わったほくろや、新しい症状が出た病変に注意してください。",
+          card3_title:"専門家に相談する", card3_desc:"疑わしい病変や変化が続く場合は医療専門家に相談してください。画像やAIの評価だけに頼らないでください。",
+          about_title:"メラノーマとは？", about_p1:"メラノーマは、メラノサイトと呼ばれる皮膚の色素細胞から発生する皮膚がんの一種です。",
+          about_p2:"適切に診断・治療されない場合、他の臓器に広がることがあります。既存のほくろから始まることも、新しい病変として現れることもあります。",
+          about_p3:"ほくろの見た目だけではがんと確定できません。異常があれば医療機関での評価が重要です。",
+          symptoms_title:"症状と注意すべき兆候", symptom1:"ほくろや黒い斑点の大きさ・厚さが変わる", symptom2:"色が均一でない、または複数の色がある", symptom3:"境界が不規則、ぎざぎざ、または不明瞭", symptom4:"病変の形が左右非対称", symptom5:"かゆみ、痛み、出血、潰瘍がある", symptom6:"新しい病変、または他のほくろと明らかに異なる病変",
+          symptoms_note:"これらの兆候が必ずメラノーマを意味するわけではありませんが、変化や心配があれば評価を受けてください。",
+          abcde_title:"ほくろや病変を観察するABCDEガイド", abcde_desc:"ABCDEは疑わしい特徴を観察するための目安で、診断ではありません。すべての特徴が現れるとは限りません。",
+          abcde_a:"非対称性", abcde_a_desc:"病変を二分したとき、左右の形が一致しません。", abcde_b:"境界", abcde_b_desc:"縁が不規則、ぎざぎざ、または不明瞭です。",
+          abcde_c:"色", abcde_c_desc:"同じ病変内に複数の色や濃淡があります。", abcde_d:"大きさ", abcde_d_desc:"6 mmを超えることが目安ですが、小さくても注意が必要な場合があります。",
+          abcde_e:"変化", abcde_e_desc:"大きさ、形、色、症状が時間とともに変わります。", references_title:"参考資料",
+          medical_title:"医療に関する注意", medical_desc:"このウェブサイトは教育と初期リスク評価を支援するものです。AIの結果は診断ではなく、皮膚がんの有無を確定・否定できません。病変が変化したり心配がある場合は医療専門家に相談してください。",
+          copyright:"© 2026 Skin Cancer AI Project"
+        },
+        zh: {
+          page_title:"黑色素瘤知识 | Skin Lesion Detection Platform",
+          nav_home:"首页", nav_ai:"AI 分析", nav_info:"黑色素瘤知识", nav_hospital:"医院", nav_start:"开始 AI 筛查",
+          hero_eyebrow:"黑色素瘤认知与皮肤健康", hero_title:"了解黑色素瘤<br>关注皮肤健康<br><span class=\"gradient-text\">掌握相关知识</span>",
+          hero_desc:"了解黑色素瘤、需要留意的警示信号，以及帮助观察痣或皮肤病变变化的 ABCDE 指南。",
+          learn_btn:"了解黑色素瘤", ai_btn:"前往 AI 分析", hero_note:"这些信息用于科普和初步观察，不是诊断工具。",
+          card_label:"皮肤健康知识", abcde_guide:"ABCDE 指南", visual_caption:"留意皮肤变化", visual_subcaption:"了解警示信号，如有疑虑请咨询医生", floating_note:"警示信号观察指南",
+          section_title:"关于黑色素瘤的重要知识", section_desc:"了解常见特征、警示信号和皮肤观察方法。",
+          card1_title:"认识疾病", card1_desc:"黑色素瘤是一种由黑色素细胞引起的皮肤癌，需接受适当的医疗评估和治疗。",
+          card2_title:"观察变化", card2_desc:"留意大小、形状或颜色发生变化的痣或病变，以及出现新症状的情况。",
+          card3_title:"寻求专业建议", card3_desc:"如果病变可疑或持续变化，请咨询医疗专业人员，不要只依赖图像或 AI 评估。",
+          about_title:"什么是黑色素瘤？", about_p1:"黑色素瘤是一种由皮肤中产生色素的细胞（称为黑色素细胞）发展而来的皮肤癌。",
+          about_p2:"如果未能及时得到适当诊断和治疗，黑色素瘤可能扩散到其他器官。它可能从已有的痣开始，也可能表现为新的皮肤病变。",
+          about_p3:"仅凭痣的外观无法确认癌症。发现异常时，医疗评估非常重要。",
+          symptoms_title:"症状和警示信号", symptom1:"痣或黑斑的大小或厚度发生变化", symptom2:"颜色不均匀或包含多种颜色", symptom3:"边缘不规则、锯齿状或不清晰", symptom4:"病变形状不对称", symptom5:"出现瘙痒、疼痛、出血或溃疡", symptom6:"出现新的病变，或明显不同于其他痣",
+          symptoms_note:"这些迹象不一定意味着黑色素瘤，但如果出现变化或担忧，应接受评估。",
+          abcde_title:"观察痣和皮肤病变的 ABCDE 指南", abcde_desc:"ABCDE 可帮助观察可能可疑的特征，但不是诊断；有些病变可能不会表现出所有特征。",
+          abcde_a:"不对称", abcde_a_desc:"将病变分成两半后，两侧形状不一致。", abcde_b:"边缘", abcde_b_desc:"边缘不规则、呈锯齿状或不清晰。",
+          abcde_c:"颜色", abcde_c_desc:"同一病变中出现多种颜色或深浅。", abcde_d:"直径", abcde_d_desc:"通常提到超过 6 毫米，但较小的病变也可能值得关注。",
+          abcde_e:"变化", abcde_e_desc:"大小、形状、颜色或症状随时间发生变化。", references_title:"延伸阅读参考资料",
+          medical_title:"医疗免责声明", medical_desc:"本网站用于科普和初步风险筛查。AI 结果不是诊断，不能确认或排除皮肤癌。如病变发生变化或您有疑虑，请咨询医疗专业人员。",
+          copyright:"© 2026 Skin Cancer AI Project"
+        },
+        ko: {
+          page_title:"흑색종 정보 | Skin Lesion Detection Platform",
+          nav_home:"홈", nav_ai:"AI 분석", nav_info:"흑색종 정보", nav_hospital:"병원", nav_start:"AI 검사 시작",
+          hero_eyebrow:"흑색종 인식 및 피부 건강", hero_title:"흑색종을 이해하고<br>피부 건강을 지키는<br><span class=\"gradient-text\">올바른 지식</span>",
+          hero_desc:"흑색종, 주의해야 할 징후, 점이나 피부 병변의 변화를 관찰하는 데 도움이 되는 ABCDE 지침을 알아보세요.",
+          learn_btn:"흑색종 알아보기", ai_btn:"AI 분석으로 이동", hero_note:"이 정보는 교육과 초기 관찰을 위한 것이며 진단 도구가 아닙니다.",
+          card_label:"피부 건강 지식", abcde_guide:"ABCDE 가이드", visual_caption:"피부 변화를 관찰하세요", visual_subcaption:"징후를 알아보고 걱정되면 의료진과 상담하세요", floating_note:"주의 징후 관찰 가이드",
+          section_title:"흑색종에 대해 알아야 할 주요 사항", section_desc:"일반적인 특징, 주의 징후 및 피부 관찰 방법을 알아보세요.",
+          card1_title:"질환 이해하기", card1_desc:"흑색종은 멜라닌 세포에서 발생하는 피부암의 한 종류이며 적절한 의료 평가와 치료가 필요합니다.",
+          card2_title:"변화 관찰하기", card2_desc:"크기, 모양, 색이 변하거나 새로운 증상이 생기는 점이나 병변을 살펴보세요.",
+          card3_title:"전문가에게 상담하기", card3_desc:"의심스럽거나 계속 변하는 병변이 있으면 의료 전문가와 상담하세요. 이미지나 AI 평가에만 의존하지 마세요.",
+          about_title:"흑색종이란?", about_p1:"흑색종은 멜라닌 세포라고 불리는 피부 색소 생성 세포에서 발생하는 피부암입니다.",
+          about_p2:"적절한 진단과 치료를 받지 않으면 다른 장기로 퍼질 수 있습니다. 기존 점에서 시작하거나 새로운 피부 병변으로 나타날 수 있습니다.",
+          about_p3:"점의 외관만으로 암을 확정할 수 없습니다. 이상이 발견되면 의료 평가가 중요합니다.",
+          symptoms_title:"증상 및 주의 징후", symptom1:"점이나 검은 반점의 크기 또는 두께가 변함", symptom2:"색이 고르지 않거나 여러 색이 나타남", symptom3:"경계가 불규칙하거나 들쭉날쭉하고 불분명함", symptom4:"병변 모양이 비대칭임", symptom5:"가려움, 통증, 출혈 또는 궤양이 생김", symptom6:"새 병변이 생기거나 다른 점과 뚜렷하게 다름",
+          symptoms_note:"이러한 징후가 항상 흑색종을 의미하는 것은 아니지만 변화나 우려가 있다면 진료를 받으세요.",
+          abcde_title:"점과 병변 관찰을 위한 ABCDE 가이드", abcde_desc:"ABCDE는 의심스러운 특징을 살펴보는 지침이며 진단이 아닙니다. 모든 특징이 나타나지 않을 수도 있습니다.",
+          abcde_a:"비대칭", abcde_a_desc:"병변을 반으로 나누었을 때 양쪽 모양이 다릅니다.", abcde_b:"경계", abcde_b_desc:"가장자리가 불규칙하거나 들쭉날쭉하고 불분명합니다.",
+          abcde_c:"색상", abcde_c_desc:"한 병변 안에 여러 색이나 색조가 나타납니다.", abcde_d:"직경", abcde_d_desc:"보통 6mm 초과를 언급하지만 더 작은 병변도 주의가 필요할 수 있습니다.",
+          abcde_e:"변화", abcde_e_desc:"크기, 모양, 색 또는 증상이 시간에 따라 변합니다.", references_title:"추가 학습 참고 자료",
+          medical_title:"의료 관련 안내", medical_desc:"이 웹사이트는 교육과 초기 위험 선별을 지원합니다. AI 결과는 진단이 아니며 피부암을 확정하거나 배제할 수 없습니다. 병변이 변하거나 걱정된다면 의료 전문가와 상담하세요.",
+          copyright:"© 2026 Skin Cancer AI Project"
+        }
+      };
+      const lang = document.documentElement.lang || "th";
+      const dict = translations[lang] || translations.th;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (dict[key] !== undefined) {
+          if (key === "hero_title") el.innerHTML = dict[key];
+          else el.textContent = dict[key];
+        }
+      });
+      document.title = dict.page_title || document.title;
+    })();
+  </script>
+
   <script>
     (() => {
       const progress = document.getElementById('progressFill');

@@ -107,6 +107,12 @@ TRANSLATIONS = {
 
 @app.before_request
 def load_preferences():
+    # Ask for language/country preferences on first visit.
+    # Users who selected outside Thailand can still use all other features.
+    if request.endpoint not in {"language", "static", "health"}:
+        if "language" not in session or "in_thailand" not in session:
+            return redirect(url_for("language"))
+
     lang = session.get("language", DEFAULT_LANGUAGE)
     if lang not in SUPPORTED_LANGUAGES:
         lang = DEFAULT_LANGUAGE
@@ -201,8 +207,8 @@ def questionnaire():
 
 @app.route("/hospital")
 def hospital():
-    if session.get("in_thailand") is not True:
-        return redirect(url_for("language"))
+    # The hospital page is not blocked at the backend.
+    # Templates should hide the hospital navigation link when in_thailand is False.
     with open("hospitals.json", "r", encoding="utf-8") as f:
         hospitals = json.load(f)
     return render_template("hospital.html", hospitals=hospitals)

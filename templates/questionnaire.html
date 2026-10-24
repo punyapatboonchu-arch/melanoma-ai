@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ current_language|default("th") }}">
+<html lang="{{ current_language|default('th') }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -368,7 +368,7 @@
         }
       };
 
-      const lang = {{ current_language|default('th')|tojson }};
+      const lang = document.documentElement.lang || "th";
       const dict = translations[lang] || translations.th;
       document.documentElement.lang = lang;
       document.querySelectorAll("[data-i18n]").forEach(el => {

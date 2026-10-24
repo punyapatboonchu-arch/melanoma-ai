@@ -134,6 +134,8 @@
   </style>
 </head>
 <body>
+{% if in_thailand %}
+
 
 <header class="site-header">
   <div class="nav-shell">
@@ -1218,5 +1220,17 @@
   });
 </script>
 
-</body>
+
+{% else %}
+  <main style="min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#f5fbff;font-family:'Prompt',sans-serif;color:#172534;text-align:center">
+    <section style="max-width:560px;background:white;padding:36px;border:1px solid #dcecf5;border-radius:24px;box-shadow:0 18px 55px #4d9ab815">
+      <div style="font-size:42px;margin-bottom:12px">🌐</div>
+      <h1 style="font-size:25px;margin:0 0 12px;color:#172534">Hospital Finder Unavailable</h1>
+      <p style="line-height:1.8;color:#657b8c;margin:0 0 24px">The hospital directory on this website is currently available only to visitors who selected that they are in Thailand.</p>
+      <a href="/language" style="display:inline-block;padding:12px 20px;border-radius:999px;background:#bdeeff;color:#15384c;text-decoration:none;font-weight:600">Change location preference</a>
+      <p style="font-size:12px;color:#8799a5;margin-top:18px">If you are in Thailand, return to the language and location selection page and choose “Thailand”.</p>
+    </section>
+  </main>
+{% endif %}
+
 </html>
