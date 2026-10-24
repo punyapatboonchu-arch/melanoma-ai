@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="{{ current_language|default('th') }}">
 <head>
   <meta charset="UTF-8">
-  <title>ค้นหาโรงพยาบาล | Skin Lesion Detection Platform for Melanoma</title>
+  <title id="pageTitle">ค้นหาโรงพยาบาล | Skin Lesion Detection Platform for Melanoma</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -139,15 +139,15 @@
 
 <header class="site-header">
   <div class="nav-shell">
-    <a class="brand" href="/" aria-label="กลับหน้าหลัก">
+    <a class="brand" href="/" aria-label="กลับหน้าหลัก" id="brandHome">
       <span class="brand-icon" aria-hidden="true">✳</span>
       <span class="brand-copy"><strong>Skin Lesion Detection</strong><small>PLATFORM FOR MELANOMA</small></span>
     </a>
-    <nav class="main-nav" aria-label="เมนูหลัก">
-      <a href="/">หน้าแรก</a>
-      <a href="/questionnaire">AI วิเคราะห์</a>
-      <a href="/info">ข้อมูล Melanoma</a>
-      <a class="nav-cta" href="/questionnaire">เริ่มประเมินด้วย AI <span>↗</span></a>
+    <nav class="main-nav" aria-label="เมนูหลัก" id="mainNav">
+      <a href="/" id="navHome">หน้าแรก</a>
+      <a href="/questionnaire" id="navAI">AI วิเคราะห์</a>
+      <a href="/info" id="navInfo">ข้อมูล Melanoma</a>
+      <a class="nav-cta" href="/questionnaire" id="navCTA">เริ่มประเมินด้วย AI <span>↗</span></a>
     </nav>
   </div>
 </header>
@@ -155,38 +155,38 @@
 <section class="page-hero">
   <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
   <div class="hero-content">
-    <span class="eyebrow"><span class="status-dot"></span> HOSPITAL DIRECTORY</span>
-    <h1>ค้นหาโรงพยาบาล<br><em>สำหรับตรวจ Melanoma</em></h1>
-    <p>ค้นหาสถานพยาบาลและข้อมูลคลินิกผิวหนังตามจังหวัด<br class="desktop-break"> เพื่อวางแผนเข้ารับคำปรึกษาจากบุคลากรทางการแพทย์</p>
-    <div class="hero-pills"><span>✦ ข้อมูลโรงพยาบาล</span><span>⌖ ค้นหาตามจังหวัด</span><span>♡ ดูแลสุขภาพผิว</span></div>
+    <span class="eyebrow"><span class="status-dot"></span> <span id="eyebrowText">HOSPITAL DIRECTORY</span></span>
+    <h1><span id="heroTitle">ค้นหาโรงพยาบาล</span><br><em id="heroTitleEm">สำหรับตรวจ Melanoma</em></h1>
+    <p id="heroDescription">ค้นหาสถานพยาบาลและข้อมูลคลินิกผิวหนังตามจังหวัด<br class="desktop-break"> เพื่อวางแผนเข้ารับคำปรึกษาจากบุคลากรทางการแพทย์</p>
+    <div class="hero-pills"><span id="pill1">✦ ข้อมูลโรงพยาบาล</span><span id="pill2">⌖ ค้นหาตามจังหวัด</span><span id="pill3">♡ ดูแลสุขภาพผิว</span></div>
   </div>
   <div class="hero-art" aria-hidden="true">
     <div class="art-glow"></div><div class="art-card art-card-back"><span>DERMATOLOGY</span><div class="art-lines"></div><div class="art-lines short"></div><div class="art-cross">＋</div></div>
     <div class="art-card art-card-front"><div class="art-crosshair">＋</div><div class="art-hospital">✚</div><strong>CARE<br>STARTS HERE</strong><small>Find trusted care</small></div>
-    <div class="art-badge"><span class="badge-icon">⌖</span><span><b>Hospital Finder</b><small>ค้นหาสถานพยาบาล</small></span></div>
+    <div class="art-badge"><span class="badge-icon">⌖</span><span><b id="badgeTitle">Hospital Finder</b><small id="badgeSubtitle">ค้นหาสถานพยาบาล</small></span></div>
   </div>
 </section>
 
 <main class="page-main">
-<div class="section-intro"><span class="section-kicker">FIND MEDICAL CARE</span><h2>ค้นหาสถานพยาบาลที่เหมาะกับคุณ</h2><p>เลือกจังหวัดและโรงพยาบาลเพื่อดูข้อมูลการติดต่อและเวลาให้บริการ</p></div>
+<div class="section-intro"><span class="section-kicker" id="sectionKicker">FIND MEDICAL CARE</span><h2 id="sectionTitle">ค้นหาสถานพยาบาลที่เหมาะกับคุณ</h2><p id="sectionDescription">เลือกจังหวัดและโรงพยาบาลเพื่อดูข้อมูลการติดต่อและเวลาให้บริการ</p></div>
 <div class="form-container">
-  <div class="form-topline"><span class="form-icon">⌖</span><div><h2>ค้นหาโรงพยาบาล</h2><p>เลือกข้อมูลด้านล่างเพื่อเริ่มค้นหา</p></div><span class="form-step">STEP 01</span></div>
-  <label for="province">เลือกจังหวัด:</label>
+  <div class="form-topline"><span class="form-icon">⌖</span><div><h2 id="formTitle">ค้นหาโรงพยาบาล</h2><p id="formSubtitle">เลือกข้อมูลด้านล่างเพื่อเริ่มค้นหา</p></div><span class="form-step">STEP 01</span></div>
+  <label for="province" id="provinceLabel">เลือกจังหวัด:</label>
   <select id="province">
-    <option value="">-- เลือกจังหวัด --</option>
+    <option value="" id="provincePlaceholder">-- เลือกจังหวัด --</option>
   </select>
 
-  <label for="hospital">เลือกโรงพยาบาล:</label>
+  <label for="hospital" id="hospitalLabel">เลือกโรงพยาบาล:</label>
   <select id="hospital">
-    <option value="">-- เลือกรพ. --</option>
+    <option value="" id="hospitalPlaceholder">-- เลือกรพ. --</option>
   </select>
 
-  <div id="hospitalDetails"><div class="empty-state"><span class="empty-icon">＋</span><strong>ข้อมูลโรงพยาบาลจะแสดงที่นี่</strong><p>กรุณาเลือกจังหวัดและโรงพยาบาลเพื่อดูรายละเอียด</p></div></div>
+  <div id="hospitalDetails"><div class="empty-state"><span class="empty-icon">＋</span><strong id="emptyTitle">ข้อมูลโรงพยาบาลจะแสดงที่นี่</strong><p id="emptyDescription">กรุณาเลือกจังหวัดและโรงพยาบาลเพื่อดูรายละเอียด</p></div></div>
   <div class="container">
 
     
 
-    <a href="/" class="back-btn">
+    <a href="/" class="back-btn" id="backButton">
         กลับหน้าแรก
     </a>
 
@@ -195,8 +195,8 @@
 
 </main>
 <footer class="site-footer">
-  <div class="footer-inner"><div><strong>Skin Lesion Detection Platform for Melanoma</strong><p>แพลตฟอร์มเพื่อสนับสนุนการคัดกรองความเสี่ยงเบื้องต้นและการเข้าถึงข้อมูลสุขภาพผิว</p></div><a href="/">กลับหน้าแรก ↑</a></div>
-  <small>© 2026 Skin Cancer AI Project · ผลจาก AI ไม่ใช่การวินิจฉัยทางการแพทย์</small>
+  <div class="footer-inner"><div><strong>Skin Lesion Detection Platform for Melanoma</strong><p id="footerDescription">แพลตฟอร์มเพื่อสนับสนุนการคัดกรองความเสี่ยงเบื้องต้นและการเข้าถึงข้อมูลสุขภาพผิว</p></div><a href="/" id="footerHome">กลับหน้าแรก ↑</a></div>
+  <small id="footerDisclaimer">© 2026 Skin Cancer AI Project · ผลจาก AI ไม่ใช่การวินิจฉัยทางการแพทย์</small>
 </footer>
 
 <script>
@@ -1174,11 +1174,84 @@
 ]
   ;
 
+
+  const lang = document.documentElement.lang || "th";
+  const ui = {
+    th: {
+      title:"ค้นหาโรงพยาบาล | Skin Lesion Detection Platform for Melanoma", home:"หน้าแรก", ai:"AI วิเคราะห์", info:"ข้อมูล Melanoma", cta:"เริ่มประเมินด้วย AI",
+      eyebrow:"HOSPITAL DIRECTORY", hero:"ค้นหาโรงพยาบาล", heroEm:"สำหรับตรวจ Melanoma",
+      heroDesc:"ค้นหาสถานพยาบาลและข้อมูลคลินิกผิวหนังตามจังหวัด<br class=\"desktop-break\"> เพื่อวางแผนเข้ารับคำปรึกษาจากบุคลากรทางการแพทย์",
+      pill1:"✦ ข้อมูลโรงพยาบาล", pill2:"⌖ ค้นหาตามจังหวัด", pill3:"♡ ดูแลสุขภาพผิว", badge:"Hospital Finder", badgeSub:"ค้นหาสถานพยาบาล",
+      kicker:"FIND MEDICAL CARE", sectionTitle:"ค้นหาสถานพยาบาลที่เหมาะกับคุณ", sectionDesc:"เลือกจังหวัดและโรงพยาบาลเพื่อดูข้อมูลการติดต่อและเวลาให้บริการ",
+      formTitle:"ค้นหาโรงพยาบาล", formSub:"เลือกข้อมูลด้านล่างเพื่อเริ่มค้นหา", province:"เลือกจังหวัด:", provinceOpt:"-- เลือกจังหวัด --",
+      hospital:"เลือกโรงพยาบาล:", hospitalOpt:"-- เลือกโรงพยาบาล --", emptyTitle:"ข้อมูลโรงพยาบาลจะแสดงที่นี่", emptyDesc:"กรุณาเลือกจังหวัดและโรงพยาบาลเพื่อดูรายละเอียด",
+      chooseHospital:"กรุณาเลือกโรงพยาบาล", address:"ที่อยู่", hours:"เวลาให้บริการคลินิกผิวหนัง", special:"เวลาให้บริการคลินิกผิวหนังพิเศษ", phone:"โทรศัพท์", map:"ดูแผนที่",
+      back:"กลับหน้าหลัก", footerDesc:"แพลตฟอร์มเพื่อสนับสนุนการคัดกรองความเสี่ยงเบื้องต้นและการเข้าถึงข้อมูลสุขภาพผิว", footerDisclaimer:"© 2026 Skin Cancer AI Project · ผลจาก AI ไม่ใช่การวินิจฉัยทางการแพทย์"
+    },
+    en: {
+      title:"Find a Hospital | Skin Lesion Detection Platform for Melanoma", home:"Home", ai:"AI Screening", info:"Melanoma Information", cta:"Start AI Screening",
+      eyebrow:"HOSPITAL DIRECTORY", hero:"Find a Hospital", heroEm:"for Melanoma Evaluation",
+      heroDesc:"Find healthcare facilities and dermatology clinic information by province<br class=\"desktop-break\"> to help plan a consultation with a healthcare professional.",
+      pill1:"✦ Hospital Directory", pill2:"⌖ Search by Province", pill3:"♡ Skin Health", badge:"Hospital Finder", badgeSub:"Search healthcare facilities",
+      kicker:"FIND MEDICAL CARE", sectionTitle:"Find Healthcare Near You", sectionDesc:"Select a province and hospital to view contact details and clinic hours.",
+      formTitle:"Hospital Search", formSub:"Select the options below to begin.", province:"Select province:", provinceOpt:"-- Select a province --",
+      hospital:"Select hospital:", hospitalOpt:"-- Select a hospital --", emptyTitle:"Hospital information will appear here", emptyDesc:"Select a province and hospital to view details.",
+      chooseHospital:"Please select a hospital.", address:"Address", hours:"Dermatology clinic hours", special:"Special dermatology clinic hours", phone:"Telephone", map:"View map",
+      back:"Back to Home", footerDesc:"A platform supporting preliminary risk screening and access to skin health information.", footerDisclaimer:"© 2026 Skin Cancer AI Project · AI results are not a medical diagnosis."
+    },
+    ja: {
+      title:"病院検索 | Skin Lesion Detection Platform for Melanoma", home:"ホーム", ai:"AIによるスクリーニング", info:"メラノーマに関する情報", cta:"AIスクリーニングを開始",
+      eyebrow:"医療機関一覧", hero:"病院を検索", heroEm:"メラノーマの診療相談に向けて",
+      heroDesc:"県別に医療機関や皮膚科の診療情報を検索し、<br class=\"desktop-break\">医療従事者への相談を計画できます。",
+      pill1:"✦ 医療機関情報", pill2:"⌖ 県から検索", pill3:"♡ 皮膚の健康", badge:"病院検索", badgeSub:"医療機関を検索",
+      kicker:"医療機関を探す", sectionTitle:"適切な医療機関を探す", sectionDesc:"県と病院を選択すると、連絡先や診療時間を確認できます。",
+      formTitle:"病院検索", formSub:"以下を選択して検索を開始してください。", province:"県を選択：", provinceOpt:"-- 県を選択 --",
+      hospital:"病院を選択：", hospitalOpt:"-- 病院を選択 --", emptyTitle:"ここに病院情報が表示されます", emptyDesc:"詳細を確認するには、県と病院を選択してください。",
+      chooseHospital:"病院を選択してください。", address:"住所", hours:"皮膚科の診療時間", special:"特別皮膚科診療の時間", phone:"電話番号", map:"地図を見る",
+      back:"ホームに戻る", footerDesc:"皮膚の健康情報へのアクセスとリスクの初期スクリーニングを支援するプラットフォームです。", footerDisclaimer:"© 2026 Skin Cancer AI Project · AIの結果は医学的診断ではありません。"
+    },
+    zh: {
+      title:"医院查询 | Skin Lesion Detection Platform for Melanoma", home:"首页", ai:"AI 初步筛查", info:"黑色素瘤相关信息", cta:"开始 AI 筛查",
+      eyebrow:"医疗机构目录", hero:"查询医院", heroEm:"以咨询黑色素瘤相关诊疗",
+      heroDesc:"按府查询医疗机构及皮肤科门诊信息，<br class=\"desktop-break\">以便安排向医疗专业人员咨询。",
+      pill1:"✦ 医院信息", pill2:"⌖ 按府查询", pill3:"♡ 皮肤健康", badge:"医院查询", badgeSub:"查询医疗机构",
+      kicker:"查找医疗服务", sectionTitle:"查找适合您的医疗机构", sectionDesc:"选择府和医院以查看联系方式及门诊时间。",
+      formTitle:"医院查询", formSub:"请选择以下选项以开始查询。", province:"选择府：", provinceOpt:"-- 选择府 --",
+      hospital:"选择医院：", hospitalOpt:"-- 选择医院 --", emptyTitle:"医院信息将在此处显示", emptyDesc:"请选择府和医院以查看详细信息。",
+      chooseHospital:"请选择医院。", address:"地址", hours:"皮肤科门诊时间", special:"特需皮肤科门诊时间", phone:"电话", map:"查看地图",
+      back:"返回首页", footerDesc:"本平台旨在支持初步风险筛查并帮助用户获取皮肤健康信息。", footerDisclaimer:"© 2026 Skin Cancer AI Project · AI 结果不构成医学诊断。"
+    },
+    ko: {
+      title:"병원 찾기 | Skin Lesion Detection Platform for Melanoma", home:"홈", ai:"AI 선별 검사", info:"흑색종 정보", cta:"AI 선별 검사 시작",
+      eyebrow:"의료기관 안내", hero:"병원 찾기", heroEm:"흑색종 진료 상담을 위한",
+      heroDesc:"주(도)별 의료기관 및 피부과 진료 정보를 확인하여<br class=\"desktop-break\"> 의료 전문가와의 상담을 계획할 수 있습니다.",
+      pill1:"✦ 병원 정보", pill2:"⌖ 지역별 검색", pill3:"♡ 피부 건강", badge:"병원 찾기", badgeSub:"의료기관 검색",
+      kicker:"의료기관 찾기", sectionTitle:"적합한 의료기관 찾기", sectionDesc:"지역과 병원을 선택하면 연락처 및 진료 시간을 확인할 수 있습니다.",
+      formTitle:"병원 검색", formSub:"아래 항목을 선택하여 검색을 시작하세요.", province:"지역 선택:", provinceOpt:"-- 지역 선택 --",
+      hospital:"병원 선택:", hospitalOpt:"-- 병원 선택 --", emptyTitle:"병원 정보가 여기에 표시됩니다", emptyDesc:"자세한 정보를 보려면 지역과 병원을 선택하세요.",
+      chooseHospital:"병원을 선택해 주세요.", address:"주소", hours:"피부과 진료 시간", special:"특별 피부과 진료 시간", phone:"전화번호", map:"지도 보기",
+      back:"홈으로 돌아가기", footerDesc:"피부 건강 정보 접근과 초기 위험 선별을 지원하는 플랫폼입니다.", footerDisclaimer:"© 2026 Skin Cancer AI Project · AI 결과는 의학적 진단이 아닙니다."
+    }
+  };
+  const T = ui[lang] || ui.th;
+  document.documentElement.lang = lang || 'th';
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  document.title = T.title;
+  setText('navHome', T.home); setText('navAI', T.ai); setText('navInfo', T.info);
+  const cta = document.getElementById('navCTA'); if (cta) cta.firstChild.textContent = T.cta + ' ';
+  setText('eyebrowText', T.eyebrow); setText('heroTitle', T.hero); setText('heroTitleEm', T.heroEm);
+  const hd = document.getElementById('heroDescription'); if (hd) hd.innerHTML = T.heroDesc;
+  setText('pill1', T.pill1); setText('pill2', T.pill2); setText('pill3', T.pill3);
+  setText('badgeTitle', T.badge); setText('badgeSubtitle', T.badgeSub);
+  setText('sectionKicker', T.kicker); setText('sectionTitle', T.sectionTitle); setText('sectionDescription', T.sectionDesc);
+  setText('formTitle', T.formTitle); setText('formSubtitle', T.formSub); setText('provinceLabel', T.province);
+  setText('provincePlaceholder', T.provinceOpt); setText('hospitalLabel', T.hospital); setText('hospitalPlaceholder', T.hospitalOpt);
+  setText('emptyTitle', T.emptyTitle); setText('emptyDescription', T.emptyDesc);
+  setText('backButton', T.back); setText('footerHome', T.back + ' ↑'); setText('footerDescription', T.footerDesc); setText('footerDisclaimer', T.footerDisclaimer);
   const provinceSelect = document.getElementById('province');
   const hospitalSelect = document.getElementById('hospital');
   const hospitalDetails = document.getElementById('hospitalDetails');
 
-  // แสดงรายชื่อจังหวัดทั้งหมดทันที โดยไม่ต้องเลือกภาคก่อน
   const provinces = [...new Set(hospitals.map(h => h.จังหวัด))]
     .filter(Boolean)
     .sort((a, b) => a.localeCompare(b, 'th'));
@@ -1191,12 +1264,15 @@
   });
 
   provinceSelect.addEventListener('change', () => {
-    hospitalSelect.innerHTML = '<option value="">-- เลือกรพ. --</option>';
-    hospitalDetails.innerHTML = 'กรุณาเลือกโรงพยาบาล';
+    hospitalSelect.innerHTML = '';
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = T.hospitalOpt;
+    hospitalSelect.appendChild(placeholder);
+    hospitalDetails.innerHTML = `<div class="empty-state"><span class="empty-icon">＋</span><strong>${T.emptyTitle}</strong><p>${T.emptyDesc}</p></div>`;
 
     const selectedProvince = provinceSelect.value;
     const filteredHospitals = hospitals.filter(h => h.จังหวัด === selectedProvince);
-
     filteredHospitals.forEach(h => {
       const option = document.createElement('option');
       option.value = h['ชื่อโรงพยาบาล'];
@@ -1207,15 +1283,16 @@
 
   hospitalSelect.addEventListener('change', () => {
     const selectedHospital = hospitals.find(h => h['ชื่อโรงพยาบาล'] === hospitalSelect.value);
-
-    if(selectedHospital) {
+    if (selectedHospital) {
       hospitalDetails.innerHTML = `
-        <p><strong>ที่อยู่:</strong> ${selectedHospital.ที่อยู่}</p>
-        <p><strong>เวลาเปิด-ปิดคลินิกผิวหนัง:</strong> ${selectedHospital['วันและเวลาเปิด-ปิดคลินิกผิวหนัง']}</p>
-        <p><strong>เวลาเปิด-ปิดคลินิกผิวหนัง (พิเศษ):</strong> ${selectedHospital['วันและเวลาเปิด-ปิดคลินิกผิวหนัง(พิเศษ)']}</p>
-        <p><strong>เบอร์โทรศัพท์:</strong> ${selectedHospital['เบอร์โทรศัพท์']}</p>
-        <p><a href="${selectedHospital['ลิงค์ที่อยู่(GOOGLEMAP)']}" target="_blank">ดูแผนที่</a></p>
+        <p><strong>${T.address}:</strong> ${selectedHospital.ที่อยู่}</p>
+        <p><strong>${T.hours}:</strong> ${selectedHospital['วันและเวลาเปิด-ปิดคลินิกผิวหนัง']}</p>
+        <p><strong>${T.special}:</strong> ${selectedHospital['วันและเวลาเปิด-ปิดคลินิกผิวหนัง(พิเศษ)']}</p>
+        <p><strong>${T.phone}:</strong> ${selectedHospital['เบอร์โทรศัพท์']}</p>
+        <p><a href="${selectedHospital['ลิงค์ที่อยู่(GOOGLEMAP)']}" target="_blank" rel="noopener noreferrer">${T.map}</a></p>
       `;
+    } else {
+      hospitalDetails.innerHTML = `<div class="empty-state"><span class="empty-icon">＋</span><strong>${T.emptyTitle}</strong><p>${T.chooseHospital}</p></div>`;
     }
   });
 </script>
