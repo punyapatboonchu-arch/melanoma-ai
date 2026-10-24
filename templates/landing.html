@@ -1,138 +1,2407 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Skin Cancer Screening</title>
+    <meta charset="UTF-8">
 
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: 'Prompt', sans-serif;
-      margin: 0;
-      background: #f4f9ff;
-      text-align: center;
-    }
+    <meta name="theme-color" content="#f5f9ff">
 
-    header {
-      background: white;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
+    <meta name="description"
+          content="แพลตฟอร์ม AI เพื่อช่วยประเมินความเสี่ยงเบื้องต้นของมะเร็งผิวหนังชนิด Melanoma พร้อมข้อมูลความรู้และการค้นหาโรงพยาบาล">
 
-    h1 {
-      color: #0a66c2;
-      margin-top: 40px;
-    }
+    <title>Skin Cancer AI | Melanoma Screening</title>
 
-    .container {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 60px;
-      flex-wrap: wrap;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    .card {
-      width: 260px;
-      height: 260px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+    <style>
+        :root {
+            --primary: #1769d2;
+            --primary-dark: #104c9c;
+            --primary-light: #eaf3ff;
 
-    .card h2 {
-      color: #0a66c2;
-      margin-bottom: 10px;
-    }
+            --navy: #102c52;
+            --text: #243b59;
+            --muted: #6d7f96;
 
-    .card p {
-      font-size: 14px;
-      color: #555;
-      padding: 0 10px;
-    }
+            --background: #f5f9ff;
+            --surface: #ffffff;
+            --border: #e3ebf5;
 
-    .form-section {
-      margin-top: 80px;
-    }
+            --shadow:
+                0 12px 35px rgba(25, 70, 125, 0.08);
 
-    iframe {
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+            --shadow-hover:
+                0 22px 48px rgba(25, 70, 125, 0.14);
 
-    footer {
-      margin-top: 60px;
-      font-size: 12px;
-      color: #777;
-    }
-  </style>
+            --radius-lg: 24px;
+            --radius-md: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Prompt", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 8% 5%,
+                    rgba(94, 166, 255, 0.13),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 95% 24%,
+                    rgba(96, 190, 255, 0.12),
+                    transparent 25%
+                ),
+                var(--background);
+
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #80b7ff;
+            outline-offset: 4px;
+        }
+
+        .page-container {
+            width: min(1160px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(220, 232, 246, 0.85);
+        }
+
+        .nav-inner {
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+
+            flex-shrink: 0;
+        }
+
+        .brand-icon {
+            width: 46px;
+            height: 46px;
+
+            display: grid;
+            place-items: center;
+
+            color: white;
+            background:
+                linear-gradient(
+                    145deg,
+                    #3388f5,
+                    #1255b3
+                );
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 7px 18px rgba(23, 105, 210, 0.23);
+        }
+
+        .brand-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .brand-title {
+            display: block;
+
+            color: var(--navy);
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .brand-subtitle {
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--muted);
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #526984;
+            font-size: 13px;
+            font-weight: 500;
+
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            padding: 11px 18px;
+
+            color: white !important;
+            background: var(--primary);
+
+            border-radius: 12px;
+
+            font-size: 13px !important;
+            font-weight: 600 !important;
+
+            box-shadow:
+                0 5px 15px rgba(23, 105, 210, 0.17);
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            display: grid;
+            grid-template-columns: 1.12fr 0.88fr;
+            align-items: center;
+
+            gap: 48px;
+
+            padding-top: 76px;
+            padding-bottom: 66px;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+            z-index: -1;
+
+            width: 380px;
+            height: 380px;
+
+            right: 3%;
+            top: 12%;
+
+            background: rgba(89, 164, 255, 0.12);
+            filter: blur(75px);
+            border-radius: 50%;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 8px 13px;
+
+            color: #1769d2;
+            background: rgba(230, 241, 255, 0.9);
+
+            border: 1px solid #d6e7ff;
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            margin-bottom: 24px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            background: #2eaf78;
+            border-radius: 50%;
+
+            box-shadow: 0 0 0 4px rgba(46, 175, 120, 0.12);
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            color: var(--navy);
+
+            font-size: clamp(32px, 4vw, 49px);
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -0.8px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            max-width: 550px;
+
+            margin: 22px 0 0;
+
+            color: #647991;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+        .hero-description strong {
+            color: #244c7b;
+            font-weight: 600;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 13px;
+
+            margin-top: 30px;
+        }
+
+        .button {
+            min-height: 49px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 12px 21px;
+
+            border-radius: 13px;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                background 0.22s ease;
+        }
+
+        .button-primary {
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2780f1,
+                    #145ac1
+                );
+
+            box-shadow:
+                0 9px 22px rgba(23, 105, 210, 0.22);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 14px 28px rgba(23, 105, 210, 0.28);
+        }
+
+        .button-secondary {
+            color: #28517f;
+            background: white;
+
+            border: 1px solid #dbe7f5;
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-3px);
+            background: #fafdff;
+            box-shadow: var(--shadow);
+        }
+
+        .button svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            max-width: 510px;
+
+            margin-top: 26px;
+
+            color: #74869b;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .hero-note svg {
+            width: 17px;
+            height: 17px;
+
+            margin-top: 3px;
+
+            flex-shrink: 0;
+            color: #4487d7;
+        }
+
+        /* =========================
+           HERO VISUAL
+        ========================= */
+
+        .hero-visual {
+            position: relative;
+
+            min-height: 390px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-glow {
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(81, 158, 255, 0.23),
+                    rgba(81, 158, 255, 0)
+                );
+
+            border-radius: 50%;
+        }
+
+        .visual-card {
+            position: relative;
+            z-index: 1;
+
+            width: min(100%, 400px);
+
+            padding: 25px;
+
+            background: rgba(255, 255, 255, 0.85);
+
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            border-radius: 26px;
+
+            box-shadow:
+                0 25px 65px rgba(35, 83, 145, 0.13),
+                inset 0 0 0 1px rgba(222, 235, 250, 0.7);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            transform: rotate(1deg);
+            transition: transform 0.3s ease;
+        }
+
+        .visual-card:hover {
+            transform: rotate(0deg) translateY(-4px);
+        }
+
+        .visual-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #eaf0f7;
+        }
+
+        .visual-label {
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .visual-tag {
+            padding: 5px 9px;
+
+            color: #2678d7;
+            background: #eaf3ff;
+
+            border-radius: 8px;
+
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .scan-area {
+            position: relative;
+
+            display: grid;
+            place-items: center;
+
+            min-height: 215px;
+
+            margin: 20px 0;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    #e7f2ff,
+                    #f5f9ff 65%,
+                    #edf5ff
+                );
+
+            border: 1px solid #e5eef9;
+            border-radius: 18px;
+        }
+
+        .scan-grid {
+            position: absolute;
+            inset: 0;
+
+            opacity: 0.35;
+
+            background-image:
+                linear-gradient(
+                    rgba(61, 130, 205, 0.1) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(61, 130, 205, 0.1) 1px,
+                    transparent 1px
+                );
+
+            background-size: 24px 24px;
+        }
+
+        .scan-orbit {
+            position: absolute;
+
+            width: 165px;
+            height: 165px;
+
+            border: 1px solid rgba(55, 133, 224, 0.25);
+            border-radius: 50%;
+        }
+
+        .scan-orbit::before,
+        .scan-orbit::after {
+            content: "";
+
+            position: absolute;
+            inset: 14px;
+
+            border: 1px dashed rgba(55, 133, 224, 0.35);
+            border-radius: 50%;
+        }
+
+        .scan-orbit::after {
+            inset: -15px;
+            border-style: solid;
+            opacity: 0.5;
+        }
+
+        .scan-icon {
+            position: relative;
+            z-index: 2;
+
+            width: 110px;
+            height: 110px;
+
+            display: grid;
+            place-items: center;
+
+            color: #1769d2;
+
+            background: rgba(255, 255, 255, 0.94);
+
+            border: 1px solid white;
+            border-radius: 28px;
+
+            box-shadow:
+                0 12px 35px rgba(40, 105, 180, 0.13);
+        }
+
+        .scan-icon svg {
+            width: 65px;
+            height: 65px;
+        }
+
+        .scan-crosshair {
+            position: absolute;
+            z-index: 3;
+
+            width: 28px;
+            height: 28px;
+
+            border-color: #3288ee;
+            border-style: solid;
+        }
+
+        .crosshair-one {
+            top: 34px;
+            left: 34px;
+
+            border-width: 2px 0 0 2px;
+        }
+
+        .crosshair-two {
+            top: 34px;
+            right: 34px;
+
+            border-width: 2px 2px 0 0;
+        }
+
+        .crosshair-three {
+            bottom: 34px;
+            left: 34px;
+
+            border-width: 0 0 2px 2px;
+        }
+
+        .crosshair-four {
+            bottom: 34px;
+            right: 34px;
+
+            border-width: 0 2px 2px 0;
+        }
+
+        .visual-bottom {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .visual-check {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            color: #1769d2;
+            background: #eaf3ff;
+
+            border-radius: 13px;
+        }
+
+        .visual-check svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .visual-bottom strong {
+            display: block;
+
+            color: var(--navy);
+            font-size: 13px;
+        }
+
+        .visual-bottom p {
+            margin: 3px 0 0;
+
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .floating-badge {
+            position: absolute;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 13px 16px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5eef9;
+            border-radius: 15px;
+
+            box-shadow:
+                0 12px 32px rgba(34, 80, 140, 0.11);
+
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .badge-top {
+            top: 28px;
+            right: -8px;
+        }
+
+        .badge-bottom {
+            bottom: 25px;
+            left: -18px;
+
+            animation-delay: -2s;
+        }
+
+        .badge-icon {
+            width: 37px;
+            height: 37px;
+
+            display: grid;
+            place-items: center;
+
+            color: #1769d2;
+            background: #eaf3ff;
+
+            border-radius: 12px;
+        }
+
+        .badge-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .floating-badge strong {
+            display: block;
+
+            color: var(--navy);
+            font-size: 12px;
+        }
+
+        .floating-badge span {
+            display: block;
+
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        /* =========================
+           TRUST STRIP
+        ========================= */
+
+        .trust-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            margin-bottom: 75px;
+
+            padding: 20px 12px;
+
+            background: rgba(255, 255, 255, 0.82);
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            box-shadow: 0 8px 30px rgba(35, 83, 145, 0.04);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+
+            padding: 5px 15px;
+        }
+
+        .trust-item + .trust-item {
+            border-left: 1px solid var(--border);
+        }
+
+        .trust-icon {
+            width: 39px;
+            height: 39px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            color: #1769d2;
+            background: #edf5ff;
+
+            border-radius: 12px;
+        }
+
+        .trust-icon svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .trust-item strong {
+            display: block;
+
+            color: var(--navy);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .trust-item span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .section-heading {
+            max-width: 650px;
+
+            margin: 0 auto 38px;
+
+            text-align: center;
+        }
+
+        .section-label {
+            display: inline-block;
+
+            margin-bottom: 10px;
+
+            color: var(--primary);
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+
+            color: var(--navy);
+
+            font-size: clamp(25px, 3vw, 34px);
+            line-height: 1.5;
+        }
+
+        .section-heading p {
+            margin: 12px 0 0;
+
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .features {
+            padding-bottom: 85px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            min-height: 285px;
+
+            padding: 28px;
+
+            background: rgba(255, 255, 255, 0.94);
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--shadow);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .feature-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            right: -85px;
+            bottom: -90px;
+
+            background: rgba(72, 146, 240, 0.08);
+            border-radius: 50%;
+
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+
+            border-color: #c5ddfa;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card:hover::after {
+            transform: scale(1.4);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+
+            display: grid;
+            place-items: center;
+
+            color: #1769d2;
+            background:
+                linear-gradient(
+                    145deg,
+                    #edf5ff,
+                    #e1eeff
+                );
+
+            border: 1px solid #dceaff;
+            border-radius: 17px;
+
+            margin-bottom: 22px;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .feature-card h3 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            margin: 12px 0 22px;
+
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .feature-link {
+            position: relative;
+            z-index: 1;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-top: auto;
+
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .feature-link svg {
+            width: 16px;
+            height: 16px;
+
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover .feature-link svg {
+            transform: translateX(4px);
+        }
+
+        /* =========================
+           HOW IT WORKS
+        ========================= */
+
+        .how-section {
+            padding: 65px 0;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #edf5ff,
+                    #f8fbff
+                );
+
+            border-top: 1px solid #e2edf9;
+            border-bottom: 1px solid #e2edf9;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+
+            padding: 22px;
+
+            background: rgba(255, 255, 255, 0.82);
+
+            border: 1px solid #e0eaf7;
+            border-radius: 18px;
+        }
+
+        .step-number {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            color: white;
+            background: var(--primary);
+
+            border-radius: 12px;
+
+            font-family: "Inter", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 14px;
+        }
+
+        .step p {
+            margin: 6px 0 0;
+
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           FEEDBACK
+        ========================= */
+
+        .feedback-section {
+            padding: 82px 0;
+        }
+
+        .feedback-card {
+            overflow: hidden;
+
+            padding: 34px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+
+            box-shadow: var(--shadow);
+        }
+
+        .feedback-intro {
+            max-width: 650px;
+
+            margin: 0 auto 28px;
+
+            text-align: center;
+        }
+
+        .feedback-intro h2 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 26px;
+        }
+
+        .feedback-intro p {
+            margin: 10px 0 0;
+
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .form-frame {
+            width: 100%;
+            max-width: 760px;
+            height: 800px;
+
+            display: block;
+
+            margin: 0 auto;
+
+            background: #f8fbff;
+
+            border: 1px solid #e2ebf5;
+            border-radius: 16px;
+        }
+
+        /* =========================
+           DISCLAIMER
+        ========================= */
+
+        .disclaimer {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+
+            margin-top: 26px;
+            padding: 20px 22px;
+
+            background: #fffaf0;
+
+            border: 1px solid #f4e5bd;
+            border-radius: 16px;
+        }
+
+        .disclaimer-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            flex-shrink: 0;
+
+            color: #a66a12;
+            background: #fff0cc;
+
+            border-radius: 11px;
+        }
+
+        .disclaimer-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .disclaimer h3 {
+            margin: 0;
+
+            color: #80551b;
+            font-size: 13px;
+        }
+
+        .disclaimer p {
+            margin: 6px 0 0;
+
+            color: #856f4d;
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 28px 0;
+
+            background: white;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-brand {
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .footer-brand span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        .footer-copy {
+            color: #8997a9;
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+        }
+
+        /* =========================
+           COOKIE NOTICE
+        ========================= */
+
+        .cookie-notice {
+            position: fixed;
+            z-index: 200;
+
+            left: 24px;
+            bottom: 24px;
+
+            width: min(380px, calc(100% - 32px));
+
+            padding: 20px;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            box-shadow:
+                0 18px 55px rgba(20, 55, 100, 0.18);
+
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .cookie-notice[hidden] {
+            display: none;
+        }
+
+        .cookie-notice h3 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 15px;
+        }
+
+        .cookie-notice p {
+            margin: 8px 0 15px;
+
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .cookie-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cookie-button {
+            min-height: 40px;
+
+            padding: 9px 14px;
+
+            border: 0;
+            border-radius: 10px;
+
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .cookie-accept {
+            color: white;
+            background: var(--primary);
+        }
+
+        .cookie-more {
+            color: #536a83;
+            background: #edf3fa;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+            .page-container {
+                width: min(100% - 36px, 720px);
+            }
+
+            .nav-inner {
+                min-height: 70px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 25px;
+
+                padding-top: 55px;
+                padding-bottom: 45px;
+            }
+
+            .hero-copy {
+                text-align: center;
+            }
+
+            .hero-description,
+            .hero-note {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                width: min(100%, 500px);
+                margin: 0 auto;
+            }
+
+            .trust-strip {
+                margin-bottom: 55px;
+            }
+
+            .feature-grid {
+                gap: 14px;
+            }
+
+            .feature-card {
+                padding: 22px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page-container {
+                width: calc(100% - 30px);
+            }
+
+            .nav-inner {
+                min-height: 68px;
+                gap: 10px;
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+            }
+
+            .brand-title {
+                font-size: 14px;
+            }
+
+            .brand-subtitle {
+                font-size: 8px;
+                letter-spacing: 0.3px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .nav-links .nav-optional {
+                display: none;
+            }
+
+            .nav-cta {
+                padding: 9px 11px;
+                font-size: 11px !important;
+            }
+
+            .hero {
+                padding-top: 42px;
+            }
+
+            .eyebrow {
+                font-size: 10px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+                letter-spacing: -0.4px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+            .button {
+                min-height: 46px;
+                padding: 11px 14px;
+                font-size: 12px;
+            }
+
+            .hero-visual {
+                min-height: 340px;
+            }
+
+            .visual-card {
+                padding: 17px;
+            }
+
+            .scan-area {
+                min-height: 190px;
+            }
+
+            .floating-badge {
+                padding: 10px;
+                gap: 7px;
+            }
+
+            .badge-top {
+                right: -3px;
+                top: 12px;
+            }
+
+            .badge-bottom {
+                left: -3px;
+                bottom: 12px;
+            }
+
+            .badge-icon {
+                width: 31px;
+                height: 31px;
+            }
+
+            .floating-badge strong {
+                font-size: 10px;
+            }
+
+            .floating-badge span {
+                font-size: 9px;
+            }
+
+            .trust-strip {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 18px;
+            }
+
+            .trust-item {
+                justify-content: flex-start;
+                padding: 5px 0;
+            }
+
+            .trust-item + .trust-item {
+                border-left: 0;
+                border-top: 1px solid var(--border);
+                padding-top: 15px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                min-height: 245px;
+                padding: 25px;
+            }
+
+            .section-heading h2 {
+                font-size: 25px;
+            }
+
+            .section-heading p {
+                font-size: 12px;
+            }
+
+            .how-section {
+                padding: 48px 0;
+            }
+
+            .feedback-section {
+                padding: 55px 0;
+            }
+
+            .feedback-card {
+                padding: 20px 13px;
+            }
+
+            .feedback-intro h2 {
+                font-size: 22px;
+            }
+
+            .form-frame {
+                height: 800px;
+            }
+
+            .disclaimer {
+                padding: 16px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .cookie-notice {
+                left: 16px;
+                bottom: 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <h2>Skin Cancer Screening System</h2>
-</header>
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="page-container nav-inner">
 
-<h1>ระบบคัดกรองความเสี่ยงมะเร็งผิวหนังชนิด Melanoma</h1>
+            <a href="/" class="brand" aria-label="Skin Cancer AI Home">
 
-<div class="container">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M12 3v3"></path>
+                        <path d="M12 18v3"></path>
+                        <path d="M3 12h3"></path>
+                        <path d="M18 12h3"></path>
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="m12 12 7-7"></path>
+                        <path d="M15 5h4v4"></path>
+                    </svg>
+                </div>
 
-  <div class="card" onclick="goHospital()">
-    <h2>โรงพยาบาล</h2>
-    <p>ค้นหาโรงพยาบาลที่สามารถตรวจและตัดชิ้นเนื้อ</p>
-  </div>
+                <div>
+                    <span class="brand-title">
+                        Skin Cancer AI
+                    </span>
 
-  <div class="card" onclick="goAI()">
-    <h2>AI วิเคราะห์</h2>
-    <p>อัปโหลดภาพเพื่อวิเคราะห์ความเสี่ยง</p>
-  </div>
+                    <span class="brand-subtitle">
+                        MELANOMA SCREENING PLATFORM
+                    </span>
+                </div>
 
-  <div class="card" onclick="goInfo()">
-    <h2>Melanoma</h2>
-    <p>ข้อมูลเกี่ยวกับโรคมะเร็งผิวหนัง</p>
-  </div>
+            </a>
 
-</div>
+            <nav class="nav-links" aria-label="เมนูหลัก">
 
-<!-- ✅ Google Form -->
-<div class="form-section">
-  <h2>แบบประเมินความพึงพอใจ</h2>
+                <a href="#features">
+                    บริการ
+                </a>
 
-  <!-- 🔴 เปลี่ยนลิงก์ src ตรงนี้ -->
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfTkIagpD5HdnVnj9iYdEcBX01MC3d3aiwIwugntAAOAY-mzA/viewform?usp=dialog"
-          width="640" height="800">
-  </iframe>
-</div>
+                <a href="/info" class="nav-optional">
+                    ความรู้
+                </a>
 
-<footer>
-  © 2026 Skin Cancer AI Project
-</footer>
+                <a href="/hospital" class="nav-optional">
+                    โรงพยาบาล
+                </a>
 
-<script>
-  function goHospital() {
-    window.location.href = "/hospital";
-  }
+                <a href="/questionnaire" class="nav-cta">
+                    เริ่มประเมิน
+                    <span aria-hidden="true">→</span>
+                </a>
 
-  function goAI() {
-    window.location.href = "/questionnaire";
-  }
+            </nav>
 
-  function goInfo() {
-    window.location.href = "/info";
-  }
-</script>
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+        <section class="page-container hero">
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    <span class="status-dot"></span>
+
+                    AI-POWERED SKIN HEALTH PLATFORM
+                </div>
+
+                <h1>
+                    เทคโนโลยี AI<br>
+
+                    เพื่อการคัดกรอง<br>
+
+                    <span class="highlight">
+                        มะเร็งผิวหนัง
+                    </span>
+
+                    Melanoma
+                </h1>
+
+                <p class="hero-description">
+                    สำรวจความเสี่ยงของรอยโรคผิวหนังผ่านเทคโนโลยี
+                    <strong>ปัญญาประดิษฐ์ (AI)</strong>
+                    พร้อมเข้าถึงข้อมูลความรู้เกี่ยวกับโรค
+                    และค้นหาโรงพยาบาลเพื่อรับคำแนะนำในการดูแลสุขภาพผิว
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="/questionnaire"
+                       class="button button-primary">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             aria-hidden="true">
+                            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <path d="m21 15-5-5L5 21"></path>
+                        </svg>
+
+                        เริ่มประเมินด้วย AI
+                    </a>
+
+                    <a href="/info"
+                       class="button button-secondary">
+
+                        เรียนรู้เกี่ยวกับ Melanoma
+
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+                <div class="hero-note">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+
+                    <span>
+                        ระบบนี้มีไว้เพื่อการคัดกรองความเสี่ยงเบื้องต้นเท่านั้น
+                        ไม่สามารถใช้แทนการวินิจฉัยจากแพทย์ผู้เชี่ยวชาญได้
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- DECORATIVE MEDICAL AI VISUAL -->
+            <div class="hero-visual" aria-hidden="true">
+
+                <div class="visual-glow"></div>
+
+                <div class="visual-card">
+
+                    <div class="visual-top">
+
+                        <div class="visual-label">
+                            AI Screening Technology
+                        </div>
+
+                        <div class="visual-tag">
+                            AI PLATFORM
+                        </div>
+
+                    </div>
+
+                    <div class="scan-area">
+
+                        <div class="scan-grid"></div>
+
+                        <div class="scan-orbit"></div>
+
+                        <div class="scan-crosshair crosshair-one"></div>
+                        <div class="scan-crosshair crosshair-two"></div>
+                        <div class="scan-crosshair crosshair-three"></div>
+                        <div class="scan-crosshair crosshair-four"></div>
+
+                        <div class="scan-icon">
+
+                            <svg viewBox="0 0 64 64"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <rect x="9" y="9" width="46" height="46" rx="13"
+                                      fill="#eaf3ff"></rect>
+
+                                <circle cx="32" cy="32" r="15"></circle>
+                                <circle cx="32" cy="32" r="8"></circle>
+
+                                <path d="M32 17v7"></path>
+                                <path d="M32 40v7"></path>
+                                <path d="M17 32h7"></path>
+                                <path d="M40 32h7"></path>
+
+                                <circle cx="32" cy="32" r="3"
+                                        fill="#1769d2"></circle>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <div class="visual-bottom">
+
+                        <div class="visual-check">
+
+                            <svg viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+
+                                <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"></path>
+                                <path d="m9 12 2 2 4-4"></path>
+
+                            </svg>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Technology for Skin Health
+                            </strong>
+
+                            <p>
+                                AI-assisted preliminary screening
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-badge badge-top">
+
+                    <div class="badge-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                            <path d="M7 12h3l2-4 3 8 2-4h1"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+                        <strong>AI Image Analysis</strong>
+                        <span>วิเคราะห์ภาพด้วย AI</span>
+                    </div>
+
+                </div>
+
+
+                <div class="floating-badge badge-bottom">
+
+                    <div class="badge-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="2.5"></circle>
+
+                        </svg>
+
+                    </div>
+
+                    <div>
+                        <strong>Hospital Finder</strong>
+                        <span>ค้นหาโรงพยาบาลใกล้คุณ</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRUST STRIP -->
+        <section class="page-container trust-strip"
+                 aria-label="จุดเด่นของแพลตฟอร์ม">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 7v5l3 2"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <strong>เข้าถึงข้อมูลได้ง่าย</strong>
+                    <span>ใช้งานผ่านเว็บไซต์</span>
+                </div>
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <strong>ส่งเสริมการตรวจพบเร็ว</strong>
+                    <span>สนับสนุนการดูแลสุขภาพผิว</span>
+                </div>
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M3 21h18"></path>
+                        <path d="M5 21V7l7-4 7 4v14"></path>
+                        <path d="M9 21v-5h6v5"></path>
+                        <path d="M9 9h.01"></path>
+                        <path d="M15 9h.01"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <strong>ค้นหาสถานพยาบาล</strong>
+                    <span>เข้าถึงข้อมูลโรงพยาบาล</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="features page-container"
+                 id="features">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    EXPLORE OUR PLATFORM
+                </span>
+
+                <h2>
+                    ทุกสิ่งที่จำเป็น<br>
+                    เพื่อการดูแลสุขภาพผิว
+                </h2>
+
+                <p>
+                    รวมเทคโนโลยี AI ข้อมูลสุขภาพ และแหล่งค้นหาสถานพยาบาล
+                    ไว้ในแพลตฟอร์มเดียว
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <!-- AI -->
+                <a href="/questionnaire"
+                   class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                            <path d="M7 12h3l2-4 3 8 2-4h1"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        AI Skin Analysis
+                    </h3>
+
+                    <p>
+                        อัปโหลดภาพรอยโรคผิวหนังเพื่อให้โมเดล AI
+                        ช่วยประเมินความเสี่ยงเบื้องต้น
+                        พร้อมแสดงผลการวิเคราะห์จากระบบ
+                    </p>
+
+                    <span class="feature-link">
+                        เริ่มประเมิน
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             aria-hidden="true">
+
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+
+                        </svg>
+                    </span>
+
+                </a>
+
+
+                <!-- HOSPITAL -->
+                <a href="/hospital"
+                   class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="2.5"></circle>
+
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        Hospital Finder
+                    </h3>
+
+                    <p>
+                        ค้นหาข้อมูลโรงพยาบาลและสถานพยาบาล
+                        เพื่อประกอบการวางแผนเข้ารับคำปรึกษา
+                        จากบุคลากรทางการแพทย์
+                    </p>
+
+                    <span class="feature-link">
+                        ค้นหาโรงพยาบาล
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             aria-hidden="true">
+
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+
+                        </svg>
+                    </span>
+
+                </a>
+
+
+                <!-- EDUCATION -->
+                <a href="/info"
+                   class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.7"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21Z"></path>
+                            <path d="M4 5.5V21"></path>
+                            <path d="M8 7h8"></path>
+                            <path d="M8 11h7"></path>
+
+                        </svg>
+
+                    </div>
+
+                    <h3>
+                        Melanoma Knowledge
+                    </h3>
+
+                    <p>
+                        เรียนรู้เกี่ยวกับมะเร็งผิวหนังเมลาโนมา
+                        สัญญาณเตือน ปัจจัยเสี่ยง
+                        และแนวทางดูแลสุขภาพผิว
+                    </p>
+
+                    <span class="feature-link">
+                        อ่านข้อมูลความรู้
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round"
+                             aria-hidden="true">
+
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+
+                        </svg>
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section">
+
+            <div class="page-container">
+
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        SIMPLE & ACCESSIBLE
+                    </span>
+
+                    <h2>
+                        เริ่มต้นใช้งานได้ง่าย
+                    </h2>
+
+                    <p>
+                        ขั้นตอนการใช้ระบบประเมินความเสี่ยงเบื้องต้น
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                อัปโหลดภาพ
+                            </h3>
+
+                            <p>
+                                เลือกภาพรอยโรคผิวหนัง
+                                ที่ต้องการให้ระบบช่วยวิเคราะห์
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                AI ประมวลผลภาพ
+                            </h3>
+
+                            <p>
+                                ระบบใช้โมเดล AI
+                                ประเมินรูปแบบของภาพตามที่ได้รับการฝึก
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                อ่านผลและคำแนะนำ
+                            </h3>
+
+                            <p>
+                                ศึกษาผลการประเมินเบื้องต้น
+                                และพิจารณาปรึกษาแพทย์เมื่อมีข้อกังวล
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEEDBACK -->
+        <section class="feedback-section page-container"
+                 id="feedback">
+
+            <div class="feedback-card">
+
+                <div class="feedback-intro">
+
+                    <span class="section-label">
+                        YOUR FEEDBACK MATTERS
+                    </span>
+
+                    <h2>
+                        ร่วมพัฒนาเว็บไซต์ให้ดียิ่งขึ้น
+                    </h2>
+
+                    <p>
+                        ความคิดเห็นของคุณช่วยให้เรานำไปปรับปรุง
+                        ประสบการณ์การใช้งานและการนำเสนอข้อมูล
+                    </p>
+
+                </div>
+
+
+                <iframe
+                    class="form-frame"
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSfTkIagpD5HdnVnj9iYdEcBX01MC3d3aiwIwugntAAOAY-mzA/viewform?embedded=true"
+                    title="แบบประเมินความพึงพอใจต่อเว็บไซต์"
+                    loading="lazy">
+
+                    เบราว์เซอร์ของคุณไม่รองรับ iframe
+                    กรุณาเปิดแบบประเมินผ่าน Google Forms
+
+                </iframe>
+
+            </div>
+
+
+            <!-- MEDICAL DISCLAIMER -->
+            <div class="disclaimer">
+
+                <div class="disclaimer-icon">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+
+                        <path d="M12 9v4"></path>
+                        <path d="M12 17h.01"></path>
+                        <path d="M10.3 3.9 2.5 17.4A2 2 0 0 0 4.2 20h15.6a2 2 0 0 0 1.7-2.6L13.7 3.9a2 2 0 0 0-3.4 0Z"></path>
+
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        ข้อจำกัดการใช้งานและคำชี้แจงทางการแพทย์
+                    </h3>
+
+                    <p>
+                        เว็บไซต์นี้พัฒนาขึ้นเพื่อสนับสนุนการคัดกรองความเสี่ยงเบื้องต้น
+                        ผลจาก AI ไม่ใช่การวินิจฉัยโรค และไม่สามารถยืนยันหรือ排除มะเร็งผิวหนังได้
+                        ผู้ใช้งานควรปรึกษาแพทย์หรือบุคลากรทางการแพทย์เพื่อรับการตรวจที่เหมาะสม
+                    </p>
+
+                    <p>
+                        This website supports preliminary risk screening only.
+                        AI results are not a medical diagnosis and cannot rule melanoma
+                        in or out. Please consult a qualified healthcare professional
+                        for appropriate medical evaluation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="page-container footer-inner">
+
+            <div class="footer-brand">
+
+                Skin Cancer AI
+
+                <span>
+                    AI-Assisted Melanoma Risk Screening Project
+                </span>
+
+            </div>
+
+            <div class="footer-copy">
+                © 2026 Skin Cancer AI Project
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- COOKIE NOTICE -->
+    <aside class="cookie-notice"
+           id="cookieNotice"
+           aria-label="Cookie notice"
+           hidden>
+
+        <h3>
+            การใช้งานคุกกี้
+        </h3>
+
+        <p>
+            เว็บไซต์อาจใช้คุกกี้ที่จำเป็นต่อการทำงาน
+            เพื่อช่วยให้ประสบการณ์การใช้งานมีความต่อเนื่อง
+            โปรดศึกษานโยบายความเป็นส่วนตัวของโครงการก่อนใช้งาน
+        </p>
+
+        <div class="cookie-actions">
+
+            <button type="button"
+                    class="cookie-button cookie-accept"
+                    id="acceptCookies">
+
+                รับทราบ
+
+            </button>
+
+            <button type="button"
+                    class="cookie-button cookie-more"
+                    id="dismissCookies">
+
+                ปิดข้อความ
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <script>
+        /*
+         * Cookie notice
+         *
+         * This notice is informational.
+         * It does not set tracking cookies.
+         */
+
+        (function () {
+
+            const notice = document.getElementById("cookieNotice");
+            const acceptButton = document.getElementById("acceptCookies");
+            const dismissButton = document.getElementById("dismissCookies");
+
+            let dismissed = false;
+
+            try {
+                dismissed =
+                    localStorage.getItem("skinCancerCookieNoticeDismissed")
+                    === "true";
+            } catch (error) {
+                // Continue without localStorage if browser storage is blocked.
+            }
+
+            if (!dismissed) {
+                notice.hidden = false;
+            }
+
+            function closeNotice() {
+                notice.hidden = true;
+
+                try {
+                    localStorage.setItem(
+                        "skinCancerCookieNoticeDismissed",
+                        "true"
+                    );
+                } catch (error) {
+                    // The notice can still be dismissed for this page view.
+                }
+            }
+
+            acceptButton.addEventListener("click", closeNotice);
+            dismissButton.addEventListener("click", closeNotice);
+
+        })();
+    </script>
 
 </body>
 </html>
