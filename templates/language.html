@@ -5,63 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Language Settings | Skin Lesion Detection</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            color: #203747;
-            background: linear-gradient(135deg, #f5fbff, #dff4ff);
-        }
-        .card {
-            width: min(100%, 520px);
-            padding: 32px;
-            border-radius: 24px;
-            background: white;
-            box-shadow: 0 18px 50px #4b9bb51c;
-        }
-        h1 { margin-top: 0; font-size: 26px; }
-        p { color: #617887; line-height: 1.6; }
-        label {
-            display: block;
-            margin: 20px 0 8px;
-            font-weight: bold;
-        }
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #cfe3ee;
-            border-radius: 12px;
-            background: #fff;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            margin-top: 26px;
-            padding: 14px;
-            border: 0;
-            border-radius: 14px;
-            background: #8bd9fa;
-            color: #173b50;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover { background: #70c9f1; }
-    </style>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        color: #203747;
+        background: linear-gradient(135deg, #f5fbff, #dff4ff);
+    }
+
+    .card {
+        width: min(100%, 520px);
+        padding: 32px;
+        border-radius: 24px;
+        background: white;
+        box-shadow: 0 18px 50px #4b9bb51c;
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 26px;
+    }
+
+    p {
+        color: #617887;
+        line-height: 1.6;
+    }
+
+    label {
+        display: block;
+        margin: 20px 0 8px;
+        font-weight: bold;
+    }
+
+    select {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #cfe3ee;
+        border-radius: 12px;
+        background: #fff;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 26px;
+        padding: 14px;
+        border: 0;
+        border-radius: 14px;
+        background: #8bd9fa;
+        color: #173b50;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #70c9f1;
+    }
+</style>
+```
+
 </head>
+
 <body>
     <main class="card">
         <h1>Welcome to Skin Lesion Detection</h1>
-        <p>Please choose your language and current location before continuing.</p>
 
 ```
+    <p>
+        Please choose your language and current location before continuing.
+    </p>
+
     <form method="POST" action="{{ url_for('language') }}">
+
         <label for="language">Language / ภาษา</label>
+
         <select id="language" name="language" required>
             <option value="th">ภาษาไทย</option>
             <option value="en">English</option>
@@ -70,13 +98,19 @@
             <option value="ko">한국어</option>
         </select>
 
-        <label for="in_thailand">Are you currently in Thailand?</label>
+        <label for="in_thailand">
+            Are you currently in Thailand?
+        </label>
+
         <select id="in_thailand" name="in_thailand" required>
             <option value="yes">Yes, I am in Thailand</option>
             <option value="no">No, I am outside Thailand</option>
         </select>
 
-        <button type="submit">Continue / ดำเนินการต่อ →</button>
+        <button type="submit">
+            Continue / ดำเนินการต่อ →
+        </button>
+
     </form>
 </main>
 ```
